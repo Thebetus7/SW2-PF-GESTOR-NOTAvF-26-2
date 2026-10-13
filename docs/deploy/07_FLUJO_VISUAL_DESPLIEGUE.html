@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Interactivo de Despliegue — Gestor de Notas IA (Google Cloud)</title>
+  <style>
+    :root[data-theme="dark"] {
+      --bg-body: #0b1220;
+      --bg-topbar: #0f172a;
+      --bg-sidebar: #111827;
+      --bg-card: #1e293b;
+      --bg-card-hover: #243248;
+      --bg-code: #090d16;
+      --border-color: #334155;
+      --border-subtle: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-heading: #ffffff;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-subtle: rgba(99, 102, 241, 0.15);
+      --success: #10b981;
+      --success-subtle: rgba(16, 185, 129, 0.15);
+      --warning: #f59e0b;
+      --warning-subtle: rgba(245, 158, 11, 0.15);
+      --danger: #ef4444;
+      --danger-subtle: rgba(239, 68, 68, 0.15);
+      --info: #0ea5e9;
+      --info-subtle: rgba(14, 165, 233, 0.15);
+      --table-header: #1e293b;
+      --table-row-alt: #162032;
+    }
+
+    :root[data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-topbar: #ffffff;
+      --bg-sidebar: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --bg-code: #0f172a;
+      --border-color: #cbd5e1;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-heading: #0f172a;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-subtle: rgba(79, 70, 229, 0.1);
+      --success: #16a34a;
+      --success-subtle: rgba(22, 163, 74, 0.1);
+      --warning: #d97706;
+      --warning-subtle: rgba(217, 119, 6, 0.1);
+      --danger: #dc2626;
+      --danger-subtle: rgba(220, 38, 38, 0.1);
+      --info: #0284c7;
+      --info-subtle: rgba(2, 132, 199, 0.1);
+      --table-header: #f1f5f9;
+      --table-row-alt: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* TOPBAR */
+    header.topbar {
+      background-color: var(--bg-topbar);
+      height: 64px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-cloud { background-color: var(--info-subtle); color: var(--info); border: 1px solid var(--info); }
+    .badge-env { background-color: var(--success-subtle); color: var(--success); border: 1px solid var(--success); }
+    .badge-status { background-color: var(--primary-subtle); color: var(--primary); border: 1px solid var(--primary); }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Buscador */
+    .search-box {
+      position: relative;
+    }
+    .search-input {
+      background-color: var(--bg-body);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px 6px 32px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      width: 240px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--primary);
+      width: 300px;
+      box-shadow: 0 0 0 2px var(--primary-subtle);
+    }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Dark Mode Toggle */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .theme-toggle:hover {
+      background-color: var(--primary-subtle);
+      border-color: var(--primary);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .app-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* SIDEBAR */
+    nav.sidebar {
+      width: 280px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      padding: 16px 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .nav-item:hover {
+      background-color: var(--bg-card-hover);
+      color: var(--text-main);
+    }
+
+    .nav-item.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .nav-item .icon {
+      font-size: 1rem;
+      margin-right: 8px;
+    }
+
+    .nav-item .node-indicator {
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* CONTENIDO */
+    main.main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background-color: var(--bg-body);
+    }
+
+    /* PIPELINE INTERACTIVO SUPERIOR (DIAGRAMA DE NODOS) */
+    .pipeline-container {
+      background-color: var(--bg-topbar);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+
+    .pipeline-node {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .pipeline-node:hover {
+      border-color: var(--primary);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    .pipeline-node.active {
+      background-color: var(--primary-subtle);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .pipeline-arrow {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .content-body {
+      padding: 32px 48px;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* TARJETAS DE CONTENIDO Y PASOS */
+    .doc-section {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    .doc-section.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-top: 14px;
+      margin-bottom: 8px;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    /* STEP CARDS (TARJETAS DE PASOS ESTRUCTURADOS) */
+    .step-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 5px solid var(--primary);
+    }
+
+    .step-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .context-tag {
+      background-color: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    /* TABLAS */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      margin: 12px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background-color: var(--table-header);
+      color: var(--text-heading);
+      font-weight: 700;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    tr:nth-child(even) td {
+      background-color: var(--table-row-alt);
+    }
+
+    /* CÓDIGO Y COPIADO */
+    .code-box {
+      background-color: var(--bg-code);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .code-topbar {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+    }
+
+    .copy-btn {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .copy-btn.copied {
+      background-color: var(--success);
+      color: #ffffff;
+      border-color: var(--success);
+    }
+
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.86rem;
+      color: #38bdf8;
+      line-height: 1.5;
+    }
+
+    /* ALERTAS */
+    .alert-box {
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-left: 4px solid;
+    }
+    .alert-box.tip { background-color: var(--success-subtle); border-color: var(--success); color: var(--text-main); }
+    .alert-box.warning { background-color: var(--warning-subtle); border-color: var(--warning); color: var(--text-main); }
+    .alert-box.danger { background-color: var(--danger-subtle); border-color: var(--danger); color: var(--text-main); }
+    .alert-box.info { background-color: var(--info-subtle); border-color: var(--info); color: var(--text-main); }
+
+    .alert-box-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* CHECKLIST */
+    .checklist-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .checklist-checkbox {
+      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer.nav-footer {
+      background-color: var(--bg-topbar);
+      border-top: 1px solid var(--border-color);
+      padding: 14px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .footer-btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-btn:hover:not(:disabled) {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .footer-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 900px) {
+      nav.sidebar { width: 220px; }
+      .content-body { padding: 20px; }
+    }
+
+    @media (max-width: 640px) {
+      .app-layout { flex-direction: column; }
+      nav.sidebar { width: 100%; height: auto; }
+      header.topbar { padding: 0 12px; }
+      .brand-title span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="brand-title">
+        <span>🚀 Gestor de Notas & Evaluaciones IA</span>
+      </div>
+      <span class="badge badge-cloud">Google Cloud</span>
+      <span class="badge badge-env">Producción</span>
+      <span class="badge badge-status">READY / GENERATED</span>
+    </div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar paso, comando o error...">
+      </div>
+      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">
+        <span id="themeIcon">☀️</span>
+        <span id="themeLabel">Modo Claro</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="sidebar-title">Suite de Despliegue</div>
+      <ul class="nav-list">
+        <li class="nav-item active" data-target="sec-00">
+          <div><span class="icon">📑</span><span>00 Resumen General</span></div>
+          <span class="node-indicator">Índice</span>
+        </li>
+        <li class="nav-item" data-target="sec-01">
+          <div><span class="icon">⚙️</span><span>01 Configurar Proyecto</span></div>
+          <span class="node-indicator">Local</span>
+        </li>
+        <li class="nav-item" data-target="sec-02">
+          <div><span class="icon">☁️</span><span>02 Crear Infraestructura</span></div>
+          <span class="node-indicator">GCP</span>
+        </li>
+        <li class="nav-item" data-target="sec-03">
+          <div><span class="icon">🔧</span><span>03 Instalar Herramientas</span></div>
+          <span class="node-indicator">Ubuntu</span>
+        </li>
+        <li class="nav-item" data-target="sec-04">
+          <div><span class="icon">🚀</span><span>04 Desplegar y Verificar</span></div>
+          <span class="node-indicator">Deploy</span>
+        </li>
+        <li class="nav-item" data-target="sec-05">
+          <div><span class="icon">🔄</span><span>05 Actualizar Producción</span></div>
+          <span class="node-indicator">CI/CD</span>
+        </li>
+        <li class="nav-item" data-target="sec-06">
+          <div><span class="icon">🛑</span><span>06 Apagar y Reactivar</span></div>
+          <span class="node-indicator">Costos</span>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- ÁREA DE CONTENIDO -->
+    <main class="main-content">
+
+      <!-- PIPELINE INTERACTIVO TIPO DIAGRAMA DE NODOS -->
+      <div class="pipeline-container">
+        <div class="pipeline-node active" onclick="showSection('sec-00')"><span>📑 00 Resumen</span></div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-node" onclick="showSection('sec-01')"><span>⚙️ 01 Configurar</span></div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-node" onclick="showSection('sec-02')"><span>☁️ 02 Infra GCP</span></div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-node" onclick="showSection('sec-03')"><span>🔧 03 Herramientas</span></div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-node" onclick="showSection('sec-04')"><span>🚀 04 Despliegue</span></div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-node" onclick="showSection('sec-05')"><span>🔄 05 Actualizar</span></div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-node" onclick="showSection('sec-06')"><span>🛑 06 Apagar / ON</span></div>
+      </div>
+
+      <div class="content-body">
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 00: RESUMEN GENERAL -->
+        <!-- ========================================== -->
+        <section id="sec-00" class="doc-section active">
+          <div class="section-header">
+            <h1 class="section-title">00. Resumen General del Despliegue</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Ficha técnica, arquitectura de producción, matriz de puertos, estimación de costos y prerrequisitos.</p>
+          </div>
+
+          <div class="card">
+            <h2 class="section-subtitle">Ficha Técnica de Producción</h2>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr><th>Parámetro</th><th>Valor Técnico</th><th>Justificación</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Proyecto</strong></td><td>Gestor de Notas & Evaluaciones con IA</td><td>Plataforma para corrección manuscrita con IA</td></tr>
+                  <tr><td><strong>Repositorio</strong></td><td><code>SW2-PF-GESTOR-NOTAvF-26-2</code></td><td>Monorepo (Django, Next.js, Flutter)</td></tr>
+                  <tr><td><strong>Proveedor Cloud</strong></td><td>Google Cloud Platform (GCP)</td><td>Compute Engine en región <code>us-central1</code></td></tr>
+                  <tr><td><strong>Instancia VM</strong></td><td><code>e2-medium</code> (2 vCPU, 4.0 GB RAM)</td><td>Capacidad óptima sin riesgo de Out-Of-Memory</td></tr>
+                  <tr><td><strong>Almacenamiento</strong></td><td>30 GB Balanced Persistent Disk</td><td>Capas Docker, base de datos y fotos de exámenes</td></tr>
+                  <tr><td><strong>Sistema Operativo</strong></td><td>Ubuntu 22.04 LTS (x86_64)</td><td>Estabilidad empresarial y soporte de largo plazo</td></tr>
+                  <tr><td><strong>Persistencia</strong></td><td>PostgreSQL 16 Alpine en contenedor</td><td>Volumen <code>postgres_data</code> en disco persistente</td></tr>
+                  <tr><td><strong>Reverse Proxy</strong></td><td>Nginx en Host (systemd)</td><td>Puertos 80/443 con límite de subida de 50MB</td></tr>
+                  <tr><td><strong>Motor IA</strong></td><td>Google Gemini API (v1beta Free Tier)</td><td>Modelo gemini-1.5-flash vía API Key</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="section-subtitle">Matriz de Puertos y Seguridad de Red</h2>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr><th>Puerto</th><th>Protocolo</th><th>Ámbito</th><th>Servicio</th><th>Justificación</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>22</strong></td><td>TCP</td><td>Público / SSH</td><td>OpenSSH</td><td>Administración remota cifrada por llaves</td></tr>
+                  <tr><td><strong>80</strong></td><td>TCP</td><td>Público / HTTP</td><td>Nginx</td><td>Acceso web y redirección segura</td></tr>
+                  <tr><td><strong>443</strong></td><td>TCP</td><td>Público / HTTPS</td><td>Nginx</td><td>Tráfico web cifrado TLS</td></tr>
+                  <tr><td><strong>3000</strong></td><td>TCP</td><td>127.0.0.1 (Local)</td><td>Next.js Web</td><td>Privado, atendido exclusivamente por Nginx</td></tr>
+                  <tr><td><strong>8000</strong></td><td>TCP</td><td>127.0.0.1 (Local)</td><td>Django API</td><td>Privado, atendido en <code>/api/</code> y <code>/admin/</code></td></tr>
+                  <tr><td><strong>5432</strong></td><td>TCP</td><td>Red Docker Interna</td><td>PostgreSQL</td><td>Aislado sin exposición pública</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="section-subtitle">Estimación y Control de Costos Mensuales (us-central1)</h2>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr><th>Recurso</th><th>Operación 24/7</th><th>Al Apagar la VM (Detenida)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Instancia e2-medium (2 vCPU, 4GB)</strong></td><td>~$24.40 USD / mes</td><td><strong>$0.00 USD (Cero cobro)</strong></td></tr>
+                  <tr><td><strong>Disco 30 GB Balanced Disk</strong></td><td>~$3.00 USD / mes</td><td>~$3.00 USD / mes</td></tr>
+                  <tr><td><strong>IP IPv4 Externa Estática</strong></td><td>$0.00 USD (asociada)</td><td>~$2.88 USD si no se asocia</td></tr>
+                  <tr><td><strong>Google Gemini API (Free Tier)</strong></td><td>$0.00 USD</td><td>$0.00 USD</td></tr>
+                  <tr><td><strong>TOTAL ESTIMADO</strong></td><td><strong>~$27.40 USD / mes</strong></td><td><strong>~$3.00 USD / mes</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 01: CONFIGURAR PROYECTO -->
+        <!-- ========================================== -->
+        <section id="sec-01" class="doc-section">
+          <div class="section-header">
+            <h1 class="section-title">01. Configurar el Proyecto para Producción</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Preparación de Dockerfile multicapa, orquestador de producción y variables seguras en PC Local.</p>
+          </div>
+
+          <!-- Step Card 1 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 1: Crear Dockerfile de Producción para Next.js</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL]</span>
+                <span class="context-tag">frontend/Dockerfile.prod</span>
+              </div>
+            </div>
+            <p>Construye una imagen ultraligera multicapa que compila Next.js en una etapa previa y entrega el runner final optimizado:</p>
+            <div class="code-box">
+              <div class="code-topbar"><span>DOCKERFILE</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>FROM node:20-alpine AS deps
+WORKDIR /app
+RUN apk add --no-cache libc6-compat
+COPY package.json package-lock.json* ./
+RUN npm install --frozen-lockfile || npm install
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NODE_ENV=production
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+USER nextjs
+EXPOSE 3000
+CMD ["npm", "run", "start"]</code></pre>
+            </div>
+            <div class="alert-box tip">
+              <div class="alert-box-title">✔ Verificación Observable</div>
+              <div>Comprueba la existencia del archivo: <code>ls -lh frontend/Dockerfile.prod</code> (tamaño aprox. 800 bytes).</div>
+            </div>
+          </div>
+
+          <!-- Step Card 2 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 2: Crear el Orquestador docker-compose.prod.yml</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL]</span>
+                <span class="context-tag">docker-compose.prod.yml</span>
+              </div>
+            </div>
+            <p>Aísla PostgreSQL en la red interna de Docker y publica únicamente hacia 127.0.0.1:</p>
+            <div class="code-box">
+              <div class="code-topbar"><span>YAML</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gestornotas_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gestornotas_db}
+      POSTGRES_USER: ${POSTGRES_USER:-gestornotas_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - gestornotas_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gestornotas_user} -d ${POSTGRES_DB:-gestornotas_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gestornotas_backend
+    restart: unless-stopped
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             python manage.py collectstatic --noinput &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - media_volume:/app/media
+      - static_volume:/app/staticfiles
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: "False"
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      USE_SQLITE: "False"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - gestornotas_network
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    container_name: gestornotas_frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      PORT: 3000
+    depends_on:
+      - backend
+    networks:
+      - gestornotas_network
+
+volumes:
+  postgres_data:
+    driver: local
+  media_volume:
+    driver: local
+  static_volume:
+    driver: local
+
+networks:
+  gestornotas_network:
+    driver: bridge</code></pre>
+            </div>
+            <div class="alert-box tip">
+              <div class="alert-box-title">✔ Verificación Observable</div>
+              <div>Ejecuta <code>docker compose -f docker-compose.prod.yml config</code> para validar la sintaxis YAML.</div>
+            </div>
+          </div>
+
+          <!-- Step Card 3 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 3: Generar Claves Criptográficas y Plantilla .env</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL]</span>
+              </div>
+            </div>
+            <p>Genera claves de alta entropía para Django y PostgreSQL desde tu terminal local:</p>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code># Django Secret Key
+python -c "import secrets; print(secrets.token_urlsafe(50))"
+
+# PostgreSQL Password
+python -c "import secrets; print(secrets.token_hex(24))"</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 02: CREAR INFRAESTRUCTURA GCP -->
+        <!-- ========================================== -->
+        <section id="sec-02" class="doc-section">
+          <div class="section-header">
+            <h1 class="section-title">02. Crear Infraestructura en Google Cloud</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Creación de máquina virtual e2-medium, IP estática y reglas de Firewall en GCP.</p>
+          </div>
+
+          <!-- Step Card 1 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 1: Reservar Dirección IPv4 Externa Estática</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL / CLI]</span>
+              </div>
+            </div>
+            <p>Reserva una IP pública inmutable en us-central1 para que no cambie al apagar o reiniciar la VM:</p>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code># Reservar IP estática
+gcloud compute addresses create gestornotas-ip-estatica --region=us-central1
+
+# Consultar la IP obtenida
+export STATIC_IP=$(gcloud compute addresses describe gestornotas-ip-estatica --region=us-central1 --format='value(address)')
+echo "Tu IP Estática es: $STATIC_IP"</code></pre>
+            </div>
+          </div>
+
+          <!-- Step Card 2 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 2: Crear Instancia Compute Engine e2-medium</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL / CLI]</span>
+              </div>
+            </div>
+            <p>Aprovisiona la VM con 2 vCPU, 4 GB RAM, 30 GB de disco equilibrado y Ubuntu 22.04 LTS:</p>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>gcloud compute instances create gestornotas-vm-prod \
+    --zone=us-central1-a \
+    --machine-type=e2-medium \
+    --network-interface=address=$STATIC_IP,network-tier=PREMIUM \
+    --image-family=ubuntu-2204-lts \
+    --image-project=ubuntu-os-cloud \
+    --boot-disk-size=30GB \
+    --boot-disk-type=pd-balanced \
+    --tags=http-server,https-server</code></pre>
+            </div>
+            <div class="alert-box tip">
+              <div class="alert-box-title">✔ Verificación Observable</div>
+              <div><code>gcloud compute instances describe gestornotas-vm-prod --zone=us-central1-a --format='value(status)'</code> &rarr; Salida: <code>RUNNING</code>.</div>
+            </div>
+          </div>
+
+          <!-- Step Card 3 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 3: Conectar por SSH al Servidor</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>gcloud compute ssh gestornotas-vm-prod --zone=us-central1-a</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 03: INSTALAR HERRAMIENTAS -->
+        <!-- ========================================== -->
+        <section id="sec-03" class="doc-section">
+          <div class="section-header">
+            <h1 class="section-title">03. Instalar Herramientas en el Servidor</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Aprovisionamiento de Docker, Docker Compose, 2 GB Swap, UFW y Nginx en Ubuntu.</p>
+          </div>
+
+          <!-- Step Card 1 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 1: Actualizar Paquetes y Configurar 2 GB Swap</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl wget git htop ufw software-properties-common ca-certificates apt-transport-https
+
+# Swap de 2 GB
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+sudo sysctl vm.swappiness=10
+echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
+
+free -h</code></pre>
+            </div>
+          </div>
+
+          <!-- Step Card 2 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 2: Instalar Docker Engine y Docker Compose Oficial</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+sudo systemctl enable docker
+sudo systemctl start docker
+rm get-docker.sh
+newgrp docker
+
+# Probar ejecución no-root
+docker run --rm hello-world</code></pre>
+            </div>
+          </div>
+
+          <!-- Step Card 3 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 3: Instalar Nginx y Activar Firewall UFW</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>sudo apt install -y nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+sudo ufw allow 22/tcp comment 'SSH Admin'
+sudo ufw allow 80/tcp comment 'HTTP Nginx'
+sudo ufw allow 443/tcp comment 'HTTPS Nginx'
+sudo ufw --force enable
+sudo ufw status verbose</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 04: DESPLEGAR Y VERIFICAR -->
+        <!-- ========================================== -->
+        <section id="sec-04" class="doc-section">
+          <div class="section-header">
+            <h1 class="section-title">04. Desplegar y Verificar la Aplicación</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Clonación, .env, build, migraciones, superusuario, Nginx Virtual Host y pruebas físicas.</p>
+          </div>
+
+          <!-- Step Card 1 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 1: Clonar el Repositorio y Configurar .env</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>cd ~
+git clone https://github.com/Thebetus7/SW2-G17-SDD-26-2.git proyecto-gestor-notas
+cd proyecto-gestor-notas
+
+cp .env.production.example .env
+nano .env</code></pre>
+            </div>
+          </div>
+
+          <!-- Step Card 2 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 2: Levantar Contenedores con Docker Compose</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>docker compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.prod.yml ps</code></pre>
+            </div>
+          </div>
+
+          <!-- Step Card 3 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 3: Migraciones y Superusuario de Django</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code># Aplicar migraciones
+docker compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
+
+# Recolectar estáticos
+docker compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput
+
+# Crear superusuario interactivo
+docker compose -f docker-compose.prod.yml exec -it backend python manage.py createsuperuser</code></pre>
+            </div>
+          </div>
+
+          <!-- Step Card 4 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Paso 4: Configurar Nginx Virtual Host (Límite 50M)</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+                <span class="context-tag">/etc/nginx/sites-available/gestornotas</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>NGINX</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>server {
+    listen 80;
+    server_name &lt;TU_IP_PUBLICA_GCP&gt; _;
+
+    client_max_body_size 50M;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000/api/;
+        proxy_read_timeout 180s;
+        proxy_connect_timeout 180s;
+    }
+
+    location /admin/ {
+        proxy_pass http://127.0.0.1:8000/admin/;
+    }
+
+    location /media/ {
+        proxy_pass http://127.0.0.1:8000/media/;
+    }
+
+    location /static/ {
+        proxy_pass http://127.0.0.1:8000/static/;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}</code></pre>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>sudo rm -f /etc/nginx/sites-enabled/default
+sudo ln -sf /etc/nginx/sites-available/gestornotas /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 05: ACTUALIZAR PRODUCCIÓN -->
+        <!-- ========================================== -->
+        <section id="sec-05" class="doc-section">
+          <div class="section-header">
+            <h1 class="section-title">05. Actualizar Producción (Zero-Downtime)</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Procedimiento seguro de CI/CD manual con backups de base de datos y rollback.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Pipeline de Actualización Segura en Servidor</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>cd ~/proyecto-gestor-notas
+
+# 1. Backup de seguridad antes de tocar nada
+mkdir -p ~/backups_db
+docker compose -f docker-compose.prod.yml exec postgres pg_dump -U gestornotas_admin gestornotas_prod_db | gzip > ~/backups_db/backup_pre_update_$(date +%Y%m%d_%H%M%S).sql.gz
+
+# 2. Descargar código
+git pull origin main
+
+# 3. Reconstruir y levantar contenedores en caliente
+docker compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml up -d --remove-orphans
+
+# 4. Migraciones y estáticos
+docker compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
+docker compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput
+
+# 5. Limpieza de imágenes huérfanas
+docker image prune -f
+
+# 6. Verificación
+curl -s -I http://localhost | head -n 3</code></pre>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">⚠️ Procedimiento de Reversión (Rollback Inmediato)</div>
+              <div class="step-meta">
+                <span class="context-tag">[SSH / SERVIDOR]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code>git reset --hard &lt;HASH_COMMIT_ANTERIOR&gt;
+gunzip -c ~/backups_db/backup_pre_update_YYYYMMDD_HHMMSS.sql.gz | docker compose -f docker-compose.prod.yml exec -T postgres psql -U gestornotas_admin -d gestornotas_prod_db
+docker compose -f docker-compose.prod.yml up -d --build --force-recreate</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 06: APAGAR Y REACTIVAR -->
+        <!-- ========================================== -->
+        <section id="sec-06" class="doc-section">
+          <div class="section-header">
+            <h1 class="section-title">06. Apagar, Reactivar y Control de Costos</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Suspensión de máquina virtual ($0 CPU/RAM), snapshots y reanudación automática.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Detener la Máquina Virtual (Ahorro de Costos)</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code># Detener la VM (Costo de CPU/RAM desciende a $0.00)
+gcloud compute instances stop gestornotas-vm-prod --zone=us-central1-a</code></pre>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Reactivar la Máquina Virtual</div>
+              <div class="step-meta">
+                <span class="context-tag">[PC LOCAL]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code># Encender la VM
+gcloud compute instances start gestornotas-vm-prod --zone=us-central1-a</code></pre>
+            </div>
+            <div class="alert-box tip">
+              <div class="alert-box-title">✔ Auto-Arranque Confirmado</div>
+              <div>Nginx y los contenedores de Docker arrancan solos en 30 segundos gracias a <code>restart: unless-stopped</code>, conservando la misma IP pública estática y la integridad de PostgreSQL.</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="nav-footer">
+    <button id="prevBtn" class="footer-btn" onclick="navigateStep(-1)">&larr; Anterior</button>
+    <button class="footer-btn" onclick="showSection('sec-00')">&uarr; Índice General</button>
+    <button id="nextBtn" class="footer-btn" onclick="navigateStep(1)">Siguiente Paso &rarr;</button>
+  </footer>
+
+  <!-- SCRIPT INTERACTIVO AUTOCONTENIDO -->
+  <script>
+    const sections = ['sec-00', 'sec-01', 'sec-02', 'sec-03', 'sec-04', 'sec-05', 'sec-06'];
+    let currentIndex = 0;
+
+    function showSection(sectionId) {
+      const idx = sections.indexOf(sectionId);
+      if (idx === -1) return;
+      currentIndex = idx;
+
+      // Secciones
+      document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
+      const activeSec = document.getElementById(sectionId);
+      if (activeSec) activeSec.classList.add('active');
+
+      // Sidebar
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-target') === sectionId) item.classList.add('active');
+      });
+
+      // Pipeline Nodes
+      document.querySelectorAll('.pipeline-node').forEach((node, i) => {
+        node.classList.toggle('active', i === currentIndex);
+      });
+
+      // Botones footer
+      document.getElementById('prevBtn').disabled = (currentIndex === 0);
+      document.getElementById('nextBtn').disabled = (currentIndex === sections.length - 1);
+
+      document.querySelector('.main-content').scrollTop = 0;
+    }
+
+    function navigateStep(direction) {
+      const newIndex = currentIndex + direction;
+      if (newIndex >= 0 && newIndex < sections.length) {
+        showSection(sections[newIndex]);
+      }
+    }
+
+    // Sidebar clicks
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        showSection(item.getAttribute('data-target'));
+      });
+    });
+
+    // Copiar código
+    function copyCode(btn) {
+      const pre = btn.closest('.code-box').querySelector('pre code');
+      if (!pre) return;
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '¡Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Dark / Light Mode Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('doc_deploy_theme', next);
+
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (next === 'dark') {
+        icon.textContent = '☀️';
+        label.textContent = 'Modo Claro';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'Modo Oscuro';
+      }
+    }
+
+    // Restaurar tema guardado
+    (function initTheme() {
+      const saved = localStorage.getItem('doc_deploy_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (saved === 'dark') {
+        icon.textContent = '☀️';
+        label.textContent = 'Modo Claro';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'Modo Oscuro';
+      }
+    })();
+
+    // Buscador interactivo
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase().trim();
+      if (!query) return;
+      for (let i = 0; i < sections.length; i++) {
+        const sec = document.getElementById(sections[i]);
+        if (sec && sec.textContent.toLowerCase().includes(query)) {
+          showSection(sections[i]);
+          break;
+        }
+      }
+    });
+
+    // Iniciar en la primera sección
+    showSection('sec-00');
+  </script>
+</body>
+</html>

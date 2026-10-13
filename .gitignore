@@ -1,0 +1,75 @@
+# ==========================================
+# Secretos y Variables de Entorno (ESTRICTO)
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+
+# ==========================================
+# Python / Django
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+media/
+staticfiles/
+
+# ==========================================
+# Node / Next.js
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.next/
+out/
+.vercel
+
+# ==========================================
+# Dart / Flutter
+# ==========================================
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+mobile/.pub-cache/
+mobile/.pub/
+mobile/build/
+
+# ==========================================
+# IDEs y Sistema Operativo
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
