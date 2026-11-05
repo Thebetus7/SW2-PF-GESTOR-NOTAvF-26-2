@@ -40,6 +40,12 @@ htmlcov/
 media/
 staticfiles/
 
+# Entornos Virtuales Python
+.venv/
+venv/
+ENV/
+env/
+
 # ==========================================
 # Node / Next.js
 # ==========================================

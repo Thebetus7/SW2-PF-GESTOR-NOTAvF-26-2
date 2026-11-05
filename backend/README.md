@@ -38,17 +38,31 @@ cd backend
   ```
   *(Si PowerShell bloquea scripts, ejecuta antes: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`)*
 
-* **En Linux / macOS:**
+* **En Windows (Git Bash):**
+  ```bash
+  python -m venv venv
+  source venv/Scripts/activate
+  ```
+
+* **En Linux / macOS (Bash / Zsh):**
   ```bash
   python3 -m venv venv
   source venv/bin/activate
   ```
 
 #### 3. Instalar dependencias
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+
+* **En Windows (PowerShell o Git Bash):**
+  ```bash
+  python -m pip install --upgrade pip
+  pip install -r requirements.txt
+  ```
+
+* **En Linux / macOS:**
+  ```bash
+  python3 -m pip install --upgrade pip
+  pip install -r requirements.txt
+  ```
 
 #### 4. Configurar variables de entorno
 Copia la plantilla de variables de entorno:
@@ -56,7 +70,7 @@ Copia la plantilla de variables de entorno:
   ```powershell
   Copy-Item .env.example .env
   ```
-* En Linux / macOS:
+* En Windows (Git Bash) / Linux / macOS:
   ```bash
   cp .env.example .env
   ```
