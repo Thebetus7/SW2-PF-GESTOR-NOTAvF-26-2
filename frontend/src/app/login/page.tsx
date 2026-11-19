@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Shield, GraduationCap, BookOpen, KeyRound, Sparkles } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { API_BASE_URL } from '@/lib/api';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function LoginPage() {
     setErrorMessage(null);
 
     try {
-      const res = await fetch('http://localhost:8000/api/v1/auth/demo-login/', {
+      const res = await fetch(`${API_BASE_URL}/auth/demo-login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role }),
@@ -63,7 +64,7 @@ export default function LoginPage() {
     setErrorMessage(null);
 
     try {
-      const res = await fetch('http://localhost:8000/api/v1/auth/login/', {
+      const res = await fetch(`${API_BASE_URL}/auth/login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -106,7 +107,7 @@ export default function LoginPage() {
     setErrorMessage(null);
 
     try {
-      const res = await fetch('http://localhost:8000/api/v1/auth/student-id-login/', {
+      const res = await fetch(`${API_BASE_URL}/auth/student-id-login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id_code: studentIdCode.trim() }),

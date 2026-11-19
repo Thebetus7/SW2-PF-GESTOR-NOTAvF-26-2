@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { StudentEvaluation, GradeDetail } from '@/types';
+import { API_BASE_URL } from '@/lib/api';
 
 interface Props {
   evaluation: StudentEvaluation;
@@ -59,7 +60,7 @@ export const EvaluationDetailModal: React.FC<Props> = ({
 
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:8000/api/v1/evaluations/${evaluation.id}/grades/${gradeId}/`, {
+      const res = await fetch(`${API_BASE_URL}/evaluations/${evaluation.id}/grades/${gradeId}/`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

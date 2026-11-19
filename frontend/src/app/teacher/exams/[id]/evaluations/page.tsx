@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { StudentEvaluation } from '@/types';
 import { Navbar } from '@/components/ui/Navbar';
 import { EvaluationDetailModal } from '@/components/evaluations/EvaluationDetailModal';
+import { API_BASE_URL } from '@/lib/api';
 
 export default function TeacherExamEvaluationsPage() {
   const params = useParams();
@@ -28,7 +29,7 @@ export default function TeacherExamEvaluationsPage() {
     setErrorMessage(null);
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:8000/api/v1/evaluations/?exam_id=${examId}`, {
+      const res = await fetch(`${API_BASE_URL}/evaluations/?exam_id=${examId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -50,7 +51,7 @@ export default function TeacherExamEvaluationsPage() {
   const handleOpenDetail = async (evalItem: StudentEvaluation) => {
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:8000/api/v1/evaluations/${evalItem.id}/`, {
+      const res = await fetch(`${API_BASE_URL}/evaluations/${evalItem.id}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -82,7 +83,7 @@ export default function TeacherExamEvaluationsPage() {
     setPublishFeedback(null);
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:8000/api/v1/evaluations/exams/${examId}/publish/`, {
+      const res = await fetch(`${API_BASE_URL}/evaluations/exams/${examId}/publish/`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
