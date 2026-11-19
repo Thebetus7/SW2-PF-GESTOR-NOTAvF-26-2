@@ -71,6 +71,8 @@ void main() {
       expect(find.text('Auto QR'), findsOneWidget);
       expect(find.byType(Switch), findsOneWidget);
       expect(find.text('Páginas del Alumno: 0'), findsOneWidget);
+
+      await tester.pump(const Duration(milliseconds: 1500));
     });
   });
 }

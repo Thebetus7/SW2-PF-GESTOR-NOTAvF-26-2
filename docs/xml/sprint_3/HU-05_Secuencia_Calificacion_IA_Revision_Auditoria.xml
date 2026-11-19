@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2026-11-19 04:00:00">
+	<XMI.header>
+		<XMI.documentation>
+			<XMI.exporter>Enterprise Architect</XMI.exporter>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
+		</XMI.documentation>
+	</XMI.header>
+	<XMI.content>
+		<UML:Model name="EA Model" xmi.id="MX_EA_Model">
+			<UML:Namespace.ownedElement>
+				<UML:Package name="Sprint 3 - HU-05" xmi.id="EAPK_SP3_HU05" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
+					<UML:ModelElement.taggedValue>
+						<UML:TaggedValue tag="ea_package_id" value="EAPK_SP3_HU05"/>
+					</UML:ModelElement.taggedValue>
+					<UML:Namespace.ownedElement>
+						<UML:Collaboration xmi.id="COL_EAPK_SP3_HU05" name="Sprint 3 - HU-05 Colaboracion">
+							<UML:Namespace.ownedElement>
+								<UML:ClassifierRole name="docente : Docente" xmi.id="EA_LL_AI_1" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Actor"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":WebGradeReviewUI" xmi.id="EA_LL_AI_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Boundary"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":StudentEvaluationViewSet" xmi.id="EA_LL_AI_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":EvaluationPipeline" xmi.id="EA_LL_AI_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":PromptBuilder" xmi.id="EA_LL_AI_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":GeminiResilientClient" xmi.id="EA_LL_AI_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":GoogleGeminiAPI" xmi.id="EA_LL_AI_7" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Boundary"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":PostgreSQL" xmi.id="EA_LL_AI_8" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Entity"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+							</UML:Namespace.ownedElement>
+							<UML:Collaboration.interaction>
+								<UML:Interaction xmi.id="INT_EAPK_SP3_HU05" name="HU-05 Diagrama de Secuencia - Calificacion IA y Ajuste Docente">
+									<UML:Interaction.message>
+										<UML:Message name="1. process_evaluation(evaluation)" xmi.id="MSG_05_01" sender="EA_LL_AI_3" receiver="EA_LL_AI_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_01"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="1"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="2. transcribirEncabezadoYAsociarEstudiante()" xmi.id="MSG_05_02" sender="EA_LL_AI_4" receiver="EA_LL_AI_8">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_02"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="2"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="3. build_multimodal_prompt(component, jpg_page)" xmi.id="MSG_05_03" sender="EA_LL_AI_4" receiver="EA_LL_AI_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_03"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="3"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="4. generate_content(prompt, image_bytes)" xmi.id="MSG_05_04" sender="EA_LL_AI_5" receiver="EA_LL_AI_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_04"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="4"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="5. POST /v1beta/models/gemini-2.5-flash:generateContent" xmi.id="MSG_05_05" sender="EA_LL_AI_6" receiver="EA_LL_AI_7">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_05"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="5"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="6. [Alt Error 429/Timeout] Cascade Fallback -&gt; gemini-2.5-pro" xmi.id="MSG_05_06" sender="EA_LL_AI_6" receiver="EA_LL_AI_7">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_06"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="6"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="7. [Alt Ilegible / Fallo persistente] Status = REVISION_DOCENTE" xmi.id="MSG_05_07" sender="EA_LL_AI_6" receiver="EA_LL_AI_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_07"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="7"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="8. 200 OK JSON (puntuacion, transcripcion, feedback)" xmi.id="MSG_05_08" sender="EA_LL_AI_7" receiver="EA_LL_AI_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_08"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="8"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="9. sanitizarYCrearGradeDetail(ai_score, feedback)" xmi.id="MSG_05_09" sender="EA_LL_AI_6" receiver="EA_LL_AI_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_09"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="9"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="10. actualizarEvaluacion(ai_total_score, status=&apos;EN_REVISION&apos;)" xmi.id="MSG_05_10" sender="EA_LL_AI_4" receiver="EA_LL_AI_8">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_10"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="10"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="11. consultarRevisionCalificaciones(exam_id)" xmi.id="MSG_05_11" sender="EA_LL_AI_1" receiver="EA_LL_AI_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_11"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="11"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="12. GET /api/v1/evaluations/?exam_id={id}" xmi.id="MSG_05_12" sender="EA_LL_AI_2" receiver="EA_LL_AI_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_12"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="12"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="13. 200 OK (evaluaciones, notas desglosadas, fotos JPG)" xmi.id="MSG_05_13" sender="EA_LL_AI_8" receiver="EA_LL_AI_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_13"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="13"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="14. compararImagenOriginalConEvaluacionIA()" xmi.id="MSG_05_14" sender="EA_LL_AI_1" receiver="EA_LL_AI_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_14"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="14"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="15. ajustarNota(grade_id, final_score=18, obs=&apos;Paso correcto&apos;)" xmi.id="MSG_05_15" sender="EA_LL_AI_1" receiver="EA_LL_AI_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_15"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="15"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="16. PATCH /api/v1/evaluations/{id}/grades/{grade_id}/" xmi.id="MSG_05_16" sender="EA_LL_AI_2" receiver="EA_LL_AI_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_16"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="16"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="17. override_grade(final_score, teacher_comment)" xmi.id="MSG_05_17" sender="EA_LL_AI_3" receiver="EA_LL_AI_8">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_17"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="17"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="18. recalcularTotalYMarcarOverridden(is_score_overridden=True)" xmi.id="MSG_05_18" sender="EA_LL_AI_8" receiver="EA_LL_AI_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_18"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="18"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="19. 200 OK (Evaluacion con nota recalculada y observacion)" xmi.id="MSG_05_19" sender="EA_LL_AI_3" receiver="EA_LL_AI_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_19"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="19"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="20. visualizaAuditoriaActualizada()" xmi.id="MSG_05_20" sender="EA_LL_AI_2" receiver="EA_LL_AI_1">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_05_20"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="20"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+									</UML:Interaction.message>
+								</UML:Interaction>
+							</UML:Collaboration.interaction>
+						</UML:Collaboration>
+					</UML:Namespace.ownedElement>
+				</UML:Package>
+			</UML:Namespace.ownedElement>
+		</UML:Model>
+	</XMI.content>
+	<XMI.difference/>
+	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
+		<EAModel.diagram>
+			<Diagram name="HU-05 Diagrama de Secuencia - Calificacion IA y Ajuste Docente" xmi.id="EA_DIAG_SP3_HU05" diagram_type="Sequence" toolflags="NAVBAR=1;" version="1.0">
+				<project author="Ybanera Herrera Edberto" version="1.0" created="2026-11-19 04:00:00" modified="2026-11-19 04:00:00"/>
+				<properties name="HU-05 Diagrama de Secuencia - Calificacion IA y Ajuste Docente" type="Sequence"/>
+				<extended_properties package="EAPK_SP3_HU05"/>
+				<elements>
+					<DiagramElement geometry="Left=60;Top=50;Right=160;Bottom=780;" subject="EA_LL_AI_1" seqno="1" style="DUID=SEQ_01;"/>
+					<DiagramElement geometry="Left=220;Top=50;Right=350;Bottom=780;" subject="EA_LL_AI_2" seqno="2" style="DUID=SEQ_02;"/>
+					<DiagramElement geometry="Left=410;Top=50;Right=570;Bottom=780;" subject="EA_LL_AI_3" seqno="3" style="DUID=SEQ_03;"/>
+					<DiagramElement geometry="Left=630;Top=50;Right=760;Bottom=780;" subject="EA_LL_AI_4" seqno="4" style="DUID=SEQ_04;"/>
+					<DiagramElement geometry="Left=820;Top=50;Right=930;Bottom=780;" subject="EA_LL_AI_5" seqno="5" style="DUID=SEQ_05;"/>
+					<DiagramElement geometry="Left=990;Top=50;Right=1130;Bottom=780;" subject="EA_LL_AI_6" seqno="6" style="DUID=SEQ_06;"/>
+					<DiagramElement geometry="Left=1190;Top=50;Right=1310;Bottom=780;" subject="EA_LL_AI_7" seqno="7" style="DUID=SEQ_07;"/>
+					<DiagramElement geometry="Left=1370;Top=50;Right=1470;Bottom=780;" subject="EA_LL_AI_8" seqno="8" style="DUID=SEQ_08;"/>
+				</elements>
+			</Diagram>
+		</EAModel.diagram>
+		<EAModel.element>
+			<Element name="docente : Docente" xmi.idref="EA_LL_AI_1" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+			<Element name=":WebGradeReviewUI" xmi.idref="EA_LL_AI_2" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+			<Element name=":StudentEvaluationViewSet" xmi.idref="EA_LL_AI_3" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+			<Element name=":EvaluationPipeline" xmi.idref="EA_LL_AI_4" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+			<Element name=":PromptBuilder" xmi.idref="EA_LL_AI_5" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+			<Element name=":GeminiResilientClient" xmi.idref="EA_LL_AI_6" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+			<Element name=":GoogleGeminiAPI" xmi.idref="EA_LL_AI_7" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+			<Element name=":PostgreSQL" xmi.idref="EA_LL_AI_8" ea_type="Sequence" package="EAPK_SP3_HU05"/>
+		</EAModel.element>
+	</XMI.extensions>
+</XMI>

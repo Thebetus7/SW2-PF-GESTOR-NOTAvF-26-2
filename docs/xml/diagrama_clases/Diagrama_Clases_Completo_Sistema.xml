@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2026-11-19 04:00:00">
+	<XMI.header>
+		<XMI.documentation>
+			<XMI.exporter>Enterprise Architect</XMI.exporter>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
+		</XMI.documentation>
+	</XMI.header>
+	<XMI.content>
+		<UML:Model name="EA Model" xmi.id="MX_EA_Model">
+			<UML:Namespace.ownedElement>
+				<UML:Package name="Sistema Completo - Modelo de Clases Integral" xmi.id="EAPK_GLOBAL_CLASS" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
+					<UML:ModelElement.taggedValue>
+						<UML:TaggedValue tag="ea_package_id" value="EAPK_GLOBAL_CLASS"/>
+					</UML:ModelElement.taggedValue>
+					<UML:Namespace.ownedElement>
+						<UML:Class name="User" xmi.id="EA_GCLS_USER" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_USER_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="email : String" xmi.id="ATTR_EA_GCLS_USER_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="role : UserRole" xmi.id="ATTR_EA_GCLS_USER_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UserRole"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="student_id_code : String" xmi.id="ATTR_EA_GCLS_USER_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="full_name() : String" xmi.id="OPER_EA_GCLS_USER_1" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="UserRole" xmi.id="EA_GCLS_USER_ROLE" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							<UML:ModelElement.stereotype><UML:Stereotype name="enumeration"/></UML:ModelElement.stereotype>
+							<UML:Classifier.feature>
+								<UML:Attribute name="ADMIN : String" xmi.id="ATTR_EA_GCLS_USER_ROLE_1" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="TEACHER : String" xmi.id="ATTR_EA_GCLS_USER_ROLE_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="STUDENT : String" xmi.id="ATTR_EA_GCLS_USER_ROLE_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="Subject" xmi.id="EA_GCLS_SUBJECT" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_SUBJECT_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="code : String" xmi.id="ATTR_EA_GCLS_SUBJECT_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="name : String" xmi.id="ATTR_EA_GCLS_SUBJECT_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="ClassroomParallel" xmi.id="EA_GCLS_PARALLEL" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_PARALLEL_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="group_code : String" xmi.id="ATTR_EA_GCLS_PARALLEL_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="period : String" xmi.id="ATTR_EA_GCLS_PARALLEL_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="Student" xmi.id="EA_GCLS_STUDENT" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_STUDENT_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="student_id_code : String" xmi.id="ATTR_EA_GCLS_STUDENT_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="full_name : String" xmi.id="ATTR_EA_GCLS_STUDENT_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="StudentEnrollment" xmi.id="EA_GCLS_ENROLLMENT" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_ENROLLMENT_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="enrolled_at : DateTime" xmi.id="ATTR_EA_GCLS_ENROLLMENT_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="Exam" xmi.id="EA_GCLS_EXAM" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_EXAM_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="title : String" xmi.id="ATTR_EA_GCLS_EXAM_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="total_score : Decimal" xmi.id="ATTR_EA_GCLS_EXAM_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="has_qr_code : Boolean" xmi.id="ATTR_EA_GCLS_EXAM_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="current_components_score_sum() : Decimal" xmi.id="OPER_EA_GCLS_EXAM_1" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="ExamComponent" xmi.id="EA_GCLS_EXAM_COMP" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_EXAM_COMP_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="type : ComponentType" xmi.id="ATTR_EA_GCLS_EXAM_COMP_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="ComponentType"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="prompt : String" xmi.id="ATTR_EA_GCLS_EXAM_COMP_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="max_score : Decimal" xmi.id="ATTR_EA_GCLS_EXAM_COMP_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="order : Integer" xmi.id="ATTR_EA_GCLS_EXAM_COMP_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Integer"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="StudentEvaluation" xmi.id="EA_GCLS_EVAL" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_EVAL_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="status : EvaluationStatus" xmi.id="ATTR_EA_GCLS_EVAL_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="EvaluationStatus"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="ai_total_score : Decimal" xmi.id="ATTR_EA_GCLS_EVAL_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="final_score : Decimal" xmi.id="ATTR_EA_GCLS_EVAL_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="is_published : Boolean" xmi.id="ATTR_EA_GCLS_EVAL_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="EvaluationPage" xmi.id="EA_GCLS_EVAL_PAGE" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_EVAL_PAGE_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="page_number : Integer" xmi.id="ATTR_EA_GCLS_EVAL_PAGE_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Integer"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="image : ImageField" xmi.id="ATTR_EA_GCLS_EVAL_PAGE_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="ImageField"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="qr_data : String" xmi.id="ATTR_EA_GCLS_EVAL_PAGE_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="GradeDetail" xmi.id="EA_GCLS_GRADE_DETAIL" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_GCLS_GRADE_DETAIL_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="ai_score : Decimal" xmi.id="ATTR_EA_GCLS_GRADE_DETAIL_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="final_score : Decimal" xmi.id="ATTR_EA_GCLS_GRADE_DETAIL_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="is_overridden : Boolean" xmi.id="ATTR_EA_GCLS_GRADE_DETAIL_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="teacher_comment : String" xmi.id="ATTR_EA_GCLS_GRADE_DETAIL_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="EvaluationPipeline" xmi.id="EA_GCLS_PIPE" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Operation name="process_evaluation(eval) : StudentEvaluation" xmi.id="OPER_EA_GCLS_PIPE_1" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="GeminiResilientClient" xmi.id="EA_GCLS_GEMINI" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="primary_model : String" xmi.id="ATTR_EA_GCLS_GEMINI_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="generate_content(prompt, img) : Dict" xmi.id="OPER_EA_GCLS_GEMINI_1" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Association name="Dicta" xmi.id="EA_GASC_1">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="teacher" type="EA_GCLS_USER" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="subjects" type="EA_GCLS_SUBJECT" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="DivideEn" xmi.id="EA_GASC_2">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="subject" type="EA_GCLS_SUBJECT" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="parallels" type="EA_GCLS_PARALLEL" multiplicity="1..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Matriculados" xmi.id="EA_GASC_3">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="parallel" type="EA_GCLS_PARALLEL" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="enrollments" type="EA_GCLS_ENROLLMENT" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Inscrito" xmi.id="EA_GASC_4">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="student" type="EA_GCLS_STUDENT" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="enrollments" type="EA_GCLS_ENROLLMENT" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Aplica" xmi.id="EA_GASC_5">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="parallel" type="EA_GCLS_PARALLEL" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="exams" type="EA_GCLS_EXAM" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="EstructuradoEn" xmi.id="EA_GASC_6">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="exam" type="EA_GCLS_EXAM" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="components" type="EA_GCLS_EXAM_COMP" multiplicity="1..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Genera" xmi.id="EA_GASC_7">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="exam" type="EA_GCLS_EXAM" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="evaluations" type="EA_GCLS_EVAL" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="HojasEscaneadas" xmi.id="EA_GASC_8">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="evaluation" type="EA_GCLS_EVAL" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="pages" type="EA_GCLS_EVAL_PAGE" multiplicity="1..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Calificaciones" xmi.id="EA_GASC_9">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="evaluation" type="EA_GCLS_EVAL" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="grades" type="EA_GCLS_GRADE_DETAIL" multiplicity="1..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="RespondeA" xmi.id="EA_GASC_10">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="grade" type="EA_GCLS_GRADE_DETAIL" multiplicity="0..*" isNavigable="true"/>
+								<UML:AssociationEnd name="component" type="EA_GCLS_EXAM_COMP" multiplicity="1" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+					</UML:Namespace.ownedElement>
+				</UML:Package>
+			</UML:Namespace.ownedElement>
+		</UML:Model>
+	</XMI.content>
+	<XMI.difference/>
+	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
+		<EAModel.diagram>
+			<Diagram name="Diagrama de Clases Completo del Sistema Gestor de Notas" xmi.id="EA_DIAG_GLOBAL_CLASS" diagram_type="Logical" toolflags="NAVBAR=1;" version="1.0">
+				<project author="Ybanera Herrera Edberto" version="1.0" created="2026-11-19 04:00:00" modified="2026-11-19 04:00:00"/>
+				<properties name="Diagrama de Clases Completo del Sistema Gestor de Notas" type="Logical"/>
+				<extended_properties package="EAPK_GLOBAL_CLASS"/>
+				<elements>
+					<DiagramElement geometry="Left=50;Top=50;Right=240;Bottom=200;" subject="EA_GCLS_USER" seqno="1" style="DUID=CLS_01;"/>
+					<DiagramElement geometry="Left=50;Top=240;Right=200;Bottom=340;" subject="EA_GCLS_USER_ROLE" seqno="2" style="DUID=CLS_02;"/>
+					<DiagramElement geometry="Left=300;Top=50;Right=480;Bottom=180;" subject="EA_GCLS_SUBJECT" seqno="3" style="DUID=CLS_03;"/>
+					<DiagramElement geometry="Left=540;Top=50;Right=740;Bottom=180;" subject="EA_GCLS_PARALLEL" seqno="4" style="DUID=CLS_04;"/>
+					<DiagramElement geometry="Left=300;Top=230;Right=480;Bottom=350;" subject="EA_GCLS_STUDENT" seqno="5" style="DUID=CLS_05;"/>
+					<DiagramElement geometry="Left=540;Top=230;Right=740;Bottom=330;" subject="EA_GCLS_ENROLLMENT" seqno="6" style="DUID=CLS_06;"/>
+					<DiagramElement geometry="Left=800;Top=50;Right=1020;Bottom=200;" subject="EA_GCLS_EXAM" seqno="7" style="DUID=CLS_07;"/>
+					<DiagramElement geometry="Left=1080;Top=50;Right=1300;Bottom=210;" subject="EA_GCLS_EXAM_COMP" seqno="8" style="DUID=CLS_08;"/>
+					<DiagramElement geometry="Left=800;Top=260;Right=1040;Bottom=420;" subject="EA_GCLS_EVAL" seqno="9" style="DUID=CLS_09;"/>
+					<DiagramElement geometry="Left=1100;Top=260;Right=1300;Bottom=390;" subject="EA_GCLS_EVAL_PAGE" seqno="10" style="DUID=CLS_10;"/>
+					<DiagramElement geometry="Left=800;Top=470;Right=1040;Bottom=620;" subject="EA_GCLS_GRADE_DETAIL" seqno="11" style="DUID=CLS_11;"/>
+					<DiagramElement geometry="Left=1100;Top=470;Right=1320;Bottom=580;" subject="EA_GCLS_PIPE" seqno="12" style="DUID=CLS_12;"/>
+					<DiagramElement geometry="Left=1100;Top=620;Right=1340;Bottom=730;" subject="EA_GCLS_GEMINI" seqno="13" style="DUID=CLS_13;"/>
+				</elements>
+			</Diagram>
+		</EAModel.diagram>
+		<EAModel.element>
+			<Element name="User" xmi.idref="EA_GCLS_USER" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="UserRole" xmi.idref="EA_GCLS_USER_ROLE" ea_type="Enumeration" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="Subject" xmi.idref="EA_GCLS_SUBJECT" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="ClassroomParallel" xmi.idref="EA_GCLS_PARALLEL" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="Student" xmi.idref="EA_GCLS_STUDENT" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="StudentEnrollment" xmi.idref="EA_GCLS_ENROLLMENT" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="Exam" xmi.idref="EA_GCLS_EXAM" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="ExamComponent" xmi.idref="EA_GCLS_EXAM_COMP" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="StudentEvaluation" xmi.idref="EA_GCLS_EVAL" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="EvaluationPage" xmi.idref="EA_GCLS_EVAL_PAGE" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="GradeDetail" xmi.idref="EA_GCLS_GRADE_DETAIL" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="EvaluationPipeline" xmi.idref="EA_GCLS_PIPE" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+			<Element name="GeminiResilientClient" xmi.idref="EA_GCLS_GEMINI" ea_type="Class" package="EAPK_GLOBAL_CLASS"/>
+		</EAModel.element>
+	</XMI.extensions>
+</XMI>

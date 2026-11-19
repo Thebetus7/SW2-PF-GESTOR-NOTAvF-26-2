@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2026-11-19 04:00:00">
+	<XMI.header>
+		<XMI.documentation>
+			<XMI.exporter>Enterprise Architect</XMI.exporter>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
+		</XMI.documentation>
+	</XMI.header>
+	<XMI.content>
+		<UML:Model name="EA Model" xmi.id="MX_EA_Model">
+			<UML:Namespace.ownedElement>
+				<UML:Package name="Sprint 1 - HU-02" xmi.id="EAPK_SP1_HU02" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
+					<UML:ModelElement.taggedValue>
+						<UML:TaggedValue tag="ea_package_id" value="EAPK_SP1_HU02"/>
+					</UML:ModelElement.taggedValue>
+					<UML:Namespace.ownedElement>
+						<UML:Collaboration xmi.id="COL_EAPK_SP1_HU02" name="Sprint 1 - HU-02 Colaboracion">
+							<UML:Namespace.ownedElement>
+								<UML:ClassifierRole name="docente : Docente" xmi.id="EA_LL_DOC_1" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Actor"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":WebTeacherUI" xmi.id="EA_LL_DOC_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Boundary"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":SubjectViewSet" xmi.id="EA_LL_DOC_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":ClassroomParallelViewSet" xmi.id="EA_LL_DOC_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":StudentDetailView" xmi.id="EA_LL_DOC_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":PostgreSQL" xmi.id="EA_LL_DOC_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Entity"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+							</UML:Namespace.ownedElement>
+							<UML:Collaboration.interaction>
+								<UML:Interaction xmi.id="INT_EAPK_SP1_HU02" name="HU-02 Diagrama de Secuencia - Gestion Materias Paralelos y Ficha">
+									<UML:Interaction.message>
+										<UML:Message name="1. ingresarGestionCursos()" xmi.id="MSG_02_01" sender="EA_LL_DOC_1" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_01"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="1"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="2. GET /api/v1/academics/subjects/" xmi.id="MSG_02_02" sender="EA_LL_DOC_2" receiver="EA_LL_DOC_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_02"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="2"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="3. filter(teacher=request.user)" xmi.id="MSG_02_03" sender="EA_LL_DOC_3" receiver="EA_LL_DOC_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_03"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="3"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="4. 200 OK (Materias asignadas)" xmi.id="MSG_02_04" sender="EA_LL_DOC_6" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_04"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="4"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="5. crearMateria(codigo, nombre, descripcion)" xmi.id="MSG_02_05" sender="EA_LL_DOC_1" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_05"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="5"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="6. POST /api/v1/academics/subjects/" xmi.id="MSG_02_06" sender="EA_LL_DOC_2" receiver="EA_LL_DOC_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_06"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="6"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="7. save(teacher=request.user)" xmi.id="MSG_02_07" sender="EA_LL_DOC_3" receiver="EA_LL_DOC_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_07"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="7"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="8. 201 Created" xmi.id="MSG_02_08" sender="EA_LL_DOC_6" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_08"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="8"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="9. crearParalelo(subject_id, aula=&apos;Aula A&apos;, periodo=&apos;1-2026&apos;)" xmi.id="MSG_02_09" sender="EA_LL_DOC_1" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_09"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="9"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="10. POST /api/v1/academics/parallels/" xmi.id="MSG_02_10" sender="EA_LL_DOC_2" receiver="EA_LL_DOC_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_10"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="10"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="11. validarUnicidadYGuardar()" xmi.id="MSG_02_11" sender="EA_LL_DOC_4" receiver="EA_LL_DOC_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_11"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="11"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="12. 201 Created (Paralelo creado)" xmi.id="MSG_02_12" sender="EA_LL_DOC_6" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_12"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="12"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="13. seleccionarEstudianteDeParalelo(student_id)" xmi.id="MSG_02_13" sender="EA_LL_DOC_1" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_13"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="13"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="14. GET /api/v1/academics/students/{student_id}/" xmi.id="MSG_02_14" sender="EA_LL_DOC_2" receiver="EA_LL_DOC_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_14"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="14"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="15. verificarPermisoDocente(paralelosDocente)" xmi.id="MSG_02_15" sender="EA_LL_DOC_5" receiver="EA_LL_DOC_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_15"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="15"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="16. consultarMatriculaHistorialYPromedio()" xmi.id="MSG_02_16" sender="EA_LL_DOC_5" receiver="EA_LL_DOC_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_16"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="16"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="17. 200 OK (Ficha académica)" xmi.id="MSG_02_17" sender="EA_LL_DOC_6" receiver="EA_LL_DOC_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_17"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="17"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="18. renderizarFicha(matricula, nombre, examenes, notas, promedio)" xmi.id="MSG_02_18" sender="EA_LL_DOC_5" receiver="EA_LL_DOC_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_18"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="18"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="19. visualizaFichaEstudiante()" xmi.id="MSG_02_19" sender="EA_LL_DOC_2" receiver="EA_LL_DOC_1">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_02_19"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="19"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+									</UML:Interaction.message>
+								</UML:Interaction>
+							</UML:Collaboration.interaction>
+						</UML:Collaboration>
+					</UML:Namespace.ownedElement>
+				</UML:Package>
+			</UML:Namespace.ownedElement>
+		</UML:Model>
+	</XMI.content>
+	<XMI.difference/>
+	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
+		<EAModel.diagram>
+			<Diagram name="HU-02 Diagrama de Secuencia - Gestion Materias Paralelos y Ficha" xmi.id="EA_DIAG_SP1_HU02" diagram_type="Sequence" toolflags="NAVBAR=1;" version="1.0">
+				<project author="Ybanera Herrera Edberto" version="1.0" created="2026-11-19 04:00:00" modified="2026-11-19 04:00:00"/>
+				<properties name="HU-02 Diagrama de Secuencia - Gestion Materias Paralelos y Ficha" type="Sequence"/>
+				<extended_properties package="EAPK_SP1_HU02"/>
+				<elements>
+					<DiagramElement geometry="Left=60;Top=50;Right=160;Bottom=780;" subject="EA_LL_DOC_1" seqno="1" style="DUID=SEQ_01;"/>
+					<DiagramElement geometry="Left=220;Top=50;Right=330;Bottom=780;" subject="EA_LL_DOC_2" seqno="2" style="DUID=SEQ_02;"/>
+					<DiagramElement geometry="Left=390;Top=50;Right=510;Bottom=780;" subject="EA_LL_DOC_3" seqno="3" style="DUID=SEQ_03;"/>
+					<DiagramElement geometry="Left=570;Top=50;Right=720;Bottom=780;" subject="EA_LL_DOC_4" seqno="4" style="DUID=SEQ_04;"/>
+					<DiagramElement geometry="Left=780;Top=50;Right=920;Bottom=780;" subject="EA_LL_DOC_5" seqno="5" style="DUID=SEQ_05;"/>
+					<DiagramElement geometry="Left=980;Top=50;Right=1090;Bottom=780;" subject="EA_LL_DOC_6" seqno="6" style="DUID=SEQ_06;"/>
+				</elements>
+			</Diagram>
+		</EAModel.diagram>
+		<EAModel.element>
+			<Element name="docente : Docente" xmi.idref="EA_LL_DOC_1" ea_type="Sequence" package="EAPK_SP1_HU02"/>
+			<Element name=":WebTeacherUI" xmi.idref="EA_LL_DOC_2" ea_type="Sequence" package="EAPK_SP1_HU02"/>
+			<Element name=":SubjectViewSet" xmi.idref="EA_LL_DOC_3" ea_type="Sequence" package="EAPK_SP1_HU02"/>
+			<Element name=":ClassroomParallelViewSet" xmi.idref="EA_LL_DOC_4" ea_type="Sequence" package="EAPK_SP1_HU02"/>
+			<Element name=":StudentDetailView" xmi.idref="EA_LL_DOC_5" ea_type="Sequence" package="EAPK_SP1_HU02"/>
+			<Element name=":PostgreSQL" xmi.idref="EA_LL_DOC_6" ea_type="Sequence" package="EAPK_SP1_HU02"/>
+		</EAModel.element>
+	</XMI.extensions>
+</XMI>

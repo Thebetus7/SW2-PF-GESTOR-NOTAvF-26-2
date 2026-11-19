@@ -72,7 +72,7 @@ class CafeBlendTheme {
           color: textSecondaryLight,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: surfaceLight,
         elevation: 2,
         shadowColor: primary.withOpacity(0.08),

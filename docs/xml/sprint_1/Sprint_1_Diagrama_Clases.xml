@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2026-11-19 04:00:00">
+	<XMI.header>
+		<XMI.documentation>
+			<XMI.exporter>Enterprise Architect</XMI.exporter>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
+		</XMI.documentation>
+	</XMI.header>
+	<XMI.content>
+		<UML:Model name="EA Model" xmi.id="MX_EA_Model">
+			<UML:Namespace.ownedElement>
+				<UML:Package name="Sprint 1 - Modelo de Dominio" xmi.id="EAPK_SP1_CLASS" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
+					<UML:ModelElement.taggedValue>
+						<UML:TaggedValue tag="ea_package_id" value="EAPK_SP1_CLASS"/>
+					</UML:ModelElement.taggedValue>
+					<UML:Namespace.ownedElement>
+						<UML:Class name="User" xmi.id="EA_CLS_USER" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_USER_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="email : String" xmi.id="ATTR_EA_CLS_USER_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="first_name : String" xmi.id="ATTR_EA_CLS_USER_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="last_name : String" xmi.id="ATTR_EA_CLS_USER_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="role : UserRole" xmi.id="ATTR_EA_CLS_USER_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UserRole"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="student_id_code : String" xmi.id="ATTR_EA_CLS_USER_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="is_active : Boolean" xmi.id="ATTR_EA_CLS_USER_7" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="is_staff : Boolean" xmi.id="ATTR_EA_CLS_USER_8" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="date_joined : DateTime" xmi.id="ATTR_EA_CLS_USER_9" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="create_user(email, password, role) : User" xmi.id="OPER_EA_CLS_USER_1" visibility="public"/>
+								<UML:Operation name="create_superuser(email, password) : User" xmi.id="OPER_EA_CLS_USER_2" visibility="public"/>
+								<UML:Operation name="full_name() : String" xmi.id="OPER_EA_CLS_USER_3" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="UserRole" xmi.id="EA_CLS_USER_ROLE" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							<UML:ModelElement.stereotype><UML:Stereotype name="enumeration"/></UML:ModelElement.stereotype>
+							<UML:Classifier.feature>
+								<UML:Attribute name="ADMIN : String" xmi.id="ATTR_EA_CLS_USER_ROLE_1" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="TEACHER : String" xmi.id="ATTR_EA_CLS_USER_ROLE_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="STUDENT : String" xmi.id="ATTR_EA_CLS_USER_ROLE_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="Subject" xmi.id="EA_CLS_SUBJECT" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_SUBJECT_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="code : String" xmi.id="ATTR_EA_CLS_SUBJECT_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="name : String" xmi.id="ATTR_EA_CLS_SUBJECT_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="description : String" xmi.id="ATTR_EA_CLS_SUBJECT_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="created_at : DateTime" xmi.id="ATTR_EA_CLS_SUBJECT_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="updated_at : DateTime" xmi.id="ATTR_EA_CLS_SUBJECT_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="ClassroomParallel" xmi.id="EA_CLS_PARALLEL" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_PARALLEL_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="group_code : String" xmi.id="ATTR_EA_CLS_PARALLEL_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="period : String" xmi.id="ATTR_EA_CLS_PARALLEL_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="created_at : DateTime" xmi.id="ATTR_EA_CLS_PARALLEL_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="Student" xmi.id="EA_CLS_STUDENT" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_STUDENT_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="student_id_code : String" xmi.id="ATTR_EA_CLS_STUDENT_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="full_name : String" xmi.id="ATTR_EA_CLS_STUDENT_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="email : String" xmi.id="ATTR_EA_CLS_STUDENT_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="created_at : DateTime" xmi.id="ATTR_EA_CLS_STUDENT_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="StudentEnrollment" xmi.id="EA_CLS_ENROLLMENT" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_ENROLLMENT_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="enrolled_at : DateTime" xmi.id="ATTR_EA_CLS_ENROLLMENT_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="TeacherManagementViewSet" xmi.id="EA_CLS_TEACHER_VS" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="serializer_class : Serializer" xmi.id="ATTR_EA_CLS_TEACHER_VS_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Serializer"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="permission_classes : List" xmi.id="ATTR_EA_CLS_TEACHER_VS_2" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="List"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="get_queryset() : QuerySet" xmi.id="OPER_EA_CLS_TEACHER_VS_1" visibility="public"/>
+								<UML:Operation name="create(request) : Response" xmi.id="OPER_EA_CLS_TEACHER_VS_2" visibility="public"/>
+								<UML:Operation name="list(request) : Response" xmi.id="OPER_EA_CLS_TEACHER_VS_3" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="SubjectViewSet" xmi.id="EA_CLS_SUBJECT_VS" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="serializer_class : Serializer" xmi.id="ATTR_EA_CLS_SUBJECT_VS_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Serializer"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="get_queryset() : QuerySet" xmi.id="OPER_EA_CLS_SUBJECT_VS_1" visibility="public"/>
+								<UML:Operation name="perform_create(serializer) : void" xmi.id="OPER_EA_CLS_SUBJECT_VS_2" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="ClassroomParallelViewSet" xmi.id="EA_CLS_PARALLEL_VS" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="serializer_class : Serializer" xmi.id="ATTR_EA_CLS_PARALLEL_VS_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Serializer"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="get_queryset() : QuerySet" xmi.id="OPER_EA_CLS_PARALLEL_VS_1" visibility="public"/>
+								<UML:Operation name="import_students(request, pk) : Response" xmi.id="OPER_EA_CLS_PARALLEL_VS_2" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="StudentDetailView" xmi.id="EA_CLS_STUDENT_DV" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="permission_classes : List" xmi.id="ATTR_EA_CLS_STUDENT_DV_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="List"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="get(request, student_id) : Response" xmi.id="OPER_EA_CLS_STUDENT_DV_1" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="ExcelStudentImporter" xmi.id="EA_CLS_EXCEL_IMP" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Operation name="import_from_file(file, parallel) : Dict" xmi.id="OPER_EA_CLS_EXCEL_IMP_1" visibility="public"/>
+								<UML:Operation name="validate_headers(sheet) : Boolean" xmi.id="OPER_EA_CLS_EXCEL_IMP_2" visibility="private"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Association name="Asignado" xmi.id="EA_ASC_USR_SUB">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="teacher" type="EA_CLS_USER" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="subjects" type="EA_CLS_SUBJECT" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Contiene" xmi.id="EA_ASC_SUB_PAR">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="subject" type="EA_CLS_SUBJECT" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="parallels" type="EA_CLS_PARALLEL" multiplicity="1..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Registra" xmi.id="EA_ASC_PAR_ENR">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="parallel" type="EA_CLS_PARALLEL" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="enrollments" type="EA_CLS_ENROLLMENT" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Participa" xmi.id="EA_ASC_STU_ENR">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="student" type="EA_CLS_STUDENT" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="enrollments" type="EA_CLS_ENROLLMENT" multiplicity="0..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Perfil" xmi.id="EA_ASC_USR_STU">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="user" type="EA_CLS_USER" multiplicity="0..1" isNavigable="true"/>
+								<UML:AssociationEnd name="student_profile" type="EA_CLS_STUDENT" multiplicity="0..1" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+					</UML:Namespace.ownedElement>
+				</UML:Package>
+			</UML:Namespace.ownedElement>
+		</UML:Model>
+	</XMI.content>
+	<XMI.difference/>
+	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
+		<EAModel.diagram>
+			<Diagram name="Sprint 1 - Diagrama de Clases Academico y Cuentas" xmi.id="EA_DIAG_SP1_CLASS" diagram_type="Logical" toolflags="NAVBAR=1;" version="1.0">
+				<project author="Ybanera Herrera Edberto" version="1.0" created="2026-11-19 04:00:00" modified="2026-11-19 04:00:00"/>
+				<properties name="Sprint 1 - Diagrama de Clases Academico y Cuentas" type="Logical"/>
+				<extended_properties package="EAPK_SP1_CLASS"/>
+				<elements>
+					<DiagramElement geometry="Left=50;Top=50;Right=280;Bottom=260;" subject="EA_CLS_USER" seqno="1" style="DUID=CLS_01;"/>
+					<DiagramElement geometry="Left=50;Top=310;Right=220;Bottom=420;" subject="EA_CLS_USER_ROLE" seqno="2" style="DUID=CLS_02;"/>
+					<DiagramElement geometry="Left=360;Top=50;Right=580;Bottom=220;" subject="EA_CLS_SUBJECT" seqno="3" style="DUID=CLS_03;"/>
+					<DiagramElement geometry="Left=660;Top=50;Right=880;Bottom=210;" subject="EA_CLS_PARALLEL" seqno="4" style="DUID=CLS_04;"/>
+					<DiagramElement geometry="Left=360;Top=280;Right=580;Bottom=420;" subject="EA_CLS_STUDENT" seqno="5" style="DUID=CLS_05;"/>
+					<DiagramElement geometry="Left=660;Top=280;Right=880;Bottom=390;" subject="EA_CLS_ENROLLMENT" seqno="6" style="DUID=CLS_06;"/>
+					<DiagramElement geometry="Left=50;Top=470;Right=290;Bottom=610;" subject="EA_CLS_TEACHER_VS" seqno="7" style="DUID=CLS_07;"/>
+					<DiagramElement geometry="Left=360;Top=470;Right=580;Bottom=600;" subject="EA_CLS_SUBJECT_VS" seqno="8" style="DUID=CLS_08;"/>
+					<DiagramElement geometry="Left=660;Top=470;Right=890;Bottom=610;" subject="EA_CLS_PARALLEL_VS" seqno="9" style="DUID=CLS_09;"/>
+					<DiagramElement geometry="Left=950;Top=280;Right=1180;Bottom=390;" subject="EA_CLS_STUDENT_DV" seqno="10" style="DUID=CLS_10;"/>
+					<DiagramElement geometry="Left=950;Top=470;Right=1200;Bottom=590;" subject="EA_CLS_EXCEL_IMP" seqno="11" style="DUID=CLS_11;"/>
+				</elements>
+			</Diagram>
+		</EAModel.diagram>
+		<EAModel.element>
+			<Element name="User" xmi.idref="EA_CLS_USER" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="UserRole" xmi.idref="EA_CLS_USER_ROLE" ea_type="Enumeration" package="EAPK_SP1_CLASS"/>
+			<Element name="Subject" xmi.idref="EA_CLS_SUBJECT" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="ClassroomParallel" xmi.idref="EA_CLS_PARALLEL" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="Student" xmi.idref="EA_CLS_STUDENT" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="StudentEnrollment" xmi.idref="EA_CLS_ENROLLMENT" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="TeacherManagementViewSet" xmi.idref="EA_CLS_TEACHER_VS" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="SubjectViewSet" xmi.idref="EA_CLS_SUBJECT_VS" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="ClassroomParallelViewSet" xmi.idref="EA_CLS_PARALLEL_VS" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="StudentDetailView" xmi.idref="EA_CLS_STUDENT_DV" ea_type="Class" package="EAPK_SP1_CLASS"/>
+			<Element name="ExcelStudentImporter" xmi.idref="EA_CLS_EXCEL_IMP" ea_type="Class" package="EAPK_SP1_CLASS"/>
+		</EAModel.element>
+	</XMI.extensions>
+</XMI>

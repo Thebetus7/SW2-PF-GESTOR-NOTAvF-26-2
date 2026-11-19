@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2026-11-19 04:00:00">
+	<XMI.header>
+		<XMI.documentation>
+			<XMI.exporter>Enterprise Architect</XMI.exporter>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
+		</XMI.documentation>
+	</XMI.header>
+	<XMI.content>
+		<UML:Model name="EA Model" xmi.id="MX_EA_Model">
+			<UML:Namespace.ownedElement>
+				<UML:Package name="Sprint 3 - HU-06" xmi.id="EAPK_SP3_HU06" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
+					<UML:ModelElement.taggedValue>
+						<UML:TaggedValue tag="ea_package_id" value="EAPK_SP3_HU06"/>
+					</UML:ModelElement.taggedValue>
+					<UML:Namespace.ownedElement>
+						<UML:Collaboration xmi.id="COL_EAPK_SP3_HU06" name="Sprint 3 - HU-06 Colaboracion">
+							<UML:Namespace.ownedElement>
+								<UML:ClassifierRole name="docente : Docente" xmi.id="EA_LL_PUB_1" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Actor"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name="estudiante : Estudiante" xmi.id="EA_LL_PUB_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Actor"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":WebTeacherUI" xmi.id="EA_LL_PUB_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Boundary"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":WebStudentPortalUI" xmi.id="EA_LL_PUB_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Boundary"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":StudentEvaluationViewSet" xmi.id="EA_LL_PUB_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":StudentIdLoginView" xmi.id="EA_LL_PUB_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":PostgreSQL" xmi.id="EA_LL_PUB_7" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Entity"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+							</UML:Namespace.ownedElement>
+							<UML:Collaboration.interaction>
+								<UML:Interaction xmi.id="INT_EAPK_SP3_HU06" name="HU-06 Diagrama de Secuencia - Publicacion y Consulta Estudiante">
+									<UML:Interaction.message>
+										<UML:Message name="1. solicitarPublicacionNotas(exam_id)" xmi.id="MSG_06_01" sender="EA_LL_PUB_1" receiver="EA_LL_PUB_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_01"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="1"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="2. POST /api/v1/evaluations/exams/{id}/publish/" xmi.id="MSG_06_02" sender="EA_LL_PUB_3" receiver="EA_LL_PUB_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_02"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="2"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="3. verificarPermisoTitularMateria()" xmi.id="MSG_06_03" sender="EA_LL_PUB_5" receiver="EA_LL_PUB_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_03"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="3"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="4. update(is_published=True, status=PUBLICADO, published_at=now)" xmi.id="MSG_06_04" sender="EA_LL_PUB_5" receiver="EA_LL_PUB_7">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_04"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="4"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="5. 200 OK (N notas publicadas)" xmi.id="MSG_06_05" sender="EA_LL_PUB_7" receiver="EA_LL_PUB_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_05"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="5"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="6. ingresarAlPortalEstudiantil(student_id_code)" xmi.id="MSG_06_06" sender="EA_LL_PUB_2" receiver="EA_LL_PUB_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_06"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="6"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="7. POST /api/v1/auth/login/student-id/ { student_id_code }" xmi.id="MSG_06_07" sender="EA_LL_PUB_4" receiver="EA_LL_PUB_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_07"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="7"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="8. autenticarMatriculaEstudiante()" xmi.id="MSG_06_08" sender="EA_LL_PUB_6" receiver="EA_LL_PUB_7">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_08"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="8"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="9. 200 OK (JWT Token para rol STUDENT)" xmi.id="MSG_06_09" sender="EA_LL_PUB_6" receiver="EA_LL_PUB_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_09"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="9"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="10. GET /api/v1/evaluations/ (con Bearer Token)" xmi.id="MSG_06_10" sender="EA_LL_PUB_4" receiver="EA_LL_PUB_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_10"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="10"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="11. filter(student=request.user.student_profile, is_published=True)" xmi.id="MSG_06_11" sender="EA_LL_PUB_5" receiver="EA_LL_PUB_7">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_11"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="11"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="12. 200 OK (Evaluaciones del estudiante)" xmi.id="MSG_06_12" sender="EA_LL_PUB_7" receiver="EA_LL_PUB_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_12"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="12"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="13. renderizarDesgloseYFotos(notaFinal, preguntas, feedback, JPGs)" xmi.id="MSG_06_13" sender="EA_LL_PUB_5" receiver="EA_LL_PUB_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_13"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="13"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="14. consultaResultadosYRetroalimentacion()" xmi.id="MSG_06_14" sender="EA_LL_PUB_4" receiver="EA_LL_PUB_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_06_14"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="14"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+									</UML:Interaction.message>
+								</UML:Interaction>
+							</UML:Collaboration.interaction>
+						</UML:Collaboration>
+					</UML:Namespace.ownedElement>
+				</UML:Package>
+			</UML:Namespace.ownedElement>
+		</UML:Model>
+	</XMI.content>
+	<XMI.difference/>
+	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
+		<EAModel.diagram>
+			<Diagram name="HU-06 Diagrama de Secuencia - Publicacion y Consulta Estudiante" xmi.id="EA_DIAG_SP3_HU06" diagram_type="Sequence" toolflags="NAVBAR=1;" version="1.0">
+				<project author="Ybanera Herrera Edberto" version="1.0" created="2026-11-19 04:00:00" modified="2026-11-19 04:00:00"/>
+				<properties name="HU-06 Diagrama de Secuencia - Publicacion y Consulta Estudiante" type="Sequence"/>
+				<extended_properties package="EAPK_SP3_HU06"/>
+				<elements>
+					<DiagramElement geometry="Left=60;Top=50;Right=160;Bottom=780;" subject="EA_LL_PUB_1" seqno="1" style="DUID=SEQ_01;"/>
+					<DiagramElement geometry="Left=210;Top=50;Right=310;Bottom=780;" subject="EA_LL_PUB_2" seqno="2" style="DUID=SEQ_02;"/>
+					<DiagramElement geometry="Left=370;Top=50;Right=490;Bottom=780;" subject="EA_LL_PUB_3" seqno="3" style="DUID=SEQ_03;"/>
+					<DiagramElement geometry="Left=550;Top=50;Right=690;Bottom=780;" subject="EA_LL_PUB_4" seqno="4" style="DUID=SEQ_04;"/>
+					<DiagramElement geometry="Left=750;Top=50;Right=910;Bottom=780;" subject="EA_LL_PUB_5" seqno="5" style="DUID=SEQ_05;"/>
+					<DiagramElement geometry="Left=970;Top=50;Right=1100;Bottom=780;" subject="EA_LL_PUB_6" seqno="6" style="DUID=SEQ_06;"/>
+					<DiagramElement geometry="Left=1160;Top=50;Right=1260;Bottom=780;" subject="EA_LL_PUB_7" seqno="7" style="DUID=SEQ_07;"/>
+				</elements>
+			</Diagram>
+		</EAModel.diagram>
+		<EAModel.element>
+			<Element name="docente : Docente" xmi.idref="EA_LL_PUB_1" ea_type="Sequence" package="EAPK_SP3_HU06"/>
+			<Element name="estudiante : Estudiante" xmi.idref="EA_LL_PUB_2" ea_type="Sequence" package="EAPK_SP3_HU06"/>
+			<Element name=":WebTeacherUI" xmi.idref="EA_LL_PUB_3" ea_type="Sequence" package="EAPK_SP3_HU06"/>
+			<Element name=":WebStudentPortalUI" xmi.idref="EA_LL_PUB_4" ea_type="Sequence" package="EAPK_SP3_HU06"/>
+			<Element name=":StudentEvaluationViewSet" xmi.idref="EA_LL_PUB_5" ea_type="Sequence" package="EAPK_SP3_HU06"/>
+			<Element name=":StudentIdLoginView" xmi.idref="EA_LL_PUB_6" ea_type="Sequence" package="EAPK_SP3_HU06"/>
+			<Element name=":PostgreSQL" xmi.idref="EA_LL_PUB_7" ea_type="Sequence" package="EAPK_SP3_HU06"/>
+		</EAModel.element>
+	</XMI.extensions>
+</XMI>

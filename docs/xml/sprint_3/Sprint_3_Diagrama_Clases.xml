@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2026-11-19 04:00:00">
+	<XMI.header>
+		<XMI.documentation>
+			<XMI.exporter>Enterprise Architect</XMI.exporter>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
+		</XMI.documentation>
+	</XMI.header>
+	<XMI.content>
+		<UML:Model name="EA Model" xmi.id="MX_EA_Model">
+			<UML:Namespace.ownedElement>
+				<UML:Package name="Sprint 3 - Modelo de Dominio" xmi.id="EAPK_SP3_CLASS" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
+					<UML:ModelElement.taggedValue>
+						<UML:TaggedValue tag="ea_package_id" value="EAPK_SP3_CLASS"/>
+					</UML:ModelElement.taggedValue>
+					<UML:Namespace.ownedElement>
+						<UML:Class name="StudentEvaluation" xmi.id="EA_CLS_STU_EVAL" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_STU_EVAL_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="status : EvaluationStatus" xmi.id="ATTR_EA_CLS_STU_EVAL_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="EvaluationStatus"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="raw_student_name : String" xmi.id="ATTR_EA_CLS_STU_EVAL_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="raw_student_identifier : String" xmi.id="ATTR_EA_CLS_STU_EVAL_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="ai_total_score : Decimal" xmi.id="ATTR_EA_CLS_STU_EVAL_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="final_score : Decimal" xmi.id="ATTR_EA_CLS_STU_EVAL_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="is_score_overridden : Boolean" xmi.id="ATTR_EA_CLS_STU_EVAL_7" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="teacher_notes : String" xmi.id="ATTR_EA_CLS_STU_EVAL_8" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="is_published : Boolean" xmi.id="ATTR_EA_CLS_STU_EVAL_9" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="published_at : DateTime" xmi.id="ATTR_EA_CLS_STU_EVAL_10" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="created_at : DateTime" xmi.id="ATTR_EA_CLS_STU_EVAL_11" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="EvaluationStatus" xmi.id="EA_CLS_EVAL_STATUS" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							<UML:ModelElement.stereotype><UML:Stereotype name="enumeration"/></UML:ModelElement.stereotype>
+							<UML:Classifier.feature>
+								<UML:Attribute name="BORRADOR : String" xmi.id="ATTR_EA_CLS_EVAL_STATUS_1" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="PROCESANDO_IA : String" xmi.id="ATTR_EA_CLS_EVAL_STATUS_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="EN_REVISION : String" xmi.id="ATTR_EA_CLS_EVAL_STATUS_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="REVISION_DOCENTE : String" xmi.id="ATTR_EA_CLS_EVAL_STATUS_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="CALIFICADO : String" xmi.id="ATTR_EA_CLS_EVAL_STATUS_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="PUBLICADO : String" xmi.id="ATTR_EA_CLS_EVAL_STATUS_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="EvaluationPage" xmi.id="EA_CLS_EVAL_PAGE" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_EVAL_PAGE_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="page_number : Integer" xmi.id="ATTR_EA_CLS_EVAL_PAGE_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Integer"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="image : ImageField" xmi.id="ATTR_EA_CLS_EVAL_PAGE_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="ImageField"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="qr_data : String" xmi.id="ATTR_EA_CLS_EVAL_PAGE_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="ocr_raw_text : String" xmi.id="ATTR_EA_CLS_EVAL_PAGE_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="created_at : DateTime" xmi.id="ATTR_EA_CLS_EVAL_PAGE_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="DateTime"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="GradeDetail" xmi.id="EA_CLS_GRADE_DETAIL" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="id : UUID" xmi.id="ATTR_EA_CLS_GRADE_DETAIL_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="UUID"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="ai_score : Decimal" xmi.id="ATTR_EA_CLS_GRADE_DETAIL_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="final_score : Decimal" xmi.id="ATTR_EA_CLS_GRADE_DETAIL_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Decimal"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="transcribed_answer : String" xmi.id="ATTR_EA_CLS_GRADE_DETAIL_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="ai_feedback : String" xmi.id="ATTR_EA_CLS_GRADE_DETAIL_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="is_overridden : Boolean" xmi.id="ATTR_EA_CLS_GRADE_DETAIL_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Boolean"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="teacher_comment : String" xmi.id="ATTR_EA_CLS_GRADE_DETAIL_7" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="StudentEvaluationViewSet" xmi.id="EA_CLS_EVAL_VS" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="permission_classes : List" xmi.id="ATTR_EA_CLS_EVAL_VS_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="List"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="get_queryset() : QuerySet" xmi.id="OPER_EA_CLS_EVAL_VS_1" visibility="public"/>
+								<UML:Operation name="override_grade(request, pk, grade_id) : Response" xmi.id="OPER_EA_CLS_EVAL_VS_2" visibility="public"/>
+								<UML:Operation name="publish_exam_grades(request, exam_id) : Response" xmi.id="OPER_EA_CLS_EVAL_VS_3" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="EvaluationPipeline" xmi.id="EA_CLS_EVAL_PIPE" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="gemini_client : GeminiResilientClient" xmi.id="ATTR_EA_CLS_EVAL_PIPE_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="GeminiResilientClient"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="prompt_builder : PromptBuilder" xmi.id="ATTR_EA_CLS_EVAL_PIPE_2" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="PromptBuilder"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="process_evaluation(eval) : StudentEvaluation" xmi.id="OPER_EA_CLS_EVAL_PIPE_1" visibility="public"/>
+								<UML:Operation name="extract_header(page) : Dict" xmi.id="OPER_EA_CLS_EVAL_PIPE_2" visibility="private"/>
+								<UML:Operation name="grade_components(eval) : void" xmi.id="OPER_EA_CLS_EVAL_PIPE_3" visibility="private"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="GeminiResilientClient" xmi.id="EA_CLS_GEMINI_CLIENT" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Attribute name="api_key : String" xmi.id="ATTR_EA_CLS_GEMINI_CLIENT_1" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="primary_model : String" xmi.id="ATTR_EA_CLS_GEMINI_CLIENT_2" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="fallback_model : String" xmi.id="ATTR_EA_CLS_GEMINI_CLIENT_3" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="String"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Attribute name="timeout_seconds : Integer" xmi.id="ATTR_EA_CLS_GEMINI_CLIENT_4" visibility="private">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="type" value="Integer"/>
+									</UML:ModelElement.taggedValue>
+								</UML:Attribute>
+								<UML:Operation name="generate_content(prompt, images) : Dict" xmi.id="OPER_EA_CLS_GEMINI_CLIENT_1" visibility="public"/>
+								<UML:Operation name="cascade_fallback(e) : Dict" xmi.id="OPER_EA_CLS_GEMINI_CLIENT_2" visibility="private"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="PromptBuilder" xmi.id="EA_CLS_PROMPT_BLD" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Operation name="build_multimodal_prompt(comp, img) : String" xmi.id="OPER_EA_CLS_PROMPT_BLD_1" visibility="public"/>
+								<UML:Operation name="format_rubric(rubric_dict) : String" xmi.id="OPER_EA_CLS_PROMPT_BLD_2" visibility="private"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="ResponseSanitizer" xmi.id="EA_CLS_RESP_SAN" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Operation name="clean_json_markdown(text) : String" xmi.id="OPER_EA_CLS_RESP_SAN_1" visibility="public"/>
+								<UML:Operation name="parse_grade_json(text) : Dict" xmi.id="OPER_EA_CLS_RESP_SAN_2" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="DemoLoginView" xmi.id="EA_CLS_DEMO_LOGIN_V" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Operation name="post(request) : Response" xmi.id="OPER_EA_CLS_DEMO_LOGIN_V_1" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Class name="StudentIdLoginView" xmi.id="EA_CLS_STU_LOGIN_V" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+							
+							<UML:Classifier.feature>
+								<UML:Operation name="post(request) : Response" xmi.id="OPER_EA_CLS_STU_LOGIN_V_1" visibility="public"/>
+							</UML:Classifier.feature>
+						</UML:Class>
+						<UML:Association name="Contiene" xmi.id="EA_ASC_EVL_PAG">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="evaluation" type="EA_CLS_STU_EVAL" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="pages" type="EA_CLS_EVAL_PAGE" multiplicity="1..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="DesglosadoEn" xmi.id="EA_ASC_EVL_GRD">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="evaluation" type="EA_CLS_STU_EVAL" multiplicity="1" isNavigable="true"/>
+								<UML:AssociationEnd name="grades" type="EA_CLS_GRADE_DETAIL" multiplicity="1..*" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Administra" xmi.id="EA_ASC_EVL_VS">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="" type="EA_CLS_EVAL_VS" multiplicity="" isNavigable="true"/>
+								<UML:AssociationEnd name="" type="EA_CLS_STU_EVAL" multiplicity="" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Invoca" xmi.id="EA_ASC_PIPE_GEMINI">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="" type="EA_CLS_EVAL_PIPE" multiplicity="" isNavigable="true"/>
+								<UML:AssociationEnd name="" type="EA_CLS_GEMINI_CLIENT" multiplicity="" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Construye" xmi.id="EA_ASC_PIPE_PROMPT">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="" type="EA_CLS_EVAL_PIPE" multiplicity="" isNavigable="true"/>
+								<UML:AssociationEnd name="" type="EA_CLS_PROMPT_BLD" multiplicity="" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+						<UML:Association name="Sanitiza" xmi.id="EA_ASC_GEMINI_SAN">
+							<UML:Association.connection>
+								<UML:AssociationEnd name="" type="EA_CLS_GEMINI_CLIENT" multiplicity="" isNavigable="true"/>
+								<UML:AssociationEnd name="" type="EA_CLS_RESP_SAN" multiplicity="" isNavigable="true"/>
+							</UML:Association.connection>
+						</UML:Association>
+					</UML:Namespace.ownedElement>
+				</UML:Package>
+			</UML:Namespace.ownedElement>
+		</UML:Model>
+	</XMI.content>
+	<XMI.difference/>
+	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
+		<EAModel.diagram>
+			<Diagram name="Sprint 3 - Diagrama de Clases Evaluaciones e IA" xmi.id="EA_DIAG_SP3_CLASS" diagram_type="Logical" toolflags="NAVBAR=1;" version="1.0">
+				<project author="Ybanera Herrera Edberto" version="1.0" created="2026-11-19 04:00:00" modified="2026-11-19 04:00:00"/>
+				<properties name="Sprint 3 - Diagrama de Clases Evaluaciones e IA" type="Logical"/>
+				<extended_properties package="EAPK_SP3_CLASS"/>
+				<elements>
+					<DiagramElement geometry="Left=50;Top=50;Right=310;Bottom=290;" subject="EA_CLS_STU_EVAL" seqno="1" style="DUID=CLS_01;"/>
+					<DiagramElement geometry="Left=50;Top=340;Right=260;Bottom=520;" subject="EA_CLS_EVAL_STATUS" seqno="2" style="DUID=CLS_02;"/>
+					<DiagramElement geometry="Left=380;Top=50;Right=610;Bottom=230;" subject="EA_CLS_EVAL_PAGE" seqno="3" style="DUID=CLS_03;"/>
+					<DiagramElement geometry="Left=670;Top=50;Right=920;Bottom=240;" subject="EA_CLS_GRADE_DETAIL" seqno="4" style="DUID=CLS_04;"/>
+					<DiagramElement geometry="Left=380;Top=280;Right=620;Bottom=430;" subject="EA_CLS_EVAL_VS" seqno="5" style="DUID=CLS_05;"/>
+					<DiagramElement geometry="Left=670;Top=280;Right=920;Bottom=430;" subject="EA_CLS_EVAL_PIPE" seqno="6" style="DUID=CLS_06;"/>
+					<DiagramElement geometry="Left=980;Top=280;Right=1220;Bottom=440;" subject="EA_CLS_GEMINI_CLIENT" seqno="7" style="DUID=CLS_07;"/>
+					<DiagramElement geometry="Left=980;Top=50;Right=1220;Bottom=190;" subject="EA_CLS_PROMPT_BLD" seqno="8" style="DUID=CLS_08;"/>
+					<DiagramElement geometry="Left=980;Top=480;Right=1220;Bottom=600;" subject="EA_CLS_RESP_SAN" seqno="9" style="DUID=CLS_09;"/>
+					<DiagramElement geometry="Left=380;Top=480;Right=580;Bottom=590;" subject="EA_CLS_DEMO_LOGIN_V" seqno="10" style="DUID=CLS_10;"/>
+					<DiagramElement geometry="Left=670;Top=480;Right=880;Bottom=590;" subject="EA_CLS_STU_LOGIN_V" seqno="11" style="DUID=CLS_11;"/>
+				</elements>
+			</Diagram>
+		</EAModel.diagram>
+		<EAModel.element>
+			<Element name="StudentEvaluation" xmi.idref="EA_CLS_STU_EVAL" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="EvaluationStatus" xmi.idref="EA_CLS_EVAL_STATUS" ea_type="Enumeration" package="EAPK_SP3_CLASS"/>
+			<Element name="EvaluationPage" xmi.idref="EA_CLS_EVAL_PAGE" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="GradeDetail" xmi.idref="EA_CLS_GRADE_DETAIL" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="StudentEvaluationViewSet" xmi.idref="EA_CLS_EVAL_VS" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="EvaluationPipeline" xmi.idref="EA_CLS_EVAL_PIPE" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="GeminiResilientClient" xmi.idref="EA_CLS_GEMINI_CLIENT" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="PromptBuilder" xmi.idref="EA_CLS_PROMPT_BLD" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="ResponseSanitizer" xmi.idref="EA_CLS_RESP_SAN" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="DemoLoginView" xmi.idref="EA_CLS_DEMO_LOGIN_V" ea_type="Class" package="EAPK_SP3_CLASS"/>
+			<Element name="StudentIdLoginView" xmi.idref="EA_CLS_STU_LOGIN_V" ea_type="Class" package="EAPK_SP3_CLASS"/>
+		</EAModel.element>
+	</XMI.extensions>
+</XMI>

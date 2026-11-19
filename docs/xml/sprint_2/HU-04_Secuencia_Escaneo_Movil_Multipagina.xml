@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2026-11-19 04:00:00">
+	<XMI.header>
+		<XMI.documentation>
+			<XMI.exporter>Enterprise Architect</XMI.exporter>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
+		</XMI.documentation>
+	</XMI.header>
+	<XMI.content>
+		<UML:Model name="EA Model" xmi.id="MX_EA_Model">
+			<UML:Namespace.ownedElement>
+				<UML:Package name="Sprint 2 - HU-04" xmi.id="EAPK_SP2_HU04" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
+					<UML:ModelElement.taggedValue>
+						<UML:TaggedValue tag="ea_package_id" value="EAPK_SP2_HU04"/>
+					</UML:ModelElement.taggedValue>
+					<UML:Namespace.ownedElement>
+						<UML:Collaboration xmi.id="COL_EAPK_SP2_HU04" name="Sprint 2 - HU-04 Colaboracion">
+							<UML:Namespace.ownedElement>
+								<UML:ClassifierRole name="docente : Docente" xmi.id="EA_LL_MOB_1" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Actor"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":CameraScannerView" xmi.id="EA_LL_MOB_2" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Boundary"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":ScannerController" xmi.id="EA_LL_MOB_3" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":MobileApiClient" xmi.id="EA_LL_MOB_4" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Boundary"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":EvaluationSubmitView" xmi.id="EA_LL_MOB_5" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Control"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":MediaStorage" xmi.id="EA_LL_MOB_6" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Entity"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+								<UML:ClassifierRole name=":PostgreSQL" xmi.id="EA_LL_MOB_7" visibility="public">
+									<UML:ModelElement.taggedValue>
+										<UML:TaggedValue tag="ea_stype" value="Sequence"/>
+										<UML:TaggedValue tag="is_active" value="false"/>
+										<UML:TaggedValue tag="classifier_type" value="Entity"/>
+									</UML:ModelElement.taggedValue>
+								</UML:ClassifierRole>
+							</UML:Namespace.ownedElement>
+							<UML:Collaboration.interaction>
+								<UML:Interaction xmi.id="INT_EAPK_SP2_HU04" name="HU-04 Diagrama de Secuencia - Escaneo Movil Multipagina Flutter">
+									<UML:Interaction.message>
+										<UML:Message name="1. seleccionarMateriaParaleloYExamen()" xmi.id="MSG_04_01" sender="EA_LL_MOB_1" receiver="EA_LL_MOB_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_01"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="1"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="2. iniciarModoEscaneo(conQR o sinQR)" xmi.id="MSG_04_02" sender="EA_LL_MOB_1" receiver="EA_LL_MOB_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_02"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="2"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="3. [Modo QR] Detección automática y captura de hoja 1 JPG" xmi.id="MSG_04_03" sender="EA_LL_MOB_2" receiver="EA_LL_MOB_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_03"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="3"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="4. [Modo sin QR] Encuadre asistido y disparo manual hoja 1 JPG" xmi.id="MSG_04_04" sender="EA_LL_MOB_2" receiver="EA_LL_MOB_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_04"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="4"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="5. almacenarTemporalJPG(pagina_1.jpg)" xmi.id="MSG_04_05" sender="EA_LL_MOB_3" receiver="EA_LL_MOB_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_05"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="5"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="6. capturarPaginaSiguiente(pagina_2.jpg)" xmi.id="MSG_04_06" sender="EA_LL_MOB_1" receiver="EA_LL_MOB_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_06"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="6"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="7. agruparPaginasEnEntrega([p1, p2])" xmi.id="MSG_04_07" sender="EA_LL_MOB_2" receiver="EA_LL_MOB_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_07"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="7"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="8. renderizarMiniaturasDeRevision()" xmi.id="MSG_04_08" sender="EA_LL_MOB_3" receiver="EA_LL_MOB_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_08"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="8"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="9. confirmarEnvioPaqueteEntrega()" xmi.id="MSG_04_09" sender="EA_LL_MOB_1" receiver="EA_LL_MOB_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_09"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="9"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="10. POST /api/v1/evaluations/submit/ (multipart exam_id, pages)" xmi.id="MSG_04_10" sender="EA_LL_MOB_2" receiver="EA_LL_MOB_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_10"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="10"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="11. submit_multipart(request)" xmi.id="MSG_04_11" sender="EA_LL_MOB_4" receiver="EA_LL_MOB_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_11"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="11"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="12. guardarArchivosJPGEnVolumen(/media/evaluations/)" xmi.id="MSG_04_12" sender="EA_LL_MOB_5" receiver="EA_LL_MOB_6">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_12"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="12"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="13. create(StudentEvaluation, EvaluationPage 1..N, status=BORRADOR)" xmi.id="MSG_04_13" sender="EA_LL_MOB_5" receiver="EA_LL_MOB_7">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_13"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="13"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="14. encolarPipelineDeInferenciaIA()" xmi.id="MSG_04_14" sender="EA_LL_MOB_5" receiver="EA_LL_MOB_5">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_14"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="14"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="15. 201 Created (Entrega recibida exitosamente)" xmi.id="MSG_04_15" sender="EA_LL_MOB_5" receiver="EA_LL_MOB_4">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_15"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="15"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="16. notificarSubidaExitosa()" xmi.id="MSG_04_16" sender="EA_LL_MOB_4" receiver="EA_LL_MOB_2">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_16"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="16"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="17. limpiarBufferYPrepararSiguienteAlumno()" xmi.id="MSG_04_17" sender="EA_LL_MOB_2" receiver="EA_LL_MOB_3">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_17"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="17"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+										<UML:Message name="18. cámara lista para siguiente estudiante" xmi.id="MSG_04_18" sender="EA_LL_MOB_3" receiver="EA_LL_MOB_1">
+											<UML:Message.action>
+												<UML:CallAction xmi.id="ACT_MSG_04_18"/>
+											</UML:Message.action>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="ea_type" value="Sequence"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="sequence_number" value="18"/>
+												<UML:TaggedValue tag="line_color" value="-1"/>
+												<UML:TaggedValue tag="ptx" value="0"/>
+												<UML:TaggedValue tag="pty" value="0"/>
+											</UML:ModelElement.taggedValue>
+										</UML:Message>
+									</UML:Interaction.message>
+								</UML:Interaction>
+							</UML:Collaboration.interaction>
+						</UML:Collaboration>
+					</UML:Namespace.ownedElement>
+				</UML:Package>
+			</UML:Namespace.ownedElement>
+		</UML:Model>
+	</XMI.content>
+	<XMI.difference/>
+	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
+		<EAModel.diagram>
+			<Diagram name="HU-04 Diagrama de Secuencia - Escaneo Movil Multipagina Flutter" xmi.id="EA_DIAG_SP2_HU04" diagram_type="Sequence" toolflags="NAVBAR=1;" version="1.0">
+				<project author="Ybanera Herrera Edberto" version="1.0" created="2026-11-19 04:00:00" modified="2026-11-19 04:00:00"/>
+				<properties name="HU-04 Diagrama de Secuencia - Escaneo Movil Multipagina Flutter" type="Sequence"/>
+				<extended_properties package="EAPK_SP2_HU04"/>
+				<elements>
+					<DiagramElement geometry="Left=60;Top=50;Right=160;Bottom=780;" subject="EA_LL_MOB_1" seqno="1" style="DUID=SEQ_01;"/>
+					<DiagramElement geometry="Left=220;Top=50;Right=350;Bottom=780;" subject="EA_LL_MOB_2" seqno="2" style="DUID=SEQ_02;"/>
+					<DiagramElement geometry="Left=410;Top=50;Right=550;Bottom=780;" subject="EA_LL_MOB_3" seqno="3" style="DUID=SEQ_03;"/>
+					<DiagramElement geometry="Left=610;Top=50;Right=730;Bottom=780;" subject="EA_LL_MOB_4" seqno="4" style="DUID=SEQ_04;"/>
+					<DiagramElement geometry="Left=790;Top=50;Right=930;Bottom=780;" subject="EA_LL_MOB_5" seqno="5" style="DUID=SEQ_05;"/>
+					<DiagramElement geometry="Left=990;Top=50;Right=1090;Bottom=780;" subject="EA_LL_MOB_6" seqno="6" style="DUID=SEQ_06;"/>
+					<DiagramElement geometry="Left=1150;Top=50;Right=1250;Bottom=780;" subject="EA_LL_MOB_7" seqno="7" style="DUID=SEQ_07;"/>
+				</elements>
+			</Diagram>
+		</EAModel.diagram>
+		<EAModel.element>
+			<Element name="docente : Docente" xmi.idref="EA_LL_MOB_1" ea_type="Sequence" package="EAPK_SP2_HU04"/>
+			<Element name=":CameraScannerView" xmi.idref="EA_LL_MOB_2" ea_type="Sequence" package="EAPK_SP2_HU04"/>
+			<Element name=":ScannerController" xmi.idref="EA_LL_MOB_3" ea_type="Sequence" package="EAPK_SP2_HU04"/>
+			<Element name=":MobileApiClient" xmi.idref="EA_LL_MOB_4" ea_type="Sequence" package="EAPK_SP2_HU04"/>
+			<Element name=":EvaluationSubmitView" xmi.idref="EA_LL_MOB_5" ea_type="Sequence" package="EAPK_SP2_HU04"/>
+			<Element name=":MediaStorage" xmi.idref="EA_LL_MOB_6" ea_type="Sequence" package="EAPK_SP2_HU04"/>
+			<Element name=":PostgreSQL" xmi.idref="EA_LL_MOB_7" ea_type="Sequence" package="EAPK_SP2_HU04"/>
+		</EAModel.element>
+	</XMI.extensions>
+</XMI>
