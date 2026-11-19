@@ -258,6 +258,11 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
+    # Redirección amigable si acceden directamente a /login
+    location = /login {
+        return 301 /app/login;
+    }
+
     # 6. Landing Page Comercial en la URL principal (http://20.51.189.52/)
     location / {
         proxy_pass http://127.0.0.1:3002;
