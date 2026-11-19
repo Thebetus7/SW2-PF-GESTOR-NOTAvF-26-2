@@ -8,6 +8,7 @@
 !.env.example
 !backend/.env.example
 !frontend/.env.example
+!mobile/.env.example
 
 # ==========================================
 # Python / Django
@@ -23,8 +24,11 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+# lib/ (excluyendo Flutter y frontend)
+backend/lib/
+backend/lib64/
+!mobile/lib/
+!frontend/src/lib/
 parts/
 sdist/
 var/

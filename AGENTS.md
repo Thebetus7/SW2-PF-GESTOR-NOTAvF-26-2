@@ -133,3 +133,12 @@ Todo código desarrollado en el proyecto debe adherirse a los siguientes estánd
 ## 7. Regla Maestra
 
 > **Primero se define la intención, después se valida la intención, luego se diseña la solución, se descompone el trabajo, se implementa y finalmente se verifica mediante evidencia.**
+
+<!-- sdd:instructions:start -->
+## SDD
+
+Al ejecutar SDD, leer `.sdd/core.md` y solo el workflow activo en
+`.sdd/workflows/`. Aplicar la matriz de autonomía y verificar tareas con
+`python3 .sdd/tools/sdd_validate.py`. El núcleo rige los comandos SDD,
+sin reemplazar las políticas particulares del proyecto.
+<!-- sdd:instructions:end -->

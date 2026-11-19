@@ -24,7 +24,7 @@ En esta fase ejecutamos el primer despliegue real de punta a punta: clonamos el 
 cd ~
 
 # 2. Clonar el repositorio del proyecto
-git clone https://github.com/Thebetus7/SW2-G17-SDD-26-2.git proyecto-gestor-notas
+git clone https://github.com/Thebetus7/SW2-PF-GESTOR-NOTAvF-26-2.git proyecto-gestor-notas
 
 # 3. Ingresar al directorio del proyecto
 cd proyecto-gestor-notas
@@ -43,7 +43,7 @@ cd proyecto-gestor-notas
 ### 🚀 Paso 2: Crear el Archivo `.env` de Producción en el Servidor
 
 > [!NOTE]
-> **Propósito:** Instanciar el archivo `.env` definitivo con los secretos reales de PostgreSQL, Django Secret Key, Gemini API Key y la IP pública estática de Google Cloud obtenida en el Paso 02.
+> **Propósito:** Instanciar el archivo `.env` definitivo con los secretos reales de PostgreSQL, Django Secret Key, Gemini API Key y la IP pública o nombre FQDN de Azure obtenidos en el Paso 02.
 > **Contexto de Ejecución:** `[SSH / SERVIDOR]`
 > **Ruta de Trabajo:** `~/proyecto-gestor-notas`
 
@@ -61,7 +61,7 @@ Configura los valores reales (reemplaza los `<PLACEHOLDERS>`):
 
 ```ini
 # ==============================================================================
-# GESTOR DE NOTAS - VARIABLES DE ENTORNO DE PRODUCCIÓN REALES
+# GESTOR DE NOTAS - VARIABLES DE ENTORNO DE PRODUCCIÓN REALES (AZURE)
 # ==============================================================================
 
 # Base de Datos PostgreSQL
@@ -73,14 +73,14 @@ POSTGRES_PORT=5432
 # Backend Django
 DJANGO_SECRET_KEY=<TU_DJANGO_SECRET_KEY_GENERADA_EN_PASO_01>
 DJANGO_DEBUG=False
-DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,<TU_IP_PUBLICA_GCP>,backend,web
-CORS_ALLOWED_ORIGINS=http://<TU_IP_PUBLICA_GCP>,http://localhost:3000
+DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,<TU_IP_PUBLICA_AZURE>,<TU_FQDN_AZURE>,backend,web
+CORS_ALLOWED_ORIGINS=http://<TU_IP_PUBLICA_AZURE>,http://<TU_FQDN_AZURE>,https://<TU_FQDN_AZURE>,http://localhost:3000
 
 # Google Gemini API
 GEMINI_API_KEY=<TU_GEMINI_API_KEY_DE_AI_STUDIO>
 
-# Frontend Web Next.js (apuntando a Nginx en puerto 80)
-NEXT_PUBLIC_API_URL=http://<TU_IP_PUBLICA_GCP>/api/v1
+# Frontend Web Next.js (apuntando a Nginx en puerto 80 / 443)
+NEXT_PUBLIC_API_URL=http://<TU_IP_PUBLICA_AZURE>/api/v1
 ```
 
 > [!TIP]
@@ -188,7 +188,7 @@ Pega el siguiente bloque de configuración completo:
 ```nginx
 server {
     listen 80;
-    server_name <TU_IP_PUBLICA_GCP> _;
+    server_name <TU_IP_PUBLICA_AZURE> <TU_FQDN_AZURE> _;
 
     # Límite de carga ampliado para fotos JPG de exámenes y planillas Excel
     client_max_body_size 50M;
@@ -256,6 +256,35 @@ sudo systemctl reload nginx
 
 ---
 
+### 🚀 Paso 7: Habilitar Certificado SSL/TLS Gratuito con Let's Encrypt (Certbot)
+
+> [!NOTE]
+> **Propósito:** Cifrar todo el tráfico web con HTTPS (puerto 443) y configurar la renovación automática utilizando el FQDN de Azure (`<DNS_LABEL>.eastus.cloudapp.azure.com`) o tu dominio propio.
+> **Contexto de Ejecución:** `[SSH / SERVIDOR]`
+
+```bash
+# 1. Instalar Certbot y el plugin de Nginx
+sudo apt install -y certbot python3-certbot-nginx
+
+# 2. Solicitar e instalar el certificado SSL automáticamente en Nginx
+sudo certbot --nginx -d <TU_FQDN_AZURE_O_DOMINIO> --non-interactive --agree-tos -m admin@institucion.edu --redirect
+
+# 3. Probar la renovación automática programada
+sudo certbot renew --dry-run
+```
+
+> [!TIP]
+> **Verificación Observable & Salida Esperada:**
+> Certbot confirmará:
+> ```text
+> Successfully received certificate.
+> Certificate is saved at: /etc/letsencrypt/live/.../fullchain.pem
+> Key is saved at:         /etc/letsencrypt/live/.../privkey.pem
+> Congratulations! You have successfully enabled HTTPS.
+> ```
+
+---
+
 ## 3. Batería de Pruebas de Verificación Física
 
 Ejecuta estas comprobaciones para confirmar el estado 100% operativo del despliegue:
@@ -290,9 +319,9 @@ curl -s -I http://localhost | head -n 3
 
 ### Test 5: Verificación Externa desde el Navegador Web de tu PC
 [PC LOCAL]
-1. Abre tu navegador web e ingresa a: `http://<TU_IP_PUBLICA_GCP>/`
-   * **Resultado esperado:** Carga la página de bienvenida / login del Gestor de Notas.
-2. Ingresa a: `http://<TU_IP_PUBLICA_GCP>/admin`
+1. Abre tu navegador web e ingresa a: `https://<TU_FQDN_AZURE>/` (o `http://<TU_IP_PUBLICA_AZURE>/`)
+   * **Resultado esperado:** Carga la página de bienvenida / login del Gestor de Notas con candado verde SSL.
+2. Ingresa a: `https://<TU_FQDN_AZURE>/admin`
    * **Resultado esperado:** Carga el panel de administración de Django. Inicia sesión con el superusuario creado en el Paso 5.
 
 ---
@@ -300,7 +329,7 @@ curl -s -I http://localhost | head -n 3
 ## 4. Troubleshooting Contextual de Fallos Frecuentes
 
 ### Fallo 1: Error 502 Bad Gateway al acceder a la IP
-* **Síntoma:** Al abrir `http://<TU_IP_PUBLICA>` el navegador devuelve error 502 Bad Gateway.
+* **Síntoma:** Al abrir la URL el navegador devuelve error 502 Bad Gateway.
 * **Causa:** Nginx está corriendo pero no puede conectarse a los contenedores locales (puerto 3000 o 8000 caídos).
 * **Solución:**
   1. Revisa el estado de los contenedores: `docker compose -f docker-compose.prod.yml ps`.
@@ -317,8 +346,8 @@ curl -s -I http://localhost | head -n 3
 
 ### Fallo 3: Error de CORS o DisallowedHost en llamadas API
 * **Síntoma:** La página web carga pero no puede listar materias o estudiantes (error 400 Bad Request en la consola del navegador).
-* **Causa:** La IP pública estática de Google Cloud no está agregada a `DJANGO_ALLOWED_HOSTS` o `CORS_ALLOWED_ORIGINS` en el `.env`.
-* **Solución:** Edita `.env`, añade tu IP pública exacta a ambas variables y reinicia el backend:
+* **Causa:** La IP pública o FQDN de Azure no están agregados a `DJANGO_ALLOWED_HOSTS` o `CORS_ALLOWED_ORIGINS` en el `.env`.
+* **Solución:** Edita `.env`, añade tu IP pública y FQDN de Azure a ambas variables y reinicia el backend:
   ```bash
   docker compose -f docker-compose.prod.yml restart backend
   ```

@@ -1,4 +1,4 @@
-# 🚀 06. Apagar, Reactivar y Control de Costos en GCP
+# 🚀 06. Apagar, Reactivar y Control de Costos en Microsoft Azure
 
 [← Paso Anterior: 05_ACTUALIZAR_PRODUCCION.md](./05_ACTUALIZAR_PRODUCCION.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 07_FLUJO_VISUAL_DESPLIEGUE.html →](./07_FLUJO_VISUAL_DESPLIEGUE.html)
 
@@ -6,20 +6,22 @@
 
 ## 1. Visión de la Fase
 
-Este documento establece la gobernanza del ciclo de vida de la infraestructura en Google Cloud Platform. Detalla el procedimiento para suspender temporalmente la máquina virtual (reduciendo los costos de cómputo a **$0.00 USD**) durante periodos sin actividad académica (vacaciones, fines de semana o noches), y cómo reactivarla sin pérdida de datos ni modificaciones en la IP pública.
+Este documento establece la gobernanza del ciclo de vida de la infraestructura en **Microsoft Azure**. Detalla el procedimiento para suspender temporalmente la máquina virtual (reduciendo los costos de cómputo a **\$0.00 USD**) durante periodos sin actividad académica (vacaciones, recesos o fines de semana), y cómo reactivarla sin pérdida de datos ni modificaciones en el subdominio DNS asignado.
 
 ---
 
-## 2. Diferencia Operativa: Detener (STOP) vs Eliminar (DELETE)
+## 2. Diferencia Operativa Crítica en Azure: Desasignar (Deallocate) vs Detener (Stop) vs Eliminar (Delete)
 
 > [!CAUTION]
-> **NUNCA ELIMINES (DELETE) LA INSTANCIA PARA AHORRAR DINERO:**
-> En Google Cloud Compute Engine, las operaciones de suspensión y destrucción son radicalmente diferentes:
+> **REGLA DE FACTURACIÓN CRÍTICA EN AZURE:**
+> Si ejecutas `sudo poweroff` o apagas la máquina desde la terminal Linux, Azure la deja en estado **`Stopped (Allocated)`**, lo que **SIGUE FACTURANDO POR CPU Y RAM**.
+> Para que Azure deje de cobrar por cómputo, la máquina virtual debe pasar al estado **`Stopped (Deallocated)`**.
 
-| Operación | Estado de la VM | Costo de Cómputo (CPU / RAM) | Costo de Almacenamiento (Disco 30 GB) | Dirección IPv4 Estática | Integridad de la Base de Datos y Media |
+| Operación | Estado en Azure | Costo de Cómputo (vCPU / RAM) | Costo de Disco (30 GB SSD) | Dirección IP Pública y FQDN | Integridad de Datos (PostgreSQL y Fotos JPG) |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Detener (STOP)** | `TERMINATED / STOPPED` | **$0.00 / hora** (Cero cobro) | ~$3.00 USD / mes (Se mantiene) | Se conserva sin costo si está asociada | **100% Intactos y Seguros** |
-| **Eliminar (DELETE)** | `DELETED` | $0.00 | Se destruye el disco | Se libera a la red pública | **Se pierde definitivamente** |
+| **Desasignar (Deallocate)** | `Stopped (deallocated)` | **\$0.00 / hora (Cero cobro)** | ~\$1.80 USD / mes (Se mantiene) | Se conserva y mantiene la etiqueta DNS | **100% Intactos y Seguros en disco administrado** |
+| **Detener en SO (Stop)** | `Stopped (allocated)` | Sigue facturando igual | ~\$1.80 USD / mes | Se conserva | Intactos |
+| **Eliminar (Delete)** | `Terminated / Deleted` | \$0.00 | Se destruye | Se libera a la red pública | **Se pierde definitivamente** |
 
 ---
 
@@ -27,8 +29,8 @@ Este documento establece la gobernanza del ciclo de vida de la infraestructura e
 
 ```mermaid
 flowchart LR
-    A["🛑 VM Detenida (STOPPED)\nCosto de CPU/RAM = $0"] -->|Iniciar VM| B["⚡ Arrancar Instancia\ngcloud compute start"]
-    B --> C["🌐 IP Estática Conservada\nSin cambio de DNS ni App Móvil"]
+    A["🛑 VM Desasignada\n(Stopped Deallocated)\nCosto de CPU/RAM = $0"] -->|Iniciar VM| B["⚡ Arrancar Instancia\naz vm start"]
+    B --> C["🌐 IP y FQDN Conservados\nSin cambios en Web ni App Móvil"]
     C --> D["🐳 Auto-Arranque Docker & Nginx\nrestart: unless-stopped"]
     D --> E["✅ Verificación Observable\nHTTP 200 OK"]
 ```
@@ -37,137 +39,133 @@ flowchart LR
 
 ## 4. Pasos Estructurados de Apagado y Reactivación
 
-### 🚀 Paso 1: Crear Snapshot Preventivo del Disco de la VM
+### 🚀 Paso 1: Crear Snapshot Preventivo del Disco en Azure
 
 > [!NOTE]
-> **Propósito:** Generar una instantánea (*Snapshot*) en Google Cloud del disco persistente antes de apagar la máquina por periodos prolongados, garantizando un punto de restauración histórico en la nube.
+> **Propósito:** Generar una instantánea (*Snapshot*) en Azure del disco del sistema operativo antes de suspender la máquina por periodos prolongados, garantizando un punto de restauración histórico en la nube.
 > **Contexto de Ejecución:** `[PC LOCAL]`
-> **Ruta de Trabajo:** Terminal local
+> **Ruta de Trabajo:** Terminal local con Azure CLI
 
 ```bash
-gcloud compute disks snapshot gestornotas-vm-prod \
-    --zone=us-central1-a \
-    --snapshot-names=snapshot-gestornotas-$(date +%Y%m%d) \
-    --description="Backup preventivo previo a periodo de suspension"
+# 1. Obtener el ID del disco del sistema operativo de la VM
+OS_DISK_ID=$(az vm show \
+  --resource-group rg-gestornotas-prod \
+  --name vm-gestornotas \
+  --query "storageProfile.osDisk.managedDisk.id" \
+  --output tsv)
+
+# 2. Crear el Snapshot preventivo en Azure
+az snapshot create \
+  --resource-group rg-gestornotas-prod \
+  --name "snapshot-gestornotas-$(date +%Y%m%d)" \
+  --source "$OS_DISK_ID" \
+  --output table
 ```
 
 > [!TIP]
 > **Verificación Observable & Salida Esperada:**
-> ```text
-> Created [https://www.googleapis.com/compute/v1/projects/.../snapshots/...].
-> STATUS: READY
-> ```
+> Azure confirmará `ProvisioningState: Succeeded` y el snapshot quedará registrado en tu grupo de recursos.
 
 ---
 
-### 🚀 Paso 2: Procedimiento para Apagar / Detener la Instancia de VM
+### 🚀 Paso 2: Procedimiento para Desasignar (Apagar) la Máquina Virtual
 
 > [!NOTE]
-> **Propósito:** Detener el consumo de vCPU y memoria RAM en Google Cloud para reducir la facturación inmediatamente a cero en el rubro de cómputo.
-> **Contexto de Ejecución:** `[PC LOCAL]` o `[CONSOLA WEB]`
+> **Propósito:** Liberar los recursos de hardware en el datacenter de Azure y pausar la facturación de CPU y memoria RAM inmediatamente.
+> **Contexto de Ejecución:** `[PC LOCAL]` o `[PORTAL AZURE]`
 
-#### Opción A: Desde la consola web de Google Cloud
-1. Ingresa a: [https://console.cloud.google.com/compute/instances](https://console.cloud.google.com/compute/instances)
-2. Selecciona la máquina `gestornotas-vm-prod`.
-3. Haz clic en el botón superior **"Detener"** (icono de cuadrado Stop) y confirma.
+#### Opción A: Desde Azure CLI (Recomendado)
 
-#### Opción B: Mediante comando `gcloud CLI`
 ```bash
-gcloud compute instances stop gestornotas-vm-prod --zone=us-central1-a
+az vm deallocate \
+  --resource-group rg-gestornotas-prod \
+  --name vm-gestornotas \
+  --output table
 ```
 
-#### Opción C: Desde la propia sesión SSH
-```bash
-sudo shutdown -h now
-```
+#### Opción B: Desde el Portal Web de Azure
+1. Ingresa a: [https://portal.azure.com/](https://portal.azure.com/)
+2. En la lista de recursos, selecciona tu máquina virtual **`vm-gestornotas`**.
+3. En la barra superior, haz clic en el botón **Detener (Stop)**.
+4. Cuando el cuadro de diálogo pregunte si deseas conservar la dirección IP pública, marca **Aceptar**.
+5. Espera a que el estado cambie a **Detenida (desasignada)** / *Stopped (deallocated)*.
 
 > [!TIP]
 > **Verificación Observable & Salida Esperada:**
+> Comprueba el estado con Azure CLI:
 > ```bash
-> gcloud compute instances describe gestornotas-vm-prod --zone=us-central1-a --format='value(status)'
+> az vm get-instance-view \
+>   --resource-group rg-gestornotas-prod \
+>   --name vm-gestornotas \
+>   --query "instanceView.statuses[?starts_with(code, 'PowerState/')].displayStatus" \
+>   --output tsv
 > ```
 > *Salida esperada:*
 > ```text
-> TERMINATED
+> VM deallocated
 > ```
 
 ---
 
-### 🚀 Paso 3: Procedimiento para Reactivar / Iniciar la Instancia de VM
+### 🚀 Paso 3: Procedimiento para Reactivar la Infraestructura
 
 > [!NOTE]
-> **Propósito:** Reanudar la máquina virtual cuando comience un nuevo periodo de evaluaciones académicas.
-> **Contexto de Ejecución:** `[PC LOCAL]` o `[CONSOLA WEB]`
+> **Propósito:** Encender nuevamente la máquina virtual al reanudar actividades académicas. Como los contenedores Docker tienen la directiva `restart: unless-stopped` y Nginx está habilitado como servicio systemd, **todos los servicios se levantarán automáticamente sin intervención manual**.
+> **Contexto de Ejecución:** `[PC LOCAL]` o `[PORTAL AZURE]`
 
-#### Opción A: Desde la consola web de Google Cloud
-1. En **Compute Engine** $\rightarrow$ **Instancias de VM**, selecciona `gestornotas-vm-prod`.
-2. Haz clic en el botón superior **"Iniciar / Reanudar"** (icono de triángulo Play).
-3. Espera 30 a 45 segundos hasta que aparezca el icono verde de verificación.
+#### Opción A: Desde Azure CLI
 
-#### Opción B: Mediante comando `gcloud CLI`
 ```bash
-gcloud compute instances start gestornotas-vm-prod --zone=us-central1-a
+az vm start \
+  --resource-group rg-gestornotas-prod \
+  --name vm-gestornotas \
+  --output table
 ```
+
+#### Opción B: Desde el Portal de Azure
+1. Ingresa al Portal y navega a **`vm-gestornotas`**.
+2. Haz clic en el botón **Iniciar (Start)**.
+3. Espera 60 segundos a que el sistema operativo y el demonio de Docker concluyan su arranque.
 
 > [!TIP]
 > **Verificación Observable & Salida Esperada:**
 > ```text
-> Starting instance(s) gestornotas-vm-prod...done.
+> PowerState      Status
+> --------------  ----------
+> VM running      VM running
 > ```
 
 ---
 
-### 🚀 Paso 4: Comprobación de Reanudación 100% Automática
+### 🚀 Paso 4: Comprobación de Salud Post-Reactivación
 
 > [!NOTE]
-> **Propósito:** Comprobar que los servicios se reanudaron por sí solos sin requerir intervención manual dentro del servidor.
-> **Contexto de Ejecución:** `[SSH / SERVIDOR]` o `[PC LOCAL]`
+> **Propósito:** Validar que los servicios web, la base de datos y la API REST estén activos y respondiendo correctamente tras el encendido.
+> **Contexto de Ejecución:** `[PC LOCAL]`
 
-Gracias a la arquitectura implementada en los pasos previos:
-1. **Nginx:** Inicia automáticamente como servicio del sistema (`systemd`).
-2. **Motor Docker:** Inicia automáticamente con `systemd` (`systemctl enable docker`).
-3. **Contenedores Docker:** Gracias a la directiva `restart: unless-stopped`, los 3 contenedores (`gestornotas_postgres`, `gestornotas_backend`, `gestornotas_frontend`) se levantan automáticamente.
-4. **IP Pública:** Como se reservó una IP estática en el Paso 02, la dirección IP pública es **idéntica a la anterior**.
-
-Prueba física de reactivación:
-```bash
-# Comprobar que Nginx y el frontend responden en puerto 80
-curl -s -I http://<TU_IP_PUBLICA_GCP> | head -n 3
-```
-
-*Salida esperada:*
-```text
-HTTP/1.1 200 OK
-```
-
----
-
-### 🚀 Paso 5: Desmantelamiento Definitivo (Fin del Ciclo del Proyecto)
-
-> [!CAUTION]
-> Ejecuta este paso **únicamente** cuando la materia universitaria haya finalizado y no se requiera conservar la plataforma en la nube, para evitar cualquier cobro residual futuro.
-
-[PC LOCAL]
+Ejecuta las pruebas de verificación externa:
 
 ```bash
-# 1. Crear y descargar el último backup de base de datos a tu computadora
-# 2. Eliminar la instancia de máquina virtual y su disco persistente
-gcloud compute instances delete gestornotas-vm-prod --zone=us-central1-a --quiet
+# 1. Probar respuesta HTTP/HTTPS del Frontend
+curl -s -I "https://<TU_FQDN_AZURE>/" | head -n 3
 
-# 3. Liberar la IP estática reservada (evita cobros por IP ociosa no asociada a VMs)
-gcloud compute addresses delete gestornotas-ip-estatica --region=us-central1 --quiet
+# 2. Probar respuesta de la API REST Backend
+curl -s -I "https://<TU_FQDN_AZURE>/api/v1/health/" | head -n 3
 ```
+
+*Salida esperada:* Ambos comandos responderán con código `HTTP/1.1 200 OK` (o redirección `301` si ingresaste por HTTP puerto 80).
 
 ---
 
 ## 5. Checklist de Cierre del Paso 06
 
-- [ ] Comprendida la diferencia entre `STOP` ($0 CPU/RAM) y `DELETE` (destrucción).
-- [ ] Procedimiento de parada ejecutado y verificado en estado `TERMINATED`.
-- [ ] Procedimiento de encendido probado y verificado en estado `RUNNING`.
-- [ ] Confirmado el auto-arranque de Nginx y contenedores Docker sin intervención manual.
-- [ ] Confirmada la preservación de la misma IP pública estática y datos de PostgreSQL.
+- [ ] Comprendida la diferencia entre `Stopped (Allocated)` y `Stopped (Deallocated)`.
+- [ ] Snapshot preventivo del disco administrado generado con éxito.
+- [ ] Comando `az vm deallocate` probado y verificado en estado `VM deallocated`.
+- [ ] Comando `az vm start` probado y verificado en estado `VM running`.
+- [ ] Servicios Docker y Nginx reactivados automáticamente sin intervención manual.
+- [ ] Plataforma web y API REST respondiendo con código HTTP 200 tras el encendido.
 
 ---
 
-[← Paso Anterior: 05_ACTUALIZAR_PRODUCCION.md](./05_ACTUALIZAR_PRODUCCION.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Dashboard Interactivo: 07_FLUJO_VISUAL_DESPLIEGUE.html →](./07_FLUJO_VISUAL_DESPLIEGUE.html)
+[← Paso Anterior: 05_ACTUALIZAR_PRODUCCION.md](./05_ACTUALIZAR_PRODUCCION.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 07_FLUJO_VISUAL_DESPLIEGUE.html →](./07_FLUJO_VISUAL_DESPLIEGUE.html)

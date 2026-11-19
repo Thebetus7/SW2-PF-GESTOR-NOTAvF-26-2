@@ -1,6 +1,6 @@
 # 🚀 01. Configurar el Proyecto para Producción
 
-[← Paso Anterior: 00_RESUMEN_GENERAL.md](./00_RESUMEN_GENERAL.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 02_CREAR_INFRAESTRUCTURA_GCP.md →](./02_CREAR_INFRAESTRUCTURA_GCP.md)
+[← Paso Anterior: 00_RESUMEN_GENERAL.md](./00_RESUMEN_GENERAL.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 02_CREAR_INFRAESTRUCTURA_AZURE.md →](./02_CREAR_INFRAESTRUCTURA_AZURE.md)
 
 ---
 
@@ -270,7 +270,7 @@ python -c "import secrets; print(secrets.token_hex(24))"
 ### 🚀 Paso 5: Confirmar y Subir Archivos de Producción al Repositorio
 
 > [!NOTE]
-> **Propósito:** Asegurar que los artefactos (`Dockerfile.prod`, `docker-compose.prod.yml` y `.env.production.example`) estén en GitHub para poder descargarlos en la máquina virtual de GCP.
+> **Propósito:** Asegurar que los artefactos (`Dockerfile.prod`, `docker-compose.prod.yml` y `.env.production.example`) estén en GitHub para poder descargarlos en la máquina virtual de Azure.
 > **Contexto de Ejecución:** `[PC LOCAL]`
 > **Ruta de Trabajo:** Raíz del proyecto
 
@@ -282,7 +282,7 @@ git status
 git add frontend/Dockerfile.prod docker-compose.prod.yml .env.production.example docs/deploy/
 
 # 3. Confirmar commit
-git commit -m "build(deploy): configurar artefactos y suite de despliegue para producción GCP"
+git commit -m "build(deploy): configurar artefactos y suite de despliegue para producción Azure"
 
 # 4. Enviar cambios al repositorio remoto
 git push origin main
@@ -305,6 +305,10 @@ git push origin main
 - [ ] Claves criptográficas generadas y resguardadas.
 - [ ] Cambios confirmados y sincronizados en la rama principal de Git.
 
+> [!TIP]
+> **¿Listo para crear tu servidor en la nube?**
+> En el siguiente paso ([02_CREAR_INFRAESTRUCTURA_AZURE.md](./02_CREAR_INFRAESTRUCTURA_AZURE.md)) ingresarás al Portal Web de Azure ([portal.azure.com](https://portal.azure.com/)) desde tu navegador web. Encontrarás una guía visual paso a paso diseñada para principiantes que nunca antes han usado Azure, detallando cada pantalla, botón y campo a configurar.
+
 ---
 
-[← Paso Anterior: 00_RESUMEN_GENERAL.md](./00_RESUMEN_GENERAL.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 02_CREAR_INFRAESTRUCTURA_GCP.md →](./02_CREAR_INFRAESTRUCTURA_GCP.md)
+[← Paso Anterior: 00_RESUMEN_GENERAL.md](./00_RESUMEN_GENERAL.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 02_CREAR_INFRAESTRUCTURA_AZURE.md →](./02_CREAR_INFRAESTRUCTURA_AZURE.md)

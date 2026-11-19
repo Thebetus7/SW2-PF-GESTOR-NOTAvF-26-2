@@ -1,16 +1,48 @@
 # 🚀 03. Instalar Herramientas en el Servidor
 
-[← Paso Anterior: 02_CREAR_INFRAESTRUCTURA_GCP.md](./02_CREAR_INFRAESTRUCTURA_GCP.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 04_DESPLEGAR_Y_VERIFICAR.md →](./04_DESPLEGAR_Y_VERIFICAR.md)
+[← Paso Anterior: 02_CREAR_INFRAESTRUCTURA_AZURE.md](./02_CREAR_INFRAESTRUCTURA_AZURE.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 04_DESPLEGAR_Y_VERIFICAR.md →](./04_DESPLEGAR_Y_VERIFICAR.md)
 
 ---
 
 ## 1. Visión de la Fase
 
-En esta fase preparamos el entorno de ejecución dentro del servidor Ubuntu 22.04 LTS en Google Cloud: actualizamos el sistema base, aprovisionamos memoria Swap de seguridad, instalamos el motor oficial de Docker y Docker Compose, configuramos Nginx y reforzamos la seguridad con el firewall UFW.
+En esta fase preparamos el entorno de ejecución dentro del servidor Ubuntu 22.04 LTS en Microsoft Azure: establecemos la primera conexión SSH, actualizamos el sistema base, aprovisionamos memoria Swap de seguridad, instalamos el motor oficial de Docker y Docker Compose, configuramos Nginx y reforzamos la seguridad con el firewall UFW.
 
 ---
 
 ## 2. Pasos Estructurados de Instalación
+
+### 🚀 Paso 0: Establecer la Primera Conexión SSH con la Máquina Virtual de Azure
+
+> [!NOTE]
+> **Propósito:** Conectarse de forma remota a la instancia `vm-gestornotas` utilizando la credencial que configuraste en el Portal de Azure en el Paso 02.
+> **Contexto de Ejecución:** `[PC LOCAL]` (PowerShell en Windows, Terminal en Linux o macOS)
+
+```bash
+# Opción 1: Si descargaste la clave .pem del Portal de Azure a tu carpeta de Descargas (Recomendada):
+# En Windows PowerShell:
+ssh -i ~/Downloads/vm-gestornotas_key.pem azureuser@<TU_IP_PUBLICA_AZURE>
+
+# O utilizando tu nombre de dominio FQDN gratuito:
+# ssh -i ~/Downloads/vm-gestornotas_key.pem azureuser@<tu-prefijo-dns>.eastus.cloudapp.azure.com
+
+# Opción 2: Si configuraste contraseña en el Portal de Azure:
+# ssh azureuser@<TU_IP_PUBLICA_AZURE>
+
+# Opción 3: Si generaste tu propia clave local con id_rsa_azure:
+# ssh -i ~/.ssh/id_rsa_azure azureuser@<TU_IP_PUBLICA_AZURE>
+```
+
+> [!TIP]
+> **Verificación Observable & Salida Esperada:**
+> Al conectarte por primera vez, el sistema solicitará confirmar la huella digital del host (`ECDSA/ED25519 key fingerprint`). Escribe `yes` y presiona Enter.
+> Si usaste contraseña, ingrésala cuando te la solicite.
+> Verás el prompt de bienvenida de Ubuntu:
+> ```text
+> Welcome to Ubuntu 22.04.x LTS (GNU/Linux x86_64)
+> azureuser@vm-gestornotas:~$
+> ```
+> *(A partir de este momento, todos los comandos marcados como `[SSH / SERVIDOR]` se ejecutan directamente dentro de esta ventana de consola)*.
 
 ### 🚀 Paso 1: Actualizar Repositorios y Paquetes Base del Sistema Operativo
 
@@ -234,4 +266,4 @@ sudo ufw --force enable
 
 ---
 
-[← Paso Anterior: 02_CREAR_INFRAESTRUCTURA_GCP.md](./02_CREAR_INFRAESTRUCTURA_GCP.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 04_DESPLEGAR_Y_VERIFICAR.md →](./04_DESPLEGAR_Y_VERIFICAR.md)
+[← Paso Anterior: 02_CREAR_INFRAESTRUCTURA_AZURE.md](./02_CREAR_INFRAESTRUCTURA_AZURE.md) | [↑ Índice General](./00_RESUMEN_GENERAL.md) | [Siguiente Paso: 04_DESPLEGAR_Y_VERIFICAR.md →](./04_DESPLEGAR_Y_VERIFICAR.md)

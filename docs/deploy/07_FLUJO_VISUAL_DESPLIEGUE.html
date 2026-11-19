@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Interactivo de Despliegue — Gestor de Notas IA (Google Cloud)</title>
+  <title>Dashboard Interactivo de Despliegue — Gestor de Notas IA (Microsoft Azure)</title>
   <style>
     :root[data-theme="dark"] {
       --bg-body: #0b1220;
@@ -586,9 +586,9 @@
       <div class="brand-title">
         <span>🚀 Gestor de Notas & Evaluaciones IA</span>
       </div>
-      <span class="badge badge-cloud">Google Cloud</span>
+      <span class="badge badge-cloud">Microsoft Azure</span>
       <span class="badge badge-env">Producción</span>
-      <span class="badge badge-status">READY / GENERATED</span>
+      <span class="badge badge-status">READY / APPROVED</span>
     </div>
     <div class="topbar-right">
       <div class="search-box">
@@ -619,7 +619,7 @@
         </li>
         <li class="nav-item" data-target="sec-02">
           <div><span class="icon">☁️</span><span>02 Crear Infraestructura</span></div>
-          <span class="node-indicator">GCP</span>
+          <span class="node-indicator">Azure</span>
         </li>
         <li class="nav-item" data-target="sec-03">
           <div><span class="icon">🔧</span><span>03 Instalar Herramientas</span></div>
@@ -649,7 +649,7 @@
         <span class="pipeline-arrow">&rarr;</span>
         <div class="pipeline-node" onclick="showSection('sec-01')"><span>⚙️ 01 Configurar</span></div>
         <span class="pipeline-arrow">&rarr;</span>
-        <div class="pipeline-node" onclick="showSection('sec-02')"><span>☁️ 02 Infra GCP</span></div>
+        <div class="pipeline-node" onclick="showSection('sec-02')"><span>☁️ 02 Infra Azure</span></div>
         <span class="pipeline-arrow">&rarr;</span>
         <div class="pipeline-node" onclick="showSection('sec-03')"><span>🔧 03 Herramientas</span></div>
         <span class="pipeline-arrow">&rarr;</span>
@@ -681,20 +681,20 @@
                 <tbody>
                   <tr><td><strong>Proyecto</strong></td><td>Gestor de Notas & Evaluaciones con IA</td><td>Plataforma para corrección manuscrita con IA</td></tr>
                   <tr><td><strong>Repositorio</strong></td><td><code>SW2-PF-GESTOR-NOTAvF-26-2</code></td><td>Monorepo (Django, Next.js, Flutter)</td></tr>
-                  <tr><td><strong>Proveedor Cloud</strong></td><td>Google Cloud Platform (GCP)</td><td>Compute Engine en región <code>us-central1</code></td></tr>
-                  <tr><td><strong>Instancia VM</strong></td><td><code>e2-medium</code> (2 vCPU, 4.0 GB RAM)</td><td>Capacidad óptima sin riesgo de Out-Of-Memory</td></tr>
-                  <tr><td><strong>Almacenamiento</strong></td><td>30 GB Balanced Persistent Disk</td><td>Capas Docker, base de datos y fotos de exámenes</td></tr>
+                  <tr><td><strong>Proveedor Cloud</strong></td><td>Microsoft Azure</td><td>Virtual Machines en región <code>eastus</code></td></tr>
+                  <tr><td><strong>Instancia VM</strong></td><td><code>Standard_B2s</code> (2 vCPU, 4.0 GiB RAM)</td><td>Capacidad balanceada de la serie B (burstable) sin OOM</td></tr>
+                  <tr><td><strong>Almacenamiento</strong></td><td>30 GB Standard SSD (StandardSSD_LRS)</td><td>Capas Docker, base de datos y fotos JPG de exámenes</td></tr>
                   <tr><td><strong>Sistema Operativo</strong></td><td>Ubuntu 22.04 LTS (x86_64)</td><td>Estabilidad empresarial y soporte de largo plazo</td></tr>
                   <tr><td><strong>Persistencia</strong></td><td>PostgreSQL 16 Alpine en contenedor</td><td>Volumen <code>postgres_data</code> en disco persistente</td></tr>
-                  <tr><td><strong>Reverse Proxy</strong></td><td>Nginx en Host (systemd)</td><td>Puertos 80/443 con límite de subida de 50MB</td></tr>
-                  <tr><td><strong>Motor IA</strong></td><td>Google Gemini API (v1beta Free Tier)</td><td>Modelo gemini-1.5-flash vía API Key</td></tr>
+                  <tr><td><strong>Reverse Proxy</strong></td><td>Nginx en Host (systemd) + SSL Let's Encrypt</td><td>Puertos 80/443 con límite de subida de 50MB</td></tr>
+                  <tr><td><strong>Motor IA</strong></td><td>Google Gemini API (v1beta Free Tier)</td><td>Inferencia multimodal con rotación resiliente</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
 
           <div class="card">
-            <h2 class="section-subtitle">Matriz de Puertos y Seguridad de Red</h2>
+            <h2 class="section-subtitle">Matriz de Puertos y Seguridad de Red (NSG)</h2>
             <div class="table-container">
               <table>
                 <thead>
@@ -702,7 +702,7 @@
                 </thead>
                 <tbody>
                   <tr><td><strong>22</strong></td><td>TCP</td><td>Público / SSH</td><td>OpenSSH</td><td>Administración remota cifrada por llaves</td></tr>
-                  <tr><td><strong>80</strong></td><td>TCP</td><td>Público / HTTP</td><td>Nginx</td><td>Acceso web y redirección segura</td></tr>
+                  <tr><td><strong>80</strong></td><td>TCP</td><td>Público / HTTP</td><td>Nginx</td><td>Acceso web y desafío ACME SSL</td></tr>
                   <tr><td><strong>443</strong></td><td>TCP</td><td>Público / HTTPS</td><td>Nginx</td><td>Tráfico web cifrado TLS</td></tr>
                   <tr><td><strong>3000</strong></td><td>TCP</td><td>127.0.0.1 (Local)</td><td>Next.js Web</td><td>Privado, atendido exclusivamente por Nginx</td></tr>
                   <tr><td><strong>8000</strong></td><td>TCP</td><td>127.0.0.1 (Local)</td><td>Django API</td><td>Privado, atendido en <code>/api/</code> y <code>/admin/</code></td></tr>
@@ -713,18 +713,18 @@
           </div>
 
           <div class="card">
-            <h2 class="section-subtitle">Estimación y Control de Costos Mensuales (us-central1)</h2>
+            <h2 class="section-subtitle">Estimación y Control de Costos Mensuales en Azure (eastus)</h2>
             <div class="table-container">
               <table>
                 <thead>
-                  <tr><th>Recurso</th><th>Operación 24/7</th><th>Al Apagar la VM (Detenida)</th></tr>
+                  <tr><th>Recurso</th><th>Operación 24/7</th><th>Al Desasignar la VM (Deallocated)</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td><strong>Instancia e2-medium (2 vCPU, 4GB)</strong></td><td>~$24.40 USD / mes</td><td><strong>$0.00 USD (Cero cobro)</strong></td></tr>
-                  <tr><td><strong>Disco 30 GB Balanced Disk</strong></td><td>~$3.00 USD / mes</td><td>~$3.00 USD / mes</td></tr>
-                  <tr><td><strong>IP IPv4 Externa Estática</strong></td><td>$0.00 USD (asociada)</td><td>~$2.88 USD si no se asocia</td></tr>
+                  <tr><td><strong>Instancia Standard_B2s (2 vCPU, 4GB)</strong></td><td>~$30.36 USD / mes</td><td><strong>$0.00 USD (Cero cobro)</strong></td></tr>
+                  <tr><td><strong>Disco 30 GB Standard SSD</strong></td><td>~$1.80 USD / mes</td><td>~$1.80 USD / mes</td></tr>
+                  <tr><td><strong>IP Pública Standard + FQDN DNS</strong></td><td>~$3.60 USD / mes</td><td>~$3.60 USD / mes</td></tr>
                   <tr><td><strong>Google Gemini API (Free Tier)</strong></td><td>$0.00 USD</td><td>$0.00 USD</td></tr>
-                  <tr><td><strong>TOTAL ESTIMADO</strong></td><td><strong>~$27.40 USD / mes</strong></td><td><strong>~$3.00 USD / mes</strong></td></tr>
+                  <tr><td><strong>TOTAL ESTIMADO</strong></td><td><strong>~$35.76 USD / mes</strong></td><td><strong>~$5.40 USD / mes</strong></td></tr>
                 </tbody>
               </table>
             </div>
@@ -910,72 +910,88 @@ python -c "import secrets; print(secrets.token_hex(24))"</code></pre>
         </section>
 
         <!-- ========================================== -->
-        <!-- SECCIÓN 02: CREAR INFRAESTRUCTURA GCP -->
+        <!-- SECCIÓN 02: CREAR INFRAESTRUCTURA AZURE -->
         <!-- ========================================== -->
         <section id="sec-02" class="doc-section">
           <div class="section-header">
-            <h1 class="section-title">02. Crear Infraestructura en Google Cloud</h1>
-            <p style="color: var(--text-muted); margin-top: 4px;">Creación de máquina virtual e2-medium, IP estática y reglas de Firewall en GCP.</p>
+            <h1 class="section-title">02. Crear Infraestructura en Microsoft Azure</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Aprovisionamiento de Resource Group, VNet, NSG (puertos 22, 80, 443), IP pública FQDN y VM Standard_B2s en Azure.</p>
           </div>
 
           <!-- Step Card 1 -->
           <div class="step-card">
             <div class="step-card-header">
-              <div class="step-card-title">🚀 Paso 1: Reservar Dirección IPv4 Externa Estática</div>
+              <div class="step-card-title">🚀 Paso 1: Generar Par de Llaves SSH</div>
               <div class="step-meta">
-                <span class="context-tag">[PC LOCAL / CLI]</span>
+                <span class="context-tag">[PC LOCAL]</span>
               </div>
             </div>
-            <p>Reserva una IP pública inmutable en us-central1 para que no cambie al apagar o reiniciar la VM:</p>
+            <p>Genera la llave criptográfica RSA de 4096 bits para autenticarte de forma segura en la VM de Azure:</p>
             <div class="code-box">
               <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-              <pre><code># Reservar IP estática
-gcloud compute addresses create gestornotas-ip-estatica --region=us-central1
-
-# Consultar la IP obtenida
-export STATIC_IP=$(gcloud compute addresses describe gestornotas-ip-estatica --region=us-central1 --format='value(address)')
-echo "Tu IP Estática es: $STATIC_IP"</code></pre>
+              <pre><code>mkdir -p ~/.ssh
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_azure -C "deploy-azure@gestornotas" -N ""
+chmod 400 ~/.ssh/id_rsa_azure</code></pre>
             </div>
           </div>
 
           <!-- Step Card 2 -->
           <div class="step-card">
             <div class="step-card-header">
-              <div class="step-card-title">🚀 Paso 2: Crear Instancia Compute Engine e2-medium</div>
+              <div class="step-card-title">🚀 Paso 2: Crear Resource Group, VNet y Network Security Group</div>
               <div class="step-meta">
-                <span class="context-tag">[PC LOCAL / CLI]</span>
+                <span class="context-tag">[AZURE CLI]</span>
               </div>
             </div>
-            <p>Aprovisiona la VM con 2 vCPU, 4 GB RAM, 30 GB de disco equilibrado y Ubuntu 22.04 LTS:</p>
+            <p>Aprovisiona el grupo de recursos, la red virtual y las reglas de firewall perimetral (puertos 22, 80 y 443):</p>
             <div class="code-box">
               <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-              <pre><code>gcloud compute instances create gestornotas-vm-prod \
-    --zone=us-central1-a \
-    --machine-type=e2-medium \
-    --network-interface=address=$STATIC_IP,network-tier=PREMIUM \
-    --image-family=ubuntu-2204-lts \
-    --image-project=ubuntu-os-cloud \
-    --boot-disk-size=30GB \
-    --boot-disk-type=pd-balanced \
-    --tags=http-server,https-server</code></pre>
-            </div>
-            <div class="alert-box tip">
-              <div class="alert-box-title">✔ Verificación Observable</div>
-              <div><code>gcloud compute instances describe gestornotas-vm-prod --zone=us-central1-a --format='value(status)'</code> &rarr; Salida: <code>RUNNING</code>.</div>
+              <pre><code># 1. Crear Resource Group
+az group create --name rg-gestornotas-prod --location eastus
+
+# 2. Crear VNet y Subred
+az network vnet create --resource-group rg-gestornotas-prod --name vnet-gestornotas --address-prefix 10.0.0.0/16 --subnet-name snet-default --subnet-prefix 10.0.1.0/24
+
+# 3. Crear NSG y Reglas de Entrada (22, 80, 443)
+az network nsg create --resource-group rg-gestornotas-prod --name nsg-gestornotas
+az network nsg rule create --resource-group rg-gestornotas-prod --nsg-name nsg-gestornotas --name Allow-SSH --priority 1000 --access Allow --protocol Tcp --destination-port-ranges 22
+az network nsg rule create --resource-group rg-gestornotas-prod --nsg-name nsg-gestornotas --name Allow-HTTP --priority 1010 --access Allow --protocol Tcp --destination-port-ranges 80
+az network nsg rule create --resource-group rg-gestornotas-prod --nsg-name nsg-gestornotas --name Allow-HTTPS --priority 1020 --access Allow --protocol Tcp --destination-port-ranges 443</code></pre>
             </div>
           </div>
 
           <!-- Step Card 3 -->
           <div class="step-card">
             <div class="step-card-header">
-              <div class="step-card-title">🚀 Paso 3: Conectar por SSH al Servidor</div>
+              <div class="step-card-title">🚀 Paso 3: Crear IP Pública con FQDN y Aprovisionar VM Standard_B2s</div>
               <div class="step-meta">
-                <span class="context-tag">[PC LOCAL]</span>
+                <span class="context-tag">[AZURE CLI]</span>
               </div>
             </div>
+            <p>Crea la IP pública con etiqueta DNS gratuita y levanta la máquina virtual con Ubuntu 22.04 LTS:</p>
             <div class="code-box">
               <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-              <pre><code>gcloud compute ssh gestornotas-vm-prod --zone=us-central1-a</code></pre>
+              <pre><code># 1. IP Pública con subdominio gratuito (.eastus.cloudapp.azure.com)
+az network public-ip create --resource-group rg-gestornotas-prod --name pip-gestornotas --sku Standard --allocation-method Static --dns-name "gestornotas-$RANDOM"
+
+# 2. Aprovisionar Máquina Virtual Ubuntu 22.04 LTS en Standard_B2s
+az vm create \
+  --resource-group rg-gestornotas-prod \
+  --name vm-gestornotas \
+  --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest \
+  --size Standard_B2s \
+  --admin-username azureuser \
+  --ssh-key-values ~/.ssh/id_rsa_azure.pub \
+  --vnet-name vnet-gestornotas \
+  --subnet snet-default \
+  --nsg nsg-gestornotas \
+  --public-ip-address pip-gestornotas \
+  --os-disk-size-gb 30 \
+  --storage-sku StandardSSD_LRS</code></pre>
+            </div>
+            <div class="alert-box tip">
+              <div class="alert-box-title">✔ Conexión SSH Inmediata</div>
+              <div>Conéctate a la VM: <code>ssh -i ~/.ssh/id_rsa_azure azureuser@&lt;TU_IP_PUBLICA_AZURE&gt;</code></div>
             </div>
           </div>
         </section>
@@ -1081,7 +1097,7 @@ sudo ufw status verbose</code></pre>
             <div class="code-box">
               <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
               <pre><code>cd ~
-git clone https://github.com/Thebetus7/SW2-G17-SDD-26-2.git proyecto-gestor-notas
+git clone https://github.com/Thebetus7/SW2-PF-GESTOR-NOTAvF-26-2.git proyecto-gestor-notas
 cd proyecto-gestor-notas
 
 cp .env.production.example .env
@@ -1138,7 +1154,7 @@ docker compose -f docker-compose.prod.yml exec -it backend python manage.py crea
               <div class="code-topbar"><span>NGINX</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
               <pre><code>server {
     listen 80;
-    server_name &lt;TU_IP_PUBLICA_GCP&gt; _;
+    server_name &lt;TU_IP_PUBLICA_AZURE&gt; &lt;TU_FQDN_AZURE&gt; _;
 
     client_max_body_size 50M;
 
@@ -1243,25 +1259,43 @@ docker compose -f docker-compose.prod.yml up -d --build --force-recreate</code><
         </section>
 
         <!-- ========================================== -->
-        <!-- SECCIÓN 06: APAGAR Y REACTIVAR -->
+        <!-- SECCIÓN 06: APAGAR Y REACTIVAR (AZURE) -->
         <!-- ========================================== -->
         <section id="sec-06" class="doc-section">
           <div class="section-header">
-            <h1 class="section-title">06. Apagar, Reactivar y Control de Costos</h1>
-            <p style="color: var(--text-muted); margin-top: 4px;">Suspensión de máquina virtual ($0 CPU/RAM), snapshots y reanudación automática.</p>
+            <h1 class="section-title">06. Apagar, Reactivar y Control de Costos en Azure</h1>
+            <p style="color: var(--text-muted); margin-top: 4px;">Desasignación de máquina virtual ($0 CPU/RAM), snapshot preventivo y reactivación automática.</p>
           </div>
 
           <div class="step-card">
             <div class="step-card-header">
-              <div class="step-card-title">🚀 Detener la Máquina Virtual (Ahorro de Costos)</div>
+              <div class="step-card-title">🚀 Snapshot Preventivo del Disco Administrado</div>
               <div class="step-meta">
-                <span class="context-tag">[PC LOCAL]</span>
+                <span class="context-tag">[AZURE CLI]</span>
               </div>
             </div>
             <div class="code-box">
               <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-              <pre><code># Detener la VM (Costo de CPU/RAM desciende a $0.00)
-gcloud compute instances stop gestornotas-vm-prod --zone=us-central1-a</code></pre>
+              <pre><code>OS_DISK_ID=$(az vm show --resource-group rg-gestornotas-prod --name vm-gestornotas --query "storageProfile.osDisk.managedDisk.id" --output tsv)
+az snapshot create --resource-group rg-gestornotas-prod --name "snapshot-gestornotas-$(date +%Y%m%d)" --source "$OS_DISK_ID"</code></pre>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-card-title">🚀 Desasignar la Máquina Virtual (Costo CPU/RAM = $0.00)</div>
+              <div class="step-meta">
+                <span class="context-tag">[AZURE CLI]</span>
+              </div>
+            </div>
+            <div class="code-box">
+              <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+              <pre><code># Desasignar la VM (Libera vCPU y memoria; la facturación de cómputo pasa a $0.00)
+az vm deallocate --resource-group rg-gestornotas-prod --name vm-gestornotas</code></pre>
+            </div>
+            <div class="alert-box warning">
+              <div class="alert-box-title">⚠ Regla de Facturación en Azure</div>
+              <div>Solo el estado <code>Stopped (deallocated)</code> pausa la facturación de cómputo. Apagar desde dentro del sistema operativo deja la máquina en <code>Stopped (allocated)</code> y sigue generando costos.</div>
             </div>
           </div>
 
@@ -1269,17 +1303,17 @@ gcloud compute instances stop gestornotas-vm-prod --zone=us-central1-a</code></p
             <div class="step-card-header">
               <div class="step-card-title">🚀 Reactivar la Máquina Virtual</div>
               <div class="step-meta">
-                <span class="context-tag">[PC LOCAL]</span>
+                <span class="context-tag">[AZURE CLI]</span>
               </div>
             </div>
             <div class="code-box">
               <div class="code-topbar"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-              <pre><code># Encender la VM
-gcloud compute instances start gestornotas-vm-prod --zone=us-central1-a</code></pre>
+              <pre><code># Encender la VM nuevamente al reanudar clases
+az vm start --resource-group rg-gestornotas-prod --name vm-gestornotas</code></pre>
             </div>
             <div class="alert-box tip">
               <div class="alert-box-title">✔ Auto-Arranque Confirmado</div>
-              <div>Nginx y los contenedores de Docker arrancan solos en 30 segundos gracias a <code>restart: unless-stopped</code>, conservando la misma IP pública estática y la integridad de PostgreSQL.</div>
+              <div>Nginx y los contenedores Docker arrancan solos en 30 segundos gracias a <code>restart: unless-stopped</code>, conservando la misma IP pública y el subdominio DNS de Azure intactos.</div>
             </div>
           </div>
         </section>

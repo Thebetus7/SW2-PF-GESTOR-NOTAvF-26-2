@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.evaluacion.gestornotas_mobile">
+    <!-- Permiso requerido para depuración remota en emulador y flutter run -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>

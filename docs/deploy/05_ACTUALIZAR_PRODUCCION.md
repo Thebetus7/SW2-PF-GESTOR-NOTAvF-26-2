@@ -17,7 +17,7 @@ sequenceDiagram
     autonumber
     actor Dev as 💻 Desarrollador (PC Local)
     participant Git as 🐙 GitHub Repository
-    participant Srv as 🖥️ Servidor GCP (Compute Engine)
+    participant Srv as 🖥️ Servidor Azure (Virtual Machine)
     participant DB as 🗄️ PostgreSQL Container
 
     Dev->>Git: git push origin main (Nueva versión)
@@ -55,7 +55,7 @@ git push origin main
 > [!TIP]
 > **Verificación Observable & Salida Esperada:**
 > ```text
-> To https://github.com/Thebetus7/SW2-G17-SDD-26-2.git
+> To https://github.com/Thebetus7/SW2-PF-GESTOR-NOTAvF-26-2.git
 >    1234567..89abcde  main -> main
 > ```
 
