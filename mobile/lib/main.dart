@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/config/env_config.dart';
 import 'core/theme/cafeblend_theme.dart';
 import 'modules/auth/views/login_view.dart';
 import 'modules/courses/views/course_selection_view.dart';
@@ -11,9 +12,13 @@ Future<void> main() async {
 
   // Carga segura del archivo .env para configuración de IP/puerto backend
   try {
-    await dotenv.load(fileName: '.env');
-  } catch (e) {
-    debugPrint('Aviso: No se pudo cargar .env en Flutter ($e). Se usará URL por defecto.');
+    await dotenv.load(fileName: 'assets/.env');
+  } catch (_) {
+    try {
+      await dotenv.load(fileName: '.env');
+    } catch (e) {
+      debugPrint('Aviso: No se pudo cargar .env en Flutter ($e). Se usará URL por defecto (${EnvConfig.apiBaseUrl}).');
+    }
   }
 
   // Comprobar si existe sesión activa previa

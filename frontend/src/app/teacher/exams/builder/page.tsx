@@ -227,22 +227,23 @@ function ExamBuilderContent() {
     <div>
       <Navbar userRole="TEACHER" userName="Profesor Evaluador" />
 
-      <main style={{ maxWidth: '1080px', margin: '2.5rem auto', padding: '0 1.5rem' }}>
+      <main className="max-w-5xl mx-auto my-4 sm:my-8 px-3 sm:px-6">
         <Breadcrumbs items={breadcrumbItems} />
 
-        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 style={{ fontSize: '2.25rem', marginBottom: '0.25rem' }}>Constructor Modular de Exámenes</h1>
-            <p style={{ color: 'var(--color-text-secondary)' }}>
+            <h1 className="text-2xl sm:text-3xl font-headline font-bold text-[var(--color-primary)] mb-1">
+              Constructor Modular de Exámenes
+            </h1>
+            <p className="text-sm sm:text-base text-[var(--color-text-secondary)]">
               Configure la rúbrica, preguntas y tolerancias pedagógicas para este examen. Las asignaturas y aulas se gestionan en Mis Materias.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div className="w-full sm:w-auto flex justify-end">
             <button
               onClick={handleSaveExam}
               disabled={saving}
-              className="btn-primary"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+              className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2 py-2.5 px-5"
             >
               <Save size={18} />
               <span>{saving ? 'Guardando...' : 'Guardar Examen'}</span>
@@ -251,24 +252,24 @@ function ExamBuilderContent() {
         </header>
 
         {error && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', backgroundColor: 'var(--color-error-bg)', color: 'var(--color-error)', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
-            <AlertCircle size={20} />
-            <span>{error}</span>
+          <div className="flex items-center gap-3 p-4 bg-[var(--color-error-bg)] text-[var(--color-error)] rounded-xl border border-[var(--color-error)] mb-6">
+            <AlertCircle size={20} className="shrink-0" />
+            <span className="text-sm">{error}</span>
           </div>
         )}
 
         {successMsg && (
-          <div style={{ padding: '1.25rem', backgroundColor: 'var(--color-success-bg)', color: 'var(--color-success)', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem', fontWeight: 600 }}>
-              <CheckCircle2 size={20} />
+          <div className="p-4 sm:p-5 bg-[var(--color-success-bg)] text-[var(--color-success)] rounded-xl border border-[var(--color-success)] mb-6">
+            <div className="flex items-center gap-3 mb-3 font-semibold">
+              <CheckCircle2 size={20} className="shrink-0" />
               <span>{successMsg}</span>
             </div>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <button onClick={() => downloadPdf('with_qr')} className="btn-primary" style={{ fontSize: '0.85rem', padding: '0.5rem 1rem' }}>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button onClick={() => downloadPdf('with_qr')} className="btn-primary text-xs sm:text-sm py-2 px-4 flex items-center justify-center gap-2">
                 <QrCode size={16} />
                 <span>Descargar PDF con QR</span>
               </button>
-              <button onClick={() => downloadPdf('without_qr')} className="btn-secondary" style={{ fontSize: '0.85rem', padding: '0.5rem 1rem' }}>
+              <button onClick={() => downloadPdf('without_qr')} className="btn-secondary text-xs sm:text-sm py-2 px-4 flex items-center justify-center gap-2">
                 <Download size={16} />
                 <span>Descargar PDF sin QR</span>
               </button>
@@ -277,12 +278,12 @@ function ExamBuilderContent() {
         )}
 
         {/* Datos Generales del Examen */}
-        <section className="card" style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1.25rem' }}>1. Parámetros del Examen</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+        <section className="card mb-6">
+          <h2 className="text-lg font-bold mb-4 font-headline">1. Parámetros del Examen</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>Aula / Paralelo</label>
-              <select className="input-field" value={parallelId} onChange={(e) => setParallelId(e.target.value)}>
+              <label className="block text-xs sm:text-sm font-semibold mb-1">Aula / Paralelo</label>
+              <select className="input-field w-full" value={parallelId} onChange={(e) => setParallelId(e.target.value)}>
                 {parallels.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.subject_name} — Aula {p.group_code} ({p.period})
@@ -291,29 +292,29 @@ function ExamBuilderContent() {
               </select>
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>Título de la Evaluación</label>
-              <input type="text" className="input-field" value={title} onChange={(e) => setTitle(e.target.value)} />
+              <label className="block text-xs sm:text-sm font-semibold mb-1">Título de la Evaluación</label>
+              <input type="text" className="input-field w-full" value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', gap: '1.25rem', marginBottom: '1rem' }}>
-            <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>Instrucciones en Hoja</label>
-              <input type="text" className="input-field" value={description} onChange={(e) => setDescription(e.target.value)} />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            <div className="sm:col-span-1">
+              <label className="block text-xs sm:text-sm font-semibold mb-1">Instrucciones en Hoja</label>
+              <input type="text" className="input-field w-full" value={description} onChange={(e) => setDescription(e.target.value)} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>Fecha de Aplicación</label>
-              <input type="date" className="input-field" value={applicationDate} onChange={(e) => setApplicationDate(e.target.value)} />
+              <label className="block text-xs sm:text-sm font-semibold mb-1">Fecha de Aplicación</label>
+              <input type="date" className="input-field w-full" value={applicationDate} onChange={(e) => setApplicationDate(e.target.value)} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>Puntaje Nominal Total</label>
-              <input type="number" className="input-field" value={totalScore} onChange={(e) => setTotalScore(Number(e.target.value))} />
+              <label className="block text-xs sm:text-sm font-semibold mb-1">Puntaje Nominal Total</label>
+              <input type="number" className="input-field w-full" value={totalScore} onChange={(e) => setTotalScore(Number(e.target.value))} />
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <input type="checkbox" id="qrCheck" checked={hasQrCode} onChange={(e) => setHasQrCode(e.target.checked)} />
-            <label htmlFor="qrCheck" style={{ fontSize: '0.9rem', color: 'var(--color-text)', cursor: 'pointer' }}>
+          <div className="flex items-start sm:items-center gap-2.5 mt-2">
+            <input type="checkbox" id="qrCheck" className="mt-1 sm:mt-0" checked={hasQrCode} onChange={(e) => setHasQrCode(e.target.checked)} />
+            <label htmlFor="qrCheck" className="text-xs sm:text-sm text-[var(--color-text)] cursor-pointer">
               Incluir código QR identificador de calibración en la esquina superior del PDF
             </label>
           </div>
@@ -321,70 +322,63 @@ function ExamBuilderContent() {
 
         {/* Barra de Balanceo de Puntaje */}
         <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '1rem 1.5rem',
-            backgroundColor: isBalanced ? 'var(--color-surface)' : 'var(--color-warning-bg)',
-            border: `1px solid ${isBalanced ? 'var(--color-border)' : 'var(--color-warning)'}`,
-            borderRadius: 'var(--radius-md)',
-            marginBottom: '2rem',
-          }}
+          className={`flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 rounded-xl mb-6 border ${
+            isBalanced
+              ? 'bg-[var(--color-surface)] border-[var(--color-border)]'
+              : 'bg-[var(--color-warning-bg)] border-[var(--color-warning)]'
+          }`}
         >
           <div>
-            <strong style={{ fontSize: '1.05rem', color: isBalanced ? 'var(--color-primary)' : 'var(--color-warning)' }}>
+            <strong className={`text-sm sm:text-base ${isBalanced ? 'text-[var(--color-primary)]' : 'text-[var(--color-warning)]'}`}>
               Balance de Calificación: {currentSum} / {totalScore} pts
             </strong>
-            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginTop: '0.2rem' }}>
+            <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] mt-0.5">
               {isBalanced ? '✓ La suma de los componentes coincide con el total nominal.' : '⚠ Ajuste los puntajes de los componentes para igualar el total.'}
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button onClick={() => addComponent('OPEN')} className="btn-secondary" style={{ fontSize: '0.85rem' }}>
+          <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+            <button onClick={() => addComponent('OPEN')} className="btn-secondary flex-1 sm:flex-none text-xs sm:text-sm py-1.5 px-3">
               <Plus size={15} /> + Pregunta Abierta
             </button>
-            <button onClick={() => addComponent('MULTIPLE_CHOICE')} className="btn-secondary" style={{ fontSize: '0.85rem' }}>
+            <button onClick={() => addComponent('MULTIPLE_CHOICE')} className="btn-secondary flex-1 sm:flex-none text-xs sm:text-sm py-1.5 px-3">
               <Plus size={15} /> + Opción Múltiple
             </button>
-            <button onClick={() => addComponent('TRUE_FALSE')} className="btn-secondary" style={{ fontSize: '0.85rem' }}>
+            <button onClick={() => addComponent('TRUE_FALSE')} className="btn-secondary flex-1 sm:flex-none text-xs sm:text-sm py-1.5 px-3">
               <Plus size={15} /> + V / F
             </button>
           </div>
         </div>
 
         {/* Lista de Componentes */}
-        <section style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
+        <section className="flex flex-col gap-4 sm:gap-6 mb-12">
           {components.map((comp, idx) => (
-            <div key={comp.id} className="card" style={{ position: 'relative' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, backgroundColor: 'var(--color-surface-inset)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-sm)', color: 'var(--color-primary)' }}>
+            <div key={comp.id} className="card relative p-4 sm:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="text-xs sm:text-sm font-bold bg-[var(--color-surface-inset)] px-2.5 py-1 rounded text-[var(--color-primary)]">
                     P{idx + 1}
                   </span>
-                  <span style={{ fontWeight: 600, color: 'var(--color-text)' }}>
+                  <span className="font-semibold text-sm sm:text-base text-[var(--color-text)]">
                     {comp.type === 'OPEN' && 'Pregunta Abierta / Desarrollo'}
                     {comp.type === 'MULTIPLE_CHOICE' && 'Opción Múltiple'}
                     {comp.type === 'TRUE_FALSE' && 'Verdadero o Falso'}
                   </span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Pts:</label>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <label className="text-xs sm:text-sm font-semibold">Pts:</label>
                     <input
                       type="number"
-                      style={{ width: '70px', padding: '0.35rem' }}
-                      className="input-field"
+                      className="input-field w-16 sm:w-20 text-center py-1 px-2"
                       value={comp.max_score}
                       onChange={(e) => updateComponent(comp.id, { max_score: Number(e.target.value) })}
                     />
                   </div>
                   <button
                     onClick={() => removeComponent(comp.id)}
-                    className="btn-secondary"
-                    style={{ padding: '0.35rem 0.5rem', color: 'var(--color-error)' }}
+                    className="btn-secondary p-1.5 text-[var(--color-error)]"
                     title="Eliminar pregunta"
                   >
                     <Trash2 size={16} />
@@ -393,11 +387,11 @@ function ExamBuilderContent() {
               </div>
 
               {/* Enunciado */}
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem' }}>Enunciado de la Pregunta</label>
+              <div className="mb-4">
+                <label className="block text-xs sm:text-sm font-semibold mb-1">Enunciado de la Pregunta</label>
                 <textarea
                   rows={2}
-                  className="input-field"
+                  className="input-field w-full"
                   value={comp.prompt}
                   onChange={(e) => updateComponent(comp.id, { prompt: e.target.value })}
                   placeholder="Redacte la consigna o interrogante para el estudiante..."
@@ -406,28 +400,26 @@ function ExamBuilderContent() {
 
               {/* Configuración específica según tipo */}
               {comp.type === 'OPEN' && (
-                <div style={{ backgroundColor: 'var(--color-surface-inset)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
-                  <div style={{ marginBottom: '0.75rem' }}>
-                    <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.2rem' }}>
+                <div className="bg-[var(--color-surface-inset)] p-3 sm:p-4 rounded-xl border border-[var(--color-border)] space-y-3">
+                  <div>
+                    <label className="block text-xs font-semibold mb-1">
                       Contexto Pedagógico de Referencia (Para la IA)
                     </label>
                     <input
                       type="text"
-                      className="input-field"
-                      style={{ backgroundColor: 'var(--color-surface)' }}
+                      className="input-field w-full bg-[var(--color-surface)]"
                       value={comp.context || ''}
                       onChange={(e) => updateComponent(comp.id, { context: e.target.value })}
                       placeholder="Respuesta ideal esperada o criterios clave para guiar a Gemini..."
                     />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.2rem' }}>
+                      <label className="block text-xs font-semibold mb-1">
                         Nivel de Tolerancia Semántica
                       </label>
                       <select
-                        className="input-field"
-                        style={{ backgroundColor: 'var(--color-surface)' }}
+                        className="input-field w-full bg-[var(--color-surface)]"
                         value={comp.tolerance || 'MODERATE'}
                         onChange={(e) => updateComponent(comp.id, { tolerance: e.target.value as any })}
                       >
@@ -437,13 +429,12 @@ function ExamBuilderContent() {
                       </select>
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.2rem' }}>
+                      <label className="block text-xs font-semibold mb-1">
                         Palabras Clave de Respaldo (separadas por coma)
                       </label>
                       <input
                         type="text"
-                        className="input-field"
-                        style={{ backgroundColor: 'var(--color-surface)' }}
+                        className="input-field w-full bg-[var(--color-surface)]"
                         value={comp.tolerance_keywords || ''}
                         onChange={(e) => updateComponent(comp.id, { tolerance_keywords: e.target.value })}
                         placeholder="ej. cohesión, desacoplamiento, módulos"
@@ -454,23 +445,23 @@ function ExamBuilderContent() {
               )}
 
               {comp.type === 'MULTIPLE_CHOICE' && (
-                <div style={{ backgroundColor: 'var(--color-surface-inset)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
-                  <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+                <div className="bg-[var(--color-surface-inset)] p-3 sm:p-4 rounded-xl border border-[var(--color-border)]">
+                  <label className="block text-xs font-semibold mb-2">
                     Opciones y Respuesta Correcta
                   </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-2">
                     {(comp.options || []).map((opt, optIdx) => (
-                      <div key={optIdx} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div key={optIdx} className="flex items-center gap-2">
                         <input
                           type="radio"
                           name={`correct-${comp.id}`}
+                          className="shrink-0"
                           checked={comp.correct_choice === opt}
                           onChange={() => updateComponent(comp.id, { correct_choice: opt })}
                         />
                         <input
                           type="text"
-                          className="input-field"
-                          style={{ backgroundColor: 'var(--color-surface)', padding: '0.4rem 0.6rem' }}
+                          className="input-field w-full bg-[var(--color-surface)] py-1.5 px-3 text-xs sm:text-sm"
                           value={opt}
                           onChange={(e) => {
                             const newOpts = [...(comp.options || [])];
@@ -485,12 +476,12 @@ function ExamBuilderContent() {
               )}
 
               {comp.type === 'TRUE_FALSE' && (
-                <div style={{ backgroundColor: 'var(--color-surface-inset)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
-                  <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+                <div className="bg-[var(--color-surface-inset)] p-3 sm:p-4 rounded-xl border border-[var(--color-border)]">
+                  <label className="block text-xs font-semibold mb-2">
                     Respuesta Correcta
                   </label>
-                  <div style={{ display: 'flex', gap: '2rem' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                  <div className="flex items-center gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer text-sm">
                       <input
                         type="radio"
                         name={`tf-${comp.id}`}
@@ -499,7 +490,7 @@ function ExamBuilderContent() {
                       />
                       <span>Verdadero</span>
                     </label>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                    <label className="flex items-center gap-2 cursor-pointer text-sm">
                       <input
                         type="radio"
                         name={`tf-${comp.id}`}

@@ -20,7 +20,7 @@ interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
-  source?: 'groq' | 'fallback';
+  source?: 'gemini' | 'groq' | 'fallback';
   timestamp: string;
 }
 
@@ -271,7 +271,7 @@ export const ChatWidget: React.FC = () => {
                 </h3>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse"></span>
-                  <span className="text-[11px] font-mono text-[#D4A373]">GroqCloud Llama-3.3</span>
+                  <span className="text-[11px] font-mono text-[#D4A373]">IA Activa &bull; Base de Datos</span>
                 </div>
               </div>
             </div>
@@ -330,7 +330,7 @@ export const ChatWidget: React.FC = () => {
                     <span>{msg.timestamp}</span>
                     {msg.source && (
                       <span className="font-mono text-[9px] uppercase px-1 rounded bg-[#F0E6D6] dark:bg-[#1F150F] text-[#8B5E3C] dark:text-[#D4A373]">
-                        {msg.source === 'groq' ? 'Groq 70B' : 'Base SDD'}
+                        {msg.source === 'gemini' ? 'Gemini IA' : msg.source === 'groq' ? 'Groq 70B' : 'Base SDD'}
                       </span>
                     )}
                   </div>

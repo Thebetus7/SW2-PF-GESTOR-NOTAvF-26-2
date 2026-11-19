@@ -16,19 +16,8 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Migas de pan" style={{ marginBottom: '1.5rem' }}>
-      <ol
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          gap: '0.5rem',
-          listStyle: 'none',
-          padding: 0,
-          margin: 0,
-          fontSize: '0.875rem',
-        }}
-      >
+    <nav aria-label="Migas de pan" className="mb-4 overflow-hidden">
+      <ol className="flex items-center gap-1.5 overflow-x-auto whitespace-nowrap py-1 scrollbar-none text-xs sm:text-sm list-none p-0 m-0">
         <li style={{ display: 'inline-flex', alignItems: 'center' }}>
           <Link
             href="/"

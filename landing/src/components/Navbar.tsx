@@ -62,13 +62,13 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
 
         {/* CTA Button */}
         <div className="hidden md:flex items-center gap-4">
-          <Link
+          <a
             href={appUrl}
             className="inline-flex items-center gap-2 bg-[#8B5E3C] hover:bg-[#724A2D] text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-[0_4px_14px_rgba(139,94,60,0.3)] hover:shadow-[0_6px_18px_rgba(139,94,60,0.4)] transition-all transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <span>Ingresar a la Plataforma</span>
             <ArrowRight className="w-4 h-4" />
-          </Link>
+          </a>
         </div>
 
         {/* Mobile menu trigger */}
@@ -117,14 +117,14 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
             WhatsApp (+591 77389330)
           </a>
           <div className="pt-2">
-            <Link
+            <a
               href={appUrl}
               onClick={() => setMobileMenuOpen(false)}
               className="w-full flex items-center justify-center gap-2 bg-[#8B5E3C] hover:bg-[#724A2D] text-white text-base font-semibold px-4 py-3 rounded-xl shadow-md"
             >
               <span>Ingresar a la Plataforma</span>
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
         </div>
       )}

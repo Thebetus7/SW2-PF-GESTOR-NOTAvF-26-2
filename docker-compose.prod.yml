@@ -80,6 +80,8 @@ services:
       - "127.0.0.1:3002:3002"
     environment:
       GROQ_API_KEY: ${GROQ_API_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      BACKEND_INTERNAL_URL: http://backend:8000
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-/app/login}
       PORT: 3002
     networks:

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Menu, X, BookOpen, Layers, Users, FileSpreadsheet, Award } from 'lucide-react';
 import { UserMenuDropdown } from './UserMenuDropdown';
 import { UserRole } from '@/types';
 
@@ -18,6 +18,11 @@ export function Navbar({ userRole: propRole, userName: propName, userEmail: prop
   const [currentRole, setCurrentRole] = useState<UserRole>(propRole || 'TEACHER');
   const [currentName, setCurrentName] = useState<string>(propName || 'Usuario');
   const [currentEmail, setCurrentEmail] = useState<string>(propEmail || '');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const storedRole = localStorage.getItem('user_role') as UserRole | null;
@@ -72,98 +77,143 @@ export function Navbar({ userRole: propRole, userName: propName, userEmail: prop
   };
 
   return (
-    <nav
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0.65rem 2rem',
-        backgroundColor: 'var(--color-surface)',
-        borderBottom: '1px solid var(--color-border)',
-        boxShadow: 'var(--shadow-warm-sm)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-      }}
-    >
-      {/* Lado Izquierdo: Marca y Enlaces de Navegación */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-        <Link
-          href="/"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            textDecoration: 'none',
-            color: 'var(--color-primary)',
-            fontWeight: 700,
-            fontSize: '1.25rem',
-            paddingRight: '0.5rem',
-          }}
-        >
-          <GraduationCap size={28} />
-          <span>GestorNotas IA</span>
-        </Link>
+    <header className="sticky top-0 z-50 bg-[var(--color-surface)] border-b border-[var(--color-border)] shadow-[var(--shadow-warm-sm)]">
+      <nav className="flex items-center justify-between px-3 sm:px-6 py-2.5 max-w-7xl mx-auto">
+        {/* Lado Izquierdo: Marca y Enlaces de Escritorio */}
+        <div className="flex items-center gap-3 sm:gap-6">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-[var(--color-primary)] font-bold text-lg sm:text-xl no-underline"
+          >
+            <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-[var(--color-primary)] shrink-0" />
+            <span className="font-headline tracking-tight">GestorNotas <span className="text-[var(--color-secondary)]">IA</span></span>
+          </Link>
 
-        {/* Enlaces de Administrador */}
-        {currentRole === 'ADMIN' && (
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Link
-              href="/admin/teachers"
-              style={getLinkStyle('/admin/teachers')}
-            >
-              Profesores
-            </Link>
-            <Link
-              href="/admin/students/import"
-              style={getLinkStyle('/admin/students/import')}
-            >
-              Importar Estudiantes (Excel)
-            </Link>
+          {/* Enlaces de Escritorio (ocultos en móvil) */}
+          <div className="hidden md:flex items-center gap-2">
+            {currentRole === 'ADMIN' && (
+              <>
+                <Link href="/admin/teachers" style={getLinkStyle('/admin/teachers')}>
+                  Profesores
+                </Link>
+                <Link href="/admin/students/import" style={getLinkStyle('/admin/students/import')}>
+                  Importar Estudiantes (Excel)
+                </Link>
+              </>
+            )}
+
+            {currentRole === 'TEACHER' && (
+              <>
+                <Link href="/teacher/courses" style={getLinkStyle('/teacher/courses')} title="Mis Materias y Aulas">
+                  Mis Materias
+                </Link>
+                <Link href="/teacher/exams/builder" style={getLinkStyle('/teacher/exams/builder')} title="Constructor de Exámenes">
+                  Constructor de Exámenes
+                </Link>
+              </>
+            )}
+
+            {currentRole === 'STUDENT' && (
+              <Link href="/student/portal" style={getLinkStyle('/student/portal')}>
+                Mis Calificaciones
+              </Link>
+            )}
           </div>
-        )}
+        </div>
 
-        {/* Enlaces de Docente */}
-        {currentRole === 'TEACHER' && (
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Link
-              href="/teacher/courses"
-              style={getLinkStyle('/teacher/courses')}
-              title="Mis Materias y Aulas"
-            >
-              Mis Materias
-            </Link>
-            <Link
-              href="/teacher/exams/builder"
-              style={getLinkStyle('/teacher/exams/builder')}
-              title="Constructor y Editor de Exámenes"
-            >
-              Constructor de Exámenes
-            </Link>
-          </div>
-        )}
+        {/* Lado Derecho: Menú de Usuario + Botón Móvil */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <UserMenuDropdown
+            userRole={currentRole}
+            userName={currentName}
+            userEmail={currentEmail}
+          />
 
-        {/* Enlace de Estudiante */}
-        {currentRole === 'STUDENT' && (
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          {/* Botón Hamburguesa para Móvil */}
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg text-[var(--color-text)] hover:bg-[var(--color-surface-inset)] transition-colors border border-[var(--color-border)]"
+            aria-label="Abrir menú de navegación"
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Menú Desplegable Móvil */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 space-y-2 animate-in slide-in-from-top-2 duration-150 shadow-lg">
+          {currentRole === 'ADMIN' && (
+            <>
+              <Link
+                href="/admin/teachers"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  isLinkActive('/admin/teachers')
+                    ? 'bg-[var(--color-surface-inset)] text-[var(--color-primary)] font-bold'
+                    : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-inset)]'
+                }`}
+              >
+                <Users size={18} />
+                <span>Gestión de Profesores</span>
+              </Link>
+              <Link
+                href="/admin/students/import"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  isLinkActive('/admin/students/import')
+                    ? 'bg-[var(--color-surface-inset)] text-[var(--color-primary)] font-bold'
+                    : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-inset)]'
+                }`}
+              >
+                <FileSpreadsheet size={18} />
+                <span>Importar Estudiantes (Excel)</span>
+              </Link>
+            </>
+          )}
+
+          {currentRole === 'TEACHER' && (
+            <>
+              <Link
+                href="/teacher/courses"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  isLinkActive('/teacher/courses')
+                    ? 'bg-[var(--color-surface-inset)] text-[var(--color-primary)] font-bold'
+                    : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-inset)]'
+                }`}
+              >
+                <BookOpen size={18} />
+                <span>Mis Materias y Aulas</span>
+              </Link>
+              <Link
+                href="/teacher/exams/builder"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  isLinkActive('/teacher/exams/builder')
+                    ? 'bg-[var(--color-surface-inset)] text-[var(--color-primary)] font-bold'
+                    : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-inset)]'
+                }`}
+              >
+                <Layers size={18} />
+                <span>Constructor de Exámenes</span>
+              </Link>
+            </>
+          )}
+
+          {currentRole === 'STUDENT' && (
             <Link
               href="/student/portal"
-              style={getLinkStyle('/student/portal')}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                isLinkActive('/student/portal')
+                  ? 'bg-[var(--color-surface-inset)] text-[var(--color-primary)] font-bold'
+                  : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-inset)]'
+              }`}
             >
-              Mis Calificaciones
+              <Award size={18} />
+              <span>Mis Calificaciones</span>
             </Link>
-          </div>
-        )}
-      </div>
-
-      {/* Lado Derecho: Menú Dropdown de Usuario Unificado */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <UserMenuDropdown
-          userRole={currentRole}
-          userName={currentName}
-          userEmail={currentEmail}
-        />
-      </div>
-    </nav>
+          )}
+        </div>
+      )}
+    </header>
   );
 }

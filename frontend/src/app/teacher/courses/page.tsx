@@ -78,48 +78,31 @@ export default function TeacherCoursesPage() {
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--color-background)' }}>
       <Navbar userRole="TEACHER" userName="Profesor Evaluador" />
 
-      <main style={{ maxWidth: '1140px', margin: '2.5rem auto', padding: '0 1.5rem' }}>
+      <main className="max-w-6xl mx-auto my-4 sm:my-8 px-3 sm:px-6">
         {/* Cabecera con Título y Acción Primaria Modal */}
-        <header
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-            marginBottom: '2rem',
-          }}
-        >
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1
-              style={{
-                fontFamily: 'var(--font-headline)',
-                fontSize: '2.25rem',
-                color: 'var(--color-primary)',
-                marginBottom: '0.35rem',
-              }}
-            >
+            <h1 className="font-headline text-2xl sm:text-3xl text-[var(--color-primary)] mb-1">
               Mis Materias
             </h1>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem' }}>
+            <p className="text-xs sm:text-sm text-[var(--color-text-secondary)]">
               Catálogo de asignaturas asignadas. Seleccione una materia para administrar sus aulas y exámenes.
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
             <button
               type="button"
               onClick={fetchCourses}
-              className="btn-secondary"
+              className="btn-secondary p-2.5"
               title="Refrescar catálogo"
-              style={{ padding: '0.625rem 0.85rem' }}
             >
               <RefreshCw size={16} />
             </button>
             <button
               type="button"
               onClick={handleOpenCreateModal}
-              className="btn-primary"
+              className="btn-primary flex items-center justify-center gap-2 py-2.5 px-4 text-xs sm:text-sm flex-1 sm:flex-none"
             >
               <PlusCircle size={18} />
               <span>+ Nueva Materia</span>
@@ -212,13 +195,7 @@ export default function TeacherCoursesPage() {
             </button>
           </div>
         ) : (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-              gap: '1.5rem',
-            }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {subjects.map((sub) => {
               const parallelCount = sub.parallels?.length || 0;
               const totalStudents = (sub.parallels || []).reduce(

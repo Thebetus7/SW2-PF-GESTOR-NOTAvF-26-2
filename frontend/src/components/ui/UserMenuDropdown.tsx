@@ -186,8 +186,8 @@ export function UserMenuDropdown({
           {initials}
         </div>
 
-        {/* Info usuario visible */}
-        <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
+        {/* Info usuario visible (oculto en pantallas muy pequeñas) */}
+        <div className="hidden sm:flex" style={{ textAlign: 'left', flexDirection: 'column' }}>
           <span
             style={{
               fontSize: '0.875rem',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/widgets/breadcrumb_bar.dart';
@@ -45,6 +46,24 @@ class _CourseSelectionViewState extends State<CourseSelectionView> {
           _errorMessage = 'Error al obtener materias del servidor (${response.statusCode})';
         });
       }
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Sesión expirada o no autorizada. Por favor inicia sesión nuevamente.')),
+          );
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const LoginView()),
+            (route) => false,
+          );
+        }
+        return;
+      }
+      setState(() {
+        _errorMessage = 'No se pudieron cargar las materias (${e.message ?? e.toString()})';
+      });
     } catch (e) {
       setState(() {
         _errorMessage = 'No se pudieron cargar las materias ($e)';

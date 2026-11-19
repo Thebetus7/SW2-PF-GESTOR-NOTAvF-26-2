@@ -54,13 +54,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ appUrl = '/app/login' 
 
           {/* Action Buttons */}
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
+            <a
               href={appUrl}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#8B5E3C] hover:bg-[#724A2D] text-white text-base font-semibold px-8 py-3.5 rounded-xl shadow-[0_8px_20px_rgba(139,94,60,0.35)] hover:shadow-[0_12px_28px_rgba(139,94,60,0.45)] transition-all transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <span>Ingresar a la Plataforma</span>
               <ArrowRight className="w-5 h-5" />
-            </Link>
+            </a>
 
             <a
               href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
@@ -293,13 +293,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ appUrl = '/app/login' 
                 <span className="text-xs text-[#6B5B52] flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5" /> Procesado en 1.84 segundos
                 </span>
-                <Link
+                <a
                   href={appUrl}
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8B5E3C] hover:text-[#6B4226] bg-[#FAF0E1] px-3.5 py-1.5 rounded-lg border border-[#E8DCC8] hover:border-[#8B5E3C] transition-colors"
                 >
                   <span>Ver en Plataforma</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
