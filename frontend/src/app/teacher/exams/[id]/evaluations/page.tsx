@@ -122,7 +122,7 @@ export default function TeacherExamEvaluationsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col font-sans transition-colors duration-200">
-      <Navbar />
+      <Navbar userRole="TEACHER" userName="Profesor Evaluador" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
         

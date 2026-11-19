@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Navbar } from '@/components/ui/Navbar';
 import { apiClient, API_BASE_URL } from '@/lib/api';
@@ -41,7 +41,7 @@ interface BuilderComponent {
   correct_bool?: boolean;
 }
 
-export default function ExamBuilderPage() {
+function ExamBuilderContent() {
   const searchParams = useSearchParams();
   const initialParallelId = searchParams.get('parallel_id') || '';
 
@@ -496,5 +496,19 @@ export default function ExamBuilderPage() {
         </section>
       </main>
     </div>
+  );
+}
+
+export default function ExamBuilderPage() {
+  return (
+    <Suspense
+      fallback={
+        <div style={{ textAlign: 'center', padding: '4rem 1rem', color: 'var(--color-text-secondary)' }}>
+          Cargando constructor de exámenes...
+        </div>
+      }
+    >
+      <ExamBuilderContent />
+    </Suspense>
   );
 }

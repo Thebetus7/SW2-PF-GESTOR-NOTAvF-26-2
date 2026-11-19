@@ -1,6 +1,7 @@
 # Constitution
 
 Status: APPROVED
+Version: 1
 
 ## 1. Mission and Domain
 

@@ -8,6 +8,7 @@
 !.env.example
 !backend/.env.example
 !frontend/.env.example
+!landing/.env.example
 !mobile/.env.example
 
 # ==========================================

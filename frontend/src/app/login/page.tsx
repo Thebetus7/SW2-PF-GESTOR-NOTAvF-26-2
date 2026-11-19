@@ -36,6 +36,7 @@ export default function LoginPage() {
       localStorage.setItem('refresh_token', data.refresh);
       localStorage.setItem('user_role', data.user.role);
       localStorage.setItem('user_name', data.user.name);
+      localStorage.setItem('user', JSON.stringify(data.user));
 
       if (data.user.role === 'ADMIN') {
         router.push('/admin/teachers');
@@ -78,6 +79,7 @@ export default function LoginPage() {
       localStorage.setItem('refresh_token', data.refresh);
       localStorage.setItem('user_role', data.user.role);
       localStorage.setItem('user_name', data.user.name);
+      localStorage.setItem('user', JSON.stringify(data.user));
 
       if (data.user.role === 'ADMIN') {
         router.push('/admin/teachers');
@@ -120,6 +122,7 @@ export default function LoginPage() {
       localStorage.setItem('refresh_token', data.refresh);
       localStorage.setItem('user_role', 'STUDENT');
       localStorage.setItem('user_name', data.user.name);
+      localStorage.setItem('user', JSON.stringify(data.user));
 
       router.push('/student/portal');
     } catch (err: any) {

@@ -68,6 +68,23 @@ services:
     networks:
       - gestornotas_network
 
+  landing:
+    build:
+      context: ./landing
+      dockerfile: Dockerfile.prod
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-/app}
+    container_name: gestornotas_landing
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3002:3000"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-/app}
+      PORT: 3000
+    networks:
+      - gestornotas_network
+
 volumes:
   postgres_data:
     driver: local

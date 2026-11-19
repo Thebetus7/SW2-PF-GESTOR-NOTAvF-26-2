@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ==========================================================================
+     CafeBlend Design System — Modo Claro (Warm Cream)
+     ========================================================================== */
+  --font-headline: 'DM Serif Display', serif;
+  --font-body: 'Work Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Colores Principales */
+  --primary: #8B5E3C;
+  --primary-hover: #724A2D;
+  --secondary: #C4956A;
+  --tertiary: #FDF6EC;
+  --background: #FDFBF7;
+  --surface: #FFFFFF;
+  --surface-inset: #F0E6D6;
+  --surface-hover: #FAF0E1;
+  --foreground: #2C1810;
+  --border: #E8DCC8;
+
+  /* Mapeo de tokens */
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: #A6754E;
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: #B28359;
+  --color-tertiary: var(--tertiary);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-inset: var(--surface-inset);
+  --color-surface-hover: var(--surface-hover);
+  --color-text: var(--foreground);
+  --color-text-secondary: #6B5B52;
+  --color-text-muted: #9C8E85;
+  --color-border: var(--border);
+
+  /* Estados Funcionales */
+  --color-success: #059669;
+  --color-success-bg: #ECFDF5;
+  --color-warning: #D97706;
+  --color-warning-bg: #FFFBEB;
+  --color-error: #EF4444;
+  --color-error-bg: #FEF2F2;
+  --color-info: #6366F1;
+  --color-info-bg: #EEF2FF;
+
+  /* Sombras Neumórficas Cálidas */
+  --shadow-warm-sm: 0 1px 3px rgba(139, 94, 60, 0.08);
+  --shadow-warm-md: 0 4px 10px -1px rgba(139, 94, 60, 0.12), 0 2px 4px -1px rgba(139, 94, 60, 0.06);
+  --shadow-warm-lg: 0 12px 24px -4px rgba(139, 94, 60, 0.15), 0 6px 12px -2px rgba(139, 94, 60, 0.08);
+  --shadow-inset: inset 2px 2px 4px rgba(44, 24, 16, 0.06), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+  --shadow-raised: 6px 6px 12px #D5C9B8, -6px -6px 12px #FFFFFF;
+
+  /* Bordes Redondeados */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+[data-theme="dark"],
+.dark {
+  /* ==========================================================================
+     CafeBlend Design System — Modo Oscuro (Dark Espresso)
+     ========================================================================== */
+  --primary: #D4A373;
+  --primary-hover: #E0B589;
+  --secondary: #A6754E;
+  --tertiary: #2D2016;
+  --background: #1A1412;
+  --surface: #261A13;
+  --surface-inset: #1F150F;
+  --surface-hover: #32231A;
+  --foreground: #FDF6EC;
+  --border: #3D2D20;
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: #B88B5D;
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: #8B5E3C;
+  --color-tertiary: var(--tertiary);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-inset: var(--surface-inset);
+  --color-surface-hover: var(--surface-hover);
+  --color-text: var(--foreground);
+  --color-text-secondary: #C4B5A5;
+  --color-text-muted: #8C7E72;
+  --color-border: var(--border);
+
+  /* Estados Funcionales Oscuros */
+  --color-success: #34D399;
+  --color-success-bg: #064E3B;
+  --color-warning: #FBBF24;
+  --color-warning-bg: #78350F;
+  --color-error: #F87171;
+  --color-error-bg: #7F1D1D;
+  --color-info: #818CF8;
+  --color-info-bg: #312E81;
+
+  /* Sombras Modo Oscuro */
+  --shadow-warm-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-warm-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-warm-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-inset: inset 2px 2px 4px rgba(0, 0, 0, 0.4), inset -2px -2px 4px rgba(255, 255, 255, 0.03);
+  --shadow-raised: 6px 6px 14px #0F0A06, -6px -6px 14px #2E2018;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-inset);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
