@@ -8,7 +8,7 @@ interface NavbarProps {
   appUrl?: string;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app' }) => {
+export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (

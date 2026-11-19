@@ -20,7 +20,7 @@ interface HeroSectionProps {
   appUrl?: string;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ appUrl = '/app' }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ appUrl = '/app/login' }) => {
   const [activeTab, setActiveTab] = useState<'rubrica' | 'ia' | 'caligrafia'>('ia');
 
   return (

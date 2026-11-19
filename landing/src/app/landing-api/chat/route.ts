@@ -40,7 +40,7 @@ DIRECTRICES:
 function getFallbackResponse(query: string): string {
   const q = query.toLowerCase();
 
-  // WhatsApp / Contacto
+  // WhatsApp / Contacto / Soporte / Demostración / Precios
   if (
     q.includes('whatsapp') ||
     q.includes('contacto') ||
@@ -58,7 +58,7 @@ function getFallbackResponse(query: string): string {
 Nuestro equipo puede brindarte una demostración personalizada y resolver dudas de implementación para tu facultad o colegio.`;
   }
 
-  // GitHub / Código fuente
+  // GitHub / Código fuente / Arquitectura
   if (
     q.includes('github') ||
     q.includes('codigo') ||
@@ -73,7 +73,7 @@ Nuestro equipo puede brindarte una demostración personalizada y resolver dudas 
 Incluye la arquitectura SDD completa, backend Django REST, frontend Next.js y la app móvil Flutter.`;
   }
 
-  // Módulo Móvil / QR / Escaneo
+  // Módulo Móvil / QR / Escaneo / Ráfaga
   if (
     q.includes('qr') ||
     q.includes('escan') ||
@@ -81,17 +81,18 @@ Incluye la arquitectura SDD completa, backend Django REST, frontend Next.js y la
     q.includes('movil') ||
     q.includes('celular') ||
     q.includes('camara') ||
-    q.includes('foto')
+    q.includes('foto') ||
+    q.includes('rafaga')
   ) {
     return `**App Móvil Flutter — Escaneo QR y Captura de Fotos JPG:**
 
-1. **Lectura instantánea de QR:** Al apuntar la cámara al examen, decodifica el código QR del estudiante en menos de 100 ms.
-2. **Modo Ráfaga:** Permite al docente digitalizar 40 exámenes en menos de 3 minutos.
-3. **Optimización de Imagen:** Aplica corrección de perspectiva y compresión JPG para subidas ligeras al servidor Django.
-4. **Sincronización:** Si no hay internet en el aula, almacena en cola local y sube al conectarse a Wi-Fi.`;
+1. **Lectura instantánea de QR:** Al apuntar la cámara al examen, decodifica el código QR criptográfico del estudiante en menos de 100 ms.
+2. **Modo Ráfaga:** Permite al docente digitalizar hasta 40 exámenes en menos de 3 minutos.
+3. **Optimización de Imagen:** Aplica corrección de perspectiva y compresión JPG para subidas ligeras y seguras al servidor Django.
+4. **Sincronización:** Si no hay cobertura en el aula, almacena en cola local y sincroniza al conectarse a Wi-Fi.`;
   }
 
-  // Módulo Docentes / Materias / Rúbricas
+  // Módulo Docentes / Materias / Aulas / Rúbricas
   if (
     q.includes('docente') ||
     q.includes('profesor') ||
@@ -117,16 +118,17 @@ Incluye la arquitectura SDD completa, backend Django REST, frontend Next.js y la
     q.includes('portal') ||
     q.includes('consulta') ||
     q.includes('desglose') ||
-    q.includes('ci')
+    q.includes('ci') ||
+    q.includes('carnet')
   ) {
     return `**Módulo para Estudiantes — Portal de Consulta y Desglose:**
 
 - **Acceso Rápido:** Consulta tus calificaciones ingresando tu número de carnet (C.I.) o correo institucional.
-- **Transparencia Total:** No solo ves la nota final; accedes al puntaje obtenido por cada ejercicio y criterio.
-- **Feedback Constructivo:** La IA redacta sugerencias pedagógicas para entender las fortalezas y áreas de mejora.`;
+- **Transparencia Total:** No solo ves la nota final; accedes al puntaje obtenido por cada ejercicio y criterio evaluado.
+- **Feedback Constructivo:** La IA redacta sugerencias pedagógicas explicativas para comprender fortalezas y áreas de mejora.`;
   }
 
-  // Calificación IA / Visión Multimodal
+  // Calificación IA / Visión Multimodal / Rúbricas
   if (
     q.includes('ia') ||
     q.includes('inteligencia artificial') ||
@@ -139,13 +141,13 @@ Incluye la arquitectura SDD completa, backend Django REST, frontend Next.js y la
   ) {
     return `**Calificación Inteligente con IA Multimodal:**
 
-- **Visión Artificial:** Interpreta caligrafía manuscrita, esquemas técnicos, operaciones matemáticas y pseudocódigo.
-- **Cotejo con Rúbricas:** Compara la respuesta manuscrita contra la solución y rúbrica configurada por el profesor.
-- **Ahorro del 85%:** Reduce horas de corrección repetitiva a menos de 3 segundos por examen.
-- **Control Humano:** El docente siempre tiene la potestad de revisar, auditar o modificar la nota asignada antes de publicarla.`;
+- **Visión Artificial Multimodal:** Interpreta caligrafía manuscrita, esquemas técnicos, operaciones matemáticas y respuestas de desarrollo.
+- **Cotejo con Rúbricas:** Compara la respuesta manuscrita contra la solución oficial y la rúbrica configurada por el profesor.
+- **Ahorro de más del 85% de tiempo:** Reduce horas de corrección manual repetitiva a menos de 3 segundos por examen.
+- **Auditoría Docente:** El docente mantiene siempre el control total para revisar, auditar o ajustar la nota antes de su publicación definitiva.`;
   }
 
-  // Acceso al software
+  // Acceso al software / Login / Plataforma
   if (
     q.includes('software') ||
     q.includes('plataforma') ||
@@ -158,7 +160,32 @@ Incluye la arquitectura SDD completa, backend Django REST, frontend Next.js y la
 
 🚀 **Plataforma Web:** [Ingresar a GestorNotas](/app)
 
-Allí podrás iniciar sesión como docente o consultar el portal de estudiantes.`;
+Allí podrás iniciar sesión como docente o acceder al portal de consulta de notas para estudiantes.`;
+  }
+
+  // Saludos cordiales / Bienvenida / Ayuda general
+  if (
+    q.includes('hola') ||
+    q.includes('buenos dias') ||
+    q.includes('buenas tardes') ||
+    q.includes('buenas noches') ||
+    q.includes('saludos') ||
+    q.includes('que tal') ||
+    q.includes('bienvenid') ||
+    q.includes('ayuda') ||
+    q.includes('informacion')
+  ) {
+    return `¡Hola! 👋 Bienvenido al asistente virtual de **GestorNotas IA**.
+
+Puedo ayudarte con información sobre todas las capacidades del sistema:
+- 👨‍🏫 **Módulo Docentes:** Creación de rúbricas pedagógicas y hojas de examen con QR.
+- 📱 **App Móvil Flutter:** Escaneo QR ultra veloz (<100ms) y fotos en ráfaga (40 exámenes en 3 min).
+- 🎓 **Portal Estudiantes:** Consulta transparente y desglose pedagógico por C.I.
+- 🤖 **Calificación con IA Multimodal:** Visión artificial para exámenes manuscritos con ahorro >85% de tiempo.
+- 💬 **WhatsApp Oficial:** [+591 77389330](https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA)
+- 🐙 **GitHub:** [https://github.com/edberto/gestor-notas-ia](https://github.com/edberto/gestor-notas-ia)
+
+¿Sobre qué módulo o funcionalidad te gustaría conocer más detalles?`;
   }
 
   // Respuesta por defecto

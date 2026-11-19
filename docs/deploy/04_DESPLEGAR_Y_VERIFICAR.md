@@ -249,11 +249,13 @@ server {
     }
 
     # 5. Plataforma Académica Web Next.js (Sistema de Evaluación)
-    location /app/ {
-        proxy_pass http://127.0.0.1:3000/;
+    location /app {
+        proxy_pass http://127.0.0.1:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
     }
 
     # 6. Landing Page Comercial en la URL principal (http://20.51.189.52/)
