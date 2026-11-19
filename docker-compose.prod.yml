@@ -77,11 +77,11 @@ services:
     container_name: gestornotas_landing
     restart: unless-stopped
     ports:
-      - "127.0.0.1:3002:3000"
+      - "127.0.0.1:3002:3002"
     environment:
       GROQ_API_KEY: ${GROQ_API_KEY}
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-/app}
-      PORT: 3000
+      PORT: 3002
     networks:
       - gestornotas_network
 
