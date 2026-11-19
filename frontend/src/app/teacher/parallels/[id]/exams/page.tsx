@@ -378,7 +378,7 @@ export default function ParallelExamsPage() {
 
                   {/* Constructor */}
                   <Link
-                    href={`/teacher/exams/builder?parallel_id=${parallelId}`}
+                    href={`/teacher/exams/builder?parallel_id=${parallelId}&exam_id=${exam.id}`}
                     className="btn-secondary"
                     style={{ fontSize: '0.8rem', padding: '0.5rem 0.8rem', textDecoration: 'none' }}
                     title="Editar rúbricas en el constructor"

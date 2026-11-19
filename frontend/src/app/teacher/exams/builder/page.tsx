@@ -45,44 +45,51 @@ interface BuilderComponent {
 function ExamBuilderContent() {
   const searchParams = useSearchParams();
   const initialParallelId = searchParams.get('parallel_id') || '';
+  const examIdParam = searchParams.get('exam_id') || '';
 
   const [parallels, setParallels] = useState<ParallelItem[]>([]);
   const [parallelId, setParallelId] = useState(initialParallelId);
-  const [title, setTitle] = useState('Primer Examen Parcial');
-  const [description, setDescription] = useState('Lea atentamente cada pregunta y responda en los recuadros correspondientes.');
+  const [editingExamId, setEditingExamId] = useState<string | null>(examIdParam || null);
+  const [loadingExam, setLoadingExam] = useState<boolean>(!!examIdParam);
+  const [title, setTitle] = useState(examIdParam ? '' : 'Primer Examen Parcial');
+  const [description, setDescription] = useState(examIdParam ? '' : 'Lea atentamente cada pregunta y responda en los recuadros correspondientes.');
   const [applicationDate, setApplicationDate] = useState(new Date().toISOString().split('T')[0]);
   const [totalScore, setTotalScore] = useState<number>(100);
   const [hasQrCode, setHasQrCode] = useState(true);
 
-  const [components, setComponents] = useState<BuilderComponent[]>([
-    {
-      id: 'c-1',
-      type: 'OPEN',
-      prompt: 'Explique con sus propias palabras el principio de responsabilidad única (SRP).',
-      max_score: 50,
-      context: 'Una clase o módulo debe tener una y solo una razón para cambiar.',
-      tolerance: 'MODERATE',
-      tolerance_keywords: 'razón para cambiar, cohesión, modularidad',
-    },
-    {
-      id: 'c-2',
-      type: 'MULTIPLE_CHOICE',
-      prompt: '¿Cuál de los siguientes no es un patrón de diseño creacional?',
-      max_score: 30,
-      options: ['Singleton', 'Factory Method', 'Adapter', 'Abstract Factory'],
-      correct_choice: 'Adapter',
-    },
-    {
-      id: 'c-3',
-      type: 'TRUE_FALSE',
-      prompt: 'En la arquitectura hexagonal, la lógica de dominio depende de la base de datos.',
-      max_score: 20,
-      correct_bool: false,
-    },
-  ]);
+  const [components, setComponents] = useState<BuilderComponent[]>(
+    examIdParam
+      ? []
+      : [
+          {
+            id: 'c-1',
+            type: 'OPEN',
+            prompt: 'Explique con sus propias palabras el principio de responsabilidad única (SRP).',
+            max_score: 50,
+            context: 'Una clase o módulo debe tener una y solo una razón para cambiar.',
+            tolerance: 'MODERATE',
+            tolerance_keywords: 'razón para cambiar, cohesión, modularidad',
+          },
+          {
+            id: 'c-2',
+            type: 'MULTIPLE_CHOICE',
+            prompt: '¿Cuál de los siguientes no es un patrón de diseño creacional?',
+            max_score: 30,
+            options: ['Singleton', 'Factory Method', 'Adapter', 'Abstract Factory'],
+            correct_choice: 'Adapter',
+          },
+          {
+            id: 'c-3',
+            type: 'TRUE_FALSE',
+            prompt: 'En la arquitectura hexagonal, la lógica de dominio depende de la base de datos.',
+            max_score: 20,
+            correct_bool: false,
+          },
+        ]
+  );
 
   const [saving, setSaving] = useState(false);
-  const [savedExamId, setSavedExamId] = useState<string | null>(null);
+  const [savedExamId, setSavedExamId] = useState<string | null>(examIdParam || null);
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
@@ -101,6 +108,67 @@ function ExamBuilderContent() {
     };
     fetchParallels();
   }, [parallelId]);
+
+  useEffect(() => {
+    if (!examIdParam) return;
+
+    const fetchExistingExam = async () => {
+      setLoadingExam(true);
+      setError(null);
+      try {
+        const token = localStorage.getItem('access_token') || '';
+        const examData: any = await apiClient(`/exams/exams/${examIdParam}/`, { token });
+
+        if (examData) {
+          setTitle(examData.title || '');
+          setDescription(examData.description || '');
+          if (examData.application_date) setApplicationDate(examData.application_date);
+          if (examData.total_score) setTotalScore(Number(examData.total_score) || 100);
+          if (examData.has_qr_code !== undefined) setHasQrCode(examData.has_qr_code);
+          if (examData.parallel) setParallelId(examData.parallel);
+          setSavedExamId(examData.id);
+
+          if (Array.isArray(examData.components) && examData.components.length > 0) {
+            const mapped = examData.components.map((c: any, idx: number) => {
+              const rubric = c.options_or_rubric || {};
+              const keywords = Array.isArray(rubric.tolerance_keywords)
+                ? rubric.tolerance_keywords.join(', ')
+                : (rubric.tolerance_keywords || '');
+
+              let correctBool = true;
+              if (c.type === 'TRUE_FALSE') {
+                const ans = rubric.correct_answer ?? rubric.correcta;
+                correctBool = ans === true || ans === 'Verdadero' || ans === 'V' || ans === 'true';
+              }
+
+              return {
+                id: c.id ? String(c.id) : `c-${idx + 1}-${Date.now()}`,
+                type: c.type as ComponentType,
+                prompt: c.prompt || '',
+                max_score: Number(c.max_score) || 0,
+                context: rubric.context || rubric.criterio || '',
+                tolerance: rubric.tolerance || 'MODERATE',
+                tolerance_keywords: keywords,
+                options: Array.isArray(rubric.options) && rubric.options.length > 0
+                  ? rubric.options
+                  : ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
+                correct_choice: rubric.correct_answer || rubric.correcta || '',
+                correct_bool: correctBool,
+              };
+            });
+            setComponents(mapped);
+          }
+        }
+      } catch (err: any) {
+        console.error('Error al cargar examen a editar:', err);
+        setError('No se pudo cargar la información del examen para editar.');
+      } finally {
+        setLoadingExam(false);
+      }
+    };
+
+    fetchExistingExam();
+  }, [examIdParam]);
 
   const currentSum = components.reduce((sum, c) => sum + (Number(c.max_score) || 0), 0);
   const isBalanced = Math.abs(currentSum - totalScore) < 0.01;
@@ -177,8 +245,12 @@ function ExamBuilderContent() {
         };
       });
 
-      const responseData: any = await apiClient('/exams/exams/', {
-        method: 'POST',
+      const targetExamId = editingExamId || savedExamId;
+      const url = targetExamId ? `/exams/exams/${targetExamId}/` : '/exams/exams/';
+      const method = targetExamId ? 'PUT' : 'POST';
+
+      const responseData: any = await apiClient(url, {
+        method,
         token,
         body: JSON.stringify({
           parallel: parallelId,
@@ -191,8 +263,9 @@ function ExamBuilderContent() {
         }),
       });
 
+      setEditingExamId(responseData.id);
       setSavedExamId(responseData.id);
-      setSuccessMsg('Examen guardado exitosamente. Ya puede descargar el PDF para imprimir.');
+      setSuccessMsg(targetExamId ? 'Examen actualizado exitosamente. Los cambios ya se reflejan en el aula.' : 'Examen guardado exitosamente. Ya puede descargar el PDF para imprimir.');
     } catch (err: any) {
       setError(err.message || 'Error al guardar el examen');
     } finally {
@@ -233,23 +306,31 @@ function ExamBuilderContent() {
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
             <h1 className="text-2xl sm:text-3xl font-headline font-bold text-[var(--color-primary)] mb-1">
-              Constructor Modular de Exámenes
+              {editingExamId ? 'Editar Examen y Rúbricas' : 'Constructor Modular de Exámenes'}
             </h1>
             <p className="text-sm sm:text-base text-[var(--color-text-secondary)]">
-              Configure la rúbrica, preguntas y tolerancias pedagógicas para este examen. Las asignaturas y aulas se gestionan en Mis Materias.
+              {editingExamId
+                ? 'Modifique las preguntas, opciones y contexto pedagógico de este examen. Los cambios actualizarán la evaluación existente.'
+                : 'Configure la rúbrica, preguntas y tolerancias pedagógicas para este examen. Las asignaturas y aulas se gestionan en Mis Materias.'}
             </p>
           </div>
           <div className="w-full sm:w-auto flex justify-end">
             <button
               onClick={handleSaveExam}
-              disabled={saving}
+              disabled={saving || loadingExam}
               className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2 py-2.5 px-5"
             >
               <Save size={18} />
-              <span>{saving ? 'Guardando...' : 'Guardar Examen'}</span>
+              <span>{saving ? 'Guardando...' : editingExamId ? 'Actualizar Examen' : 'Guardar Examen'}</span>
             </button>
           </div>
         </header>
+
+        {loadingExam && (
+          <div className="p-6 text-center text-[var(--color-text-secondary)] bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] mb-6">
+            <p className="text-sm">Cargando preguntas y rúbricas del examen desde el servidor...</p>
+          </div>
+        )}
 
         {error && (
           <div className="flex items-center gap-3 p-4 bg-[var(--color-error-bg)] text-[var(--color-error)] rounded-xl border border-[var(--color-error)] mb-6">
