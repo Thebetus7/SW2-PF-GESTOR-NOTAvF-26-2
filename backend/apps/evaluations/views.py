@@ -87,6 +87,16 @@ class EvaluationSubmitView(APIView):
         pipeline = EvaluationPipeline()
         processed_eval = pipeline.process_evaluation(evaluation)
 
+        if getattr(processed_eval, "is_rate_limited", False):
+            return Response(
+                {
+                    "error": "IA_SATURADA",
+                    "detail": "Cuota de Gemini temporalmente saturada (Free Tier). Reintentando análisis...",
+                    "evaluation_id": str(processed_eval.id),
+                },
+                status=status.HTTP_429_TOO_MANY_REQUESTS,
+            )
+
         serializer = StudentEvaluationDetailSerializer(
             processed_eval, context={"request": request}
         )
@@ -112,6 +122,8 @@ class StudentEvaluationViewSet(viewsets.ModelViewSet):
             # Estudiante solo puede ver sus propias evaluaciones ya PUBLICADAS
             if hasattr(user, "student_profile") and user.student_profile:
                 return qs.filter(student=user.student_profile, is_published=True)
+            if user.student_id_code:
+                return qs.filter(student__student_id_code__iexact=user.student_id_code, is_published=True)
             return qs.none()
 
         if user.role == UserRole.TEACHER:

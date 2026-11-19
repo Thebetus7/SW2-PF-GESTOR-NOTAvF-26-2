@@ -10,6 +10,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN mkdir -p /app/public
 
 # Argumento para embeber la URL pública de la API durante la compilación
 ARG NEXT_PUBLIC_API_URL

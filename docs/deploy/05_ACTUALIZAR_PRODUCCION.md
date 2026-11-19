@@ -122,7 +122,7 @@ git pull origin main
 > **Ruta de Trabajo:** `~/proyecto-gestor-notas`
 
 ```bash
-# 1. Reconstruir imágenes de backend y frontend
+# 1. Reconstruir imágenes modificadas (backend, frontend web y landing)
 docker compose -f docker-compose.prod.yml build
 
 # 2. Levantar los nuevos contenedores recreando solo los modificados
@@ -135,15 +135,16 @@ docker compose -f docker-compose.prod.yml up -d --remove-orphans
 > ```text
 > Container gestornotas_backend   Recreate
 > Container gestornotas_frontend  Recreate
+> Container gestornotas_landing   Recreate
 > Container gestornotas_postgres  Running (sin cambios)
 > ```
 
 ---
 
-### 🚀 Paso 5: Aplicar Migraciones y Recolectar Estáticos
+### 🚀 Paso 5: Aplicar Migraciones, Recolectar Estáticos y Actualizar Seeder
 
 > [!NOTE]
-> **Propósito:** Ejecutar en la base de datos las migraciones que hayan sido incorporadas en la nueva versión y recopilar los nuevos estáticos de Django.
+> **Propósito:** Ejecutar en la base de datos las migraciones que hayan sido incorporadas en la nueva versión, recopilar los nuevos estáticos de Django y opcionalmente sincronizar los exámenes demo y componentes del seeder.
 > **Contexto de Ejecución:** `[SSH / SERVIDOR]`
 > **Ruta de Trabajo:** `~/proyecto-gestor-notas`
 
@@ -153,6 +154,9 @@ docker compose -f docker-compose.prod.yml exec backend python manage.py migrate 
 
 # 2. Actualizar archivos estáticos
 docker compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput
+
+# 3. (Opcional) Sincronizar o actualizar datos demo con los exámenes y componentes preconfigurados
+docker compose -f docker-compose.prod.yml exec backend python manage.py seed_demo_data
 ```
 
 > [!TIP]

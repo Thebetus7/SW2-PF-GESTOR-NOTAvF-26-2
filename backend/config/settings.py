@@ -34,6 +34,10 @@ if env_file.exists():
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env('DJANGO_DEBUG')
 ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS')
+if DEBUG:
+    for host in ['10.0.2.2', 'localhost', '127.0.0.1', '*']:
+        if host not in ALLOWED_HOSTS:
+            ALLOWED_HOSTS.append(host)
 
 # Application definition
 DJANGO_APPS = [

@@ -98,6 +98,15 @@ class ClassroomParallelViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+    @action(detail=True, methods=['get'], url_path='students')
+    def list_students(self, request, pk=None):
+        """Retorna la lista de estudiantes inscritos en el aula/paralelo."""
+        parallel = self.get_object()
+        enrollments = parallel.enrollments.select_related('student').all()
+        students = [enr.student for enr in enrollments]
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class StudentDetailView(APIView):
     """
     Permite al docente consultar la ficha y detalle individual del estudiante.

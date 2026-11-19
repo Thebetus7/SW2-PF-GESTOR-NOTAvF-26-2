@@ -50,7 +50,8 @@ flowchart TD
         end
 
         subgraph DOCKER_COMPOSE["🐳 Red Privada Docker (gestornotas_network)"]
-            FE["🌐 gestornotas_frontend\nNext.js 14 App Router (Node 20 Alpine)\nEnlace Local: 127.0.0.1:3000"]
+            LD["🚀 gestornotas_landing\nLanding Page Comercial (Next.js / Node 20)\nEnlace Local: 127.0.0.1:3002"]
+            FE["🌐 gestornotas_frontend\nPlataforma Académica Web (Next.js 14 App Router)\nEnlace Local: 127.0.0.1:3000"]
             BE["⚙️ gestornotas_backend\nDjango 5 + DRF + SimpleJWT (Python 3.12)\nEnlace Local: 127.0.0.1:8000"]
             DB["🗄️ gestornotas_postgres\nPostgreSQL 16 Alpine\nPuerto Interno 5432 (No expuesto al host)"]
         end
@@ -69,10 +70,13 @@ flowchart TD
     CLIENTES -->|HTTPS / WSS| IP
     IP --> NSG
     NSG --> NGINX
-    NGINX -->|Proxy inverso /| FE
+    NGINX -->|Proxy inverso / (Landing Page)| LD
+    NGINX -->|Proxy inverso /app/ (Plataforma Web)| FE
     NGINX -->|Proxy inverso /api/ y /admin/| BE
     NGINX -->|Proxy inverso /media/| BE
+    LD -.->|Enlace CTA a Login| FE
     FE -.->|Llamadas REST internas| BE
+    M -.->|Envío de Exámenes /api/v1/evaluaciones/| NGINX
     BE -->|Conexión interna SQL TCP:5432| DB
     BE -->|Subida y Lectura de Fotos JPG| VOL_MEDIA
     BE -->|Almacenamiento Relacional| VOL_DB

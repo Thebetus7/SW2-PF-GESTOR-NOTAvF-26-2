@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Navbar } from '@/components/ui/Navbar';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { apiClient, API_BASE_URL } from '@/lib/api';
 import {
   FileText,
@@ -205,16 +206,35 @@ function ExamBuilderContent() {
     window.open(url, '_blank');
   };
 
+  const currentParallel = parallels.find((p) => p.id === parallelId);
+  const breadcrumbItems = [
+    { label: 'Mis Materias', href: '/teacher/courses' },
+    {
+      label: currentParallel?.subject_name || 'Materia',
+      href: '/teacher/courses',
+    },
+    {
+      label: currentParallel ? `Aula ${currentParallel.group_code} (${currentParallel.period})` : 'Aula',
+      href: parallelId ? `/teacher/parallels/${parallelId}/exams` : '/teacher/courses',
+    },
+    {
+      label: 'Constructor de Exámenes',
+      active: true,
+    },
+  ];
+
   return (
     <div>
       <Navbar userRole="TEACHER" userName="Profesor Evaluador" />
 
       <main style={{ maxWidth: '1080px', margin: '2.5rem auto', padding: '0 1.5rem' }}>
+        <Breadcrumbs items={breadcrumbItems} />
+
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
           <div>
             <h1 style={{ fontSize: '2.25rem', marginBottom: '0.25rem' }}>Constructor Modular de Exámenes</h1>
             <p style={{ color: 'var(--color-text-secondary)' }}>
-              Diseñe evaluaciones físicas asistidas con IA definiendo rúbricas, contexto y tolerancias semánticas.
+              Configure la rúbrica, preguntas y tolerancias pedagógicas para este examen. Las asignaturas y aulas se gestionan en Mis Materias.
             </p>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem' }}>

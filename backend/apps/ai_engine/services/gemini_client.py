@@ -136,6 +136,7 @@ class GeminiResilientClient:
             "student_identifier_detected": "EST-DEMO-01",
             "student_name_detected": "Estudiante Demostración",
             "ocr_confidence": 0.95,
+            "raw_transcribed_text": "Transcripción integral de la hoja del examen digitalizado...",
             "components_evaluation": [
                 {
                     "component_id": 1,

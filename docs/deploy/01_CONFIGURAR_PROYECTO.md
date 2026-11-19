@@ -34,6 +34,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN mkdir -p /app/public
 
 # Argumento para embeber la URL pública de la API durante la compilación
 ARG NEXT_PUBLIC_API_URL
@@ -76,6 +77,9 @@ CMD ["npm", "run", "start"]
 
 > [!WARNING]
 > **Solución de Fallos Frecuentes (Troubleshooting):**
+> - **Síntoma:** Error `COPY --from=builder /app/public ./public: not found` en etapa final del runner de Next.js.
+> - **Causa:** La carpeta `frontend/public` está vacía o no fue rastreada por Git en el servidor.
+> - **Solución:** Incluir un archivo `frontend/public/.gitkeep` y añadir la instrucción `RUN mkdir -p /app/public` en la etapa `builder` de `Dockerfile.prod`.
 > - **Síntoma:** Error `npm run build` falla por falta de memoria o tipos faltantes de TypeScript.
 > - **Causa:** El compilador de Next.js verifica tipos y ESLint de manera estricta durante el build.
 > - **Solución:** Ejecuta `npm run build` localmente en la carpeta `frontend/` para corregir advertencias de sintaxis o rutas relativas antes de construir en Docker.

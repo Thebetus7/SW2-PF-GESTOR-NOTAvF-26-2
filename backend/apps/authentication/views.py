@@ -113,6 +113,11 @@ class DemoLoginView(APIView):
             user.set_password('demo1234')
             user.save()
 
+        # Vincular perfil de estudiante si corresponde
+        if user.role == UserRole.STUDENT and user.student_id_code:
+            from apps.academics.models import Student
+            Student.objects.filter(student_id_code__iexact=user.student_id_code, user__isnull=True).update(user=user)
+
         refresh = RefreshToken.for_user(user)
         refresh['role'] = user.role
         refresh['email'] = user.email

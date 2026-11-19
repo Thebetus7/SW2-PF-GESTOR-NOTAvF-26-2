@@ -14,7 +14,11 @@ from apps.exams.models import ExamComponent
 from apps.academics.models import Student
 from apps.ai_engine.services.gemini_client import GeminiResilientClient
 from apps.ai_engine.services.prompt_builder import build_exam_evaluation_prompt
-from apps.ai_engine.exceptions import GeminiAPIError
+from apps.ai_engine.exceptions import (
+    GeminiAPIError,
+    GeminiRateLimitError,
+    GeminiAllModelsExhaustedError,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -78,17 +82,38 @@ class EvaluationPipeline:
         except Exception as exc:
             logger.warning("Fallo en inferencia IA para evaluación %s: %s", evaluation.id, exc)
             evaluation.status = EvaluationStatus.REVISION_DOCENTE
+            if not evaluation.student:
+                evaluation.raw_student_identifier = evaluation.raw_student_identifier or "ESTUDIANTE_BORRADOR"
+                if not evaluation.raw_student_name:
+                    evaluation.raw_student_name = "Estudiante Borrador"
             evaluation.teacher_notes = (
                 f"Calificación asistida no disponible ({type(exc).__name__}). "
                 "Requiere revisión y calificación manual del docente."
             )
-            evaluation.save(update_fields=["status", "teacher_notes"])
+            # Detectar si se debe a saturación de cuota HTTP 429
+            exc_str = str(exc)
+            if "429" in exc_str or "Quota Exceeded" in exc_str or isinstance(exc, GeminiRateLimitError):
+                setattr(evaluation, "is_rate_limited", True)
+
+            evaluation.save(update_fields=["status", "raw_student_identifier", "raw_student_name", "teacher_notes"])
             return evaluation
 
         # 5. Aplicar resultados exitosos con transacción atómica
         with transaction.atomic():
             detected_id = ai_result.get("student_identifier_detected")
             detected_name = ai_result.get("student_name_detected")
+            raw_transcribed = (
+                ai_result.get("raw_transcribed_text")
+                or ai_result.get("transcribed_text")
+                or ""
+            )
+
+            # Persistir transcripción OCR completa en las páginas
+            if raw_transcribed and pages.exists():
+                for p in pages:
+                    if not p.ocr_raw_text:
+                        p.ocr_raw_text = raw_transcribed
+                        p.save(update_fields=["ocr_raw_text"])
 
             if detected_id:
                 evaluation.raw_student_identifier = str(detected_id)
@@ -115,6 +140,7 @@ class EvaluationPipeline:
             }
 
             accumulated_score = Decimal("0.0")
+            matched_components_count = 0
 
             for comp_data in ai_result.get("components_evaluation", []):
                 raw_comp_id = str(comp_data.get("component_id", ""))
@@ -131,6 +157,7 @@ class EvaluationPipeline:
                 if not comp_instance:
                     continue
 
+                matched_components_count += 1
                 score_assigned = Decimal(str(comp_data.get("score_assigned", 0.0)))
                 # Acotar entre 0 y el puntaje máximo del componente
                 max_pts = Decimal(str(comp_instance.max_score))
@@ -149,15 +176,34 @@ class EvaluationPipeline:
                     },
                 )
 
-            evaluation.ai_total_score = accumulated_score
-            evaluation.final_score = accumulated_score
-            evaluation.status = (
-                EvaluationStatus.EN_REVISION
-                if evaluation.student
-                else EvaluationStatus.REVISION_DOCENTE
-            )
-            if not evaluation.student:
-                evaluation.teacher_notes = "Estudiante no identificado con certeza. Requiere asignación manual."
+            # Fallback cuando no se detectó coincidencia con componentes estructurados
+            if matched_components_count == 0:
+                evaluation.status = EvaluationStatus.REVISION_DOCENTE
+                if not evaluation.student:
+                    evaluation.raw_student_identifier = evaluation.raw_student_identifier or "ESTUDIANTE_BORRADOR"
+                    if not evaluation.raw_student_name:
+                        evaluation.raw_student_name = "Estudiante Borrador"
+                evaluation.ai_total_score = Decimal("0.0")
+                evaluation.final_score = Decimal("0.0")
+                fallback_note = "Sin coincidencia con componentes estructurados del examen. Se guardó la transcripción del texto para revisión docente."
+                evaluation.teacher_notes = (
+                    f"{evaluation.teacher_notes}\n{fallback_note}".strip()
+                    if evaluation.teacher_notes
+                    else fallback_note
+                )
+            else:
+                evaluation.ai_total_score = accumulated_score
+                evaluation.final_score = accumulated_score
+                evaluation.status = (
+                    EvaluationStatus.EN_REVISION
+                    if evaluation.student
+                    else EvaluationStatus.REVISION_DOCENTE
+                )
+                if not evaluation.student:
+                    evaluation.raw_student_identifier = evaluation.raw_student_identifier or "ESTUDIANTE_BORRADOR"
+                    if not evaluation.raw_student_name:
+                        evaluation.raw_student_name = "Estudiante Sin Identificar"
+                    evaluation.teacher_notes = "Estudiante no identificado con certeza en el padrón. Requiere asignación manual."
 
             evaluation.save()
 

@@ -58,12 +58,14 @@ Debes analizar visualmente las páginas del examen adjuntas (en formato JPG), tr
      * FLEXIBLE: Prioriza la demostración de comprensión general del concepto sobre el rigor formal.
    - Asigna un puntaje (`score_assigned`) entre 0 y el puntaje máximo del componente.
    - Proporciona una justificación breve, constructiva y clara (`feedback`).
+5. En el campo `raw_transcribed_text`, incluye la transcripción íntegra de TODO el texto detectado en la hoja (manuscrito e impreso), especialmente si las respuestas no encajan con los componentes del examen.
 4. Retorna EXCLUSIVAMENTE un objeto JSON válido con la siguiente estructura exacta:
 
 {{
   "student_identifier_detected": "matrícula o null",
   "student_name_detected": "nombre detectado o null",
   "ocr_confidence": 0.95,
+  "raw_transcribed_text": "Transcripción íntegra de todo el texto visible en la hoja...",
   "components_evaluation": [
     {{
       "component_id": "uuid del componente",

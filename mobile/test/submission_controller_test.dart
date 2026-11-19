@@ -49,5 +49,27 @@ void main() {
       expect(controller.status, SubmissionStatus.initial);
       expect(controller.errorMessage, null);
     });
+
+    test('pauseAnalysis changes status to paused and preserves scanned pages', () {
+      final controller = SubmissionController();
+      controller.addPage(ScannedPage(pageNumber: 1, imagePath: '/path/p1.jpg'));
+
+      controller.pauseAnalysis();
+
+      expect(controller.status, SubmissionStatus.paused);
+      expect(controller.isPaused, true);
+      expect(controller.pages.length, 1);
+      expect(controller.errorMessage, contains('Análisis pausado'));
+    });
+
+    test('retrySubmission increments retryAttempt counter', () async {
+      final controller = SubmissionController();
+      controller.addPage(ScannedPage(pageNumber: 1, imagePath: '/path/p1.jpg'));
+
+      expect(controller.retryAttempt, 0);
+      // Sin exam previo guardado devuelve false pero incrementa el contador
+      await controller.retrySubmission();
+      expect(controller.retryAttempt, 1);
+    });
   });
 }

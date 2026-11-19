@@ -105,3 +105,19 @@ class TestAcademics:
         assert data['full_name'] == 'Ana Lucía Flores'
         assert len(data['courses']) == 1
         assert data['courses'][0]['subjectName'] == 'Cálculo I'
+
+    def test_list_enrolled_students_in_parallel(self):
+        """Docente consulta la lista de alumnos inscritos en un aula específica."""
+        self.client.force_authenticate(user=self.teacher_user)
+        subject = Subject.objects.create(name='Álgebra Lineal', code='MAT102', teacher=self.teacher_user)
+        parallel = ClassroomParallel.objects.create(subject=subject, group_code='B', period='1-2026')
+        student = Student.objects.create(student_id_code='EST-102', full_name='Lucía Ramos')
+        StudentEnrollment.objects.create(student=student, parallel=parallel)
+
+        url = f"/api/v1/academics/parallels/{parallel.id}/students/"
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert len(data) == 1
+        assert data[0]['student_id_code'] == 'EST-102'
+        assert data[0]['full_name'] == 'Lucía Ramos'

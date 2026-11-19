@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -7,6 +8,8 @@ import '../models/scanned_page.dart';
 enum SubmissionStatus {
   initial,
   submitting,
+  rateLimited,
+  paused,
   success,
   error,
 }
@@ -22,13 +25,31 @@ class SubmissionController extends ChangeNotifier {
   String? _errorMessage;
   dynamic _lastResult;
 
+  int _retryAttempt = 0;
+  String? _currentEvaluationId;
+  String? _lastExamId;
+  String? _lastParallelId;
+  String? _lastStudentIdentifier;
+  Timer? _retryTimer;
+
+  ApiClient get apiClient => _apiClient;
   List<ScannedPage> get pages => List.unmodifiable(_pages);
   SubmissionStatus get status => _status;
   String? get errorMessage => _errorMessage;
   dynamic get lastResult => _lastResult;
 
+  int get retryAttempt => _retryAttempt;
+  String? get currentEvaluationId => _currentEvaluationId;
+  bool get isRateLimited => _status == SubmissionStatus.rateLimited;
+  bool get isPaused => _status == SubmissionStatus.paused;
+
+  @override
+  void dispose() {
+    _retryTimer?.cancel();
+    super.dispose();
+  }
+
   void addPage(ScannedPage page) {
-    // Si no tiene pageNumber coherente, se numera correlativamente
     final newNumber = _pages.length + 1;
     _pages.add(page.copyWith(pageNumber: newNumber));
     notifyListeners();
@@ -37,7 +58,6 @@ class SubmissionController extends ChangeNotifier {
   void removePageAt(int index) {
     if (index >= 0 && index < _pages.length) {
       _pages.removeAt(index);
-      // Re-indexar correlativamente todas las páginas restantes
       for (int i = 0; i < _pages.length; i++) {
         _pages[i] = _pages[i].copyWith(pageNumber: i + 1);
       }
@@ -46,11 +66,37 @@ class SubmissionController extends ChangeNotifier {
   }
 
   void clearPages() {
+    _retryTimer?.cancel();
     _pages.clear();
     _status = SubmissionStatus.initial;
     _errorMessage = null;
     _lastResult = null;
+    _retryAttempt = 0;
+    _currentEvaluationId = null;
+    _lastExamId = null;
+    _lastParallelId = null;
+    _lastStudentIdentifier = null;
     notifyListeners();
+  }
+
+  void pauseAnalysis() {
+    _retryTimer?.cancel();
+    _status = SubmissionStatus.paused;
+    _errorMessage = 'Análisis pausado. Las fotografías se mantienen en memoria.';
+    notifyListeners();
+  }
+
+  Future<bool> retrySubmission() async {
+    _retryTimer?.cancel();
+    _retryAttempt++;
+    if (_lastExamId != null) {
+      return submitExamSubmission(
+        examId: _lastExamId!,
+        parallelId: _lastParallelId,
+        studentIdentifier: _lastStudentIdentifier,
+      );
+    }
+    return false;
   }
 
   Future<bool> submitExamSubmission({
@@ -64,6 +110,10 @@ class SubmissionController extends ChangeNotifier {
       notifyListeners();
       return false;
     }
+
+    _lastExamId = examId;
+    _lastParallelId = parallelId;
+    _lastStudentIdentifier = studentIdentifier;
 
     _status = SubmissionStatus.submitting;
     _errorMessage = null;
@@ -93,7 +143,6 @@ class SubmissionController extends ChangeNotifier {
             ),
           );
         } else {
-          // Si el archivo es una ruta simulada (mock en tests), crear MultipartFile desde bytes
           formData.files.add(
             MapEntry(
               'pages',
@@ -114,8 +163,15 @@ class SubmissionController extends ChangeNotifier {
       if (response.statusCode == 201 || response.statusCode == 200) {
         _status = SubmissionStatus.success;
         _lastResult = response.data;
+        _retryAttempt = 0;
         notifyListeners();
         return true;
+      } else if (response.statusCode == 429 || response.data?['error'] == 'IA_SATURADA') {
+        _status = SubmissionStatus.rateLimited;
+        _currentEvaluationId = response.data?['evaluation_id']?.toString();
+        _errorMessage = 'IA de Gemini saturada en capa gratuita. Reintentando análisis... (Intento #$_retryAttempt)';
+        notifyListeners();
+        return false;
       } else {
         _status = SubmissionStatus.error;
         _errorMessage = 'Error del servidor: ${response.statusCode}';
@@ -123,9 +179,21 @@ class SubmissionController extends ChangeNotifier {
         return false;
       }
     } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+
+      if (statusCode == 429 || (responseData is Map && responseData['error'] == 'IA_SATURADA')) {
+        _status = SubmissionStatus.rateLimited;
+        if (responseData is Map) {
+          _currentEvaluationId = responseData['evaluation_id']?.toString();
+        }
+        _errorMessage = 'IA de Gemini saturada en capa gratuita. Reintentando análisis... (Intento #$_retryAttempt)';
+        notifyListeners();
+        return false;
+      }
+
       _status = SubmissionStatus.error;
-      _errorMessage = e.response?.data?['error'] ??
-          e.response?.data?['detail'] ??
+      _errorMessage = (responseData is Map ? (responseData['error'] ?? responseData['detail']) : null) ??
           e.message ??
           'Error al conectar con el servidor';
       notifyListeners();

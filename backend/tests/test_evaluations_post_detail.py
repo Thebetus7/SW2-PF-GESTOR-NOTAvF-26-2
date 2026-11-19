@@ -162,3 +162,66 @@ class TestEvaluationsPostDetailAndPublish:
         assert setup_data["evaluation"].is_published is True
         assert setup_data["evaluation"].status == EvaluationStatus.PUBLICADO
         assert setup_data["evaluation"].published_at is not None
+
+    def test_unstructured_exam_fallback_to_draft_student(self, setup_data):
+        """RF-03.1 & SC-02: Examen no estructurado se guarda con texto transcrito y ESTUDIANTE_BORRADOR."""
+        client = APIClient()
+        client.force_authenticate(user=setup_data["teacher"])
+
+        fake_image = SimpleUploadedFile("page1.jpg", b"\xff\xd8\xff\xe0fakejpegdata", content_type="image/jpeg")
+
+        mock_ai_response = {
+            "student_identifier_detected": None,
+            "student_name_detected": None,
+            "ocr_confidence": 0.85,
+            "raw_transcribed_text": "Texto manuscrito libre transcrito por la IA sin componentes claros.",
+            "components_evaluation": [],  # Ningún componente coincide
+            "total_score": 0.0,
+            "overall_feedback": "El examen no sigue la estructura de componentes esperada."
+        }
+
+        with patch("apps.evaluations.services.evaluation_pipeline.GeminiResilientClient.evaluate_exam_multimodal", return_value=mock_ai_response):
+            res = client.post(
+                "/api/v1/evaluations/submit/",
+                {
+                    "exam_id": str(setup_data["exam"].id),
+                    "parallel_id": str(setup_data["parallel"].id),
+                    "pages": [fake_image],
+                },
+                format="multipart",
+            )
+
+        assert res.status_code == status.HTTP_201_CREATED
+        data = res.json()
+        assert data["status"] == EvaluationStatus.REVISION_DOCENTE
+        assert data["student_identifier"] == "ESTUDIANTE_BORRADOR"
+        assert len(data["pages"]) == 1
+        assert "Texto manuscrito libre" in data["pages"][0]["ocr_raw_text"]
+
+    def test_gemini_rate_limit_returns_429_with_structured_payload(self, setup_data):
+        """RF-03.2: Cuando Gemini agota la cuota (429), el backend retorna 429 IA_SATURADA."""
+        from apps.ai_engine.exceptions import GeminiAllModelsExhaustedError
+
+        client = APIClient()
+        client.force_authenticate(user=setup_data["teacher"])
+
+        fake_image = SimpleUploadedFile("page1.jpg", b"\xff\xd8\xff\xe0fakejpegdata", content_type="image/jpeg")
+
+        with patch(
+            "apps.evaluations.services.evaluation_pipeline.GeminiResilientClient.evaluate_exam_multimodal",
+            side_effect=GeminiAllModelsExhaustedError("gemini-2.5-flash: HTTP 429 Quota Exceeded"),
+        ):
+            res = client.post(
+                "/api/v1/evaluations/submit/",
+                {
+                    "exam_id": str(setup_data["exam"].id),
+                    "parallel_id": str(setup_data["parallel"].id),
+                    "pages": [fake_image],
+                },
+                format="multipart",
+            )
+
+        assert res.status_code == status.HTTP_429_TOO_MANY_REQUESTS
+        data = res.json()
+        assert data["error"] == "IA_SATURADA"
+        assert "evaluation_id" in data

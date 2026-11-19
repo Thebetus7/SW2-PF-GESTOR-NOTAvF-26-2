@@ -111,6 +111,7 @@ docker compose -f docker-compose.prod.yml up -d --build
 > NAME                   IMAGE                          STATUS                    PORTS
 > gestornotas_backend    proyecto-gestor-notas-backend  Up (healthy/running)     127.0.0.1:8000->8000/tcp
 > gestornotas_frontend   proyecto-gestor-notas-web      Up (running)             127.0.0.1:3000->3000/tcp
+> gestornotas_landing    proyecto-gestor-notas-landing  Up (running)             127.0.0.1:3002->3000/tcp
 > gestornotas_postgres   postgres:16-alpine             Up (healthy)             5432/tcp
 > ```
 
@@ -170,6 +171,32 @@ docker compose -f docker-compose.prod.yml exec -it backend python manage.py crea
 
 ---
 
+### 🚀 Paso 5.1: Poblar Datos Demo con Exámenes y Componentes Listos
+
+> [!NOTE]
+> **Propósito:** Sembrar en producción las materias, aulas y los 2 exámenes completos predefinidos con sus componentes de rúbrica para el docente demo, permitiendo realizar pruebas inmediatas de escaneo móvil y visualización web sin requerir carga manual inicial.
+> **Contexto de Ejecución:** `[SSH / SERVIDOR]`
+> **Ruta de Trabajo:** `~/proyecto-gestor-notas`
+
+```bash
+# Sembrar datos demo pedagógicos
+docker compose -f docker-compose.prod.yml exec backend python manage.py seed_demo_data
+```
+
+> [!TIP]
+> **Verificación Observable & Salida Esperada:**
+> ```text
+> Iniciando sembrado de datos demo para evaluaciones...
+> Docente listo: profesor.demo@evaluacion.edu.bo
+> Estudiante listo: EST-2026-001 - Juan Carlos Pérez Demo
+> Estudiante listo: EST-2026-002 - María Gómez Quispe
+> Examen 1 listo con 2 componentes: Primer Examen Parcial (Cálculo I - Aula A)
+> Examen 2 listo con 2 componentes: Examen Diagnóstico de Álgebra Lineal (Álgebra Lineal - Aula B)
+> [OK] Datos demo creados exitosamente.
+> ```
+
+---
+
 ### 🚀 Paso 6: Configurar y Habilitar Nginx Reverse Proxy
 
 > [!NOTE]
@@ -188,7 +215,7 @@ Pega el siguiente bloque de configuración completo:
 ```nginx
 server {
     listen 80;
-    server_name <TU_IP_PUBLICA_AZURE> <TU_FQDN_AZURE> _;
+    server_name 20.51.189.52 <TU_IP_PUBLICA_AZURE> <TU_FQDN_AZURE> _;
 
     # Límite de carga ampliado para fotos JPG de exámenes y planillas Excel
     client_max_body_size 50M;
@@ -221,9 +248,17 @@ server {
         proxy_pass http://127.0.0.1:8000/static/;
     }
 
-    # 5. Frontend Web Next.js (Páginas y componentes)
+    # 5. Plataforma Académica Web Next.js (Sistema de Evaluación)
+    location /app/ {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # 6. Landing Page Comercial en la URL principal (http://20.51.189.52/)
     location / {
-        proxy_pass http://127.0.0.1:3000;
+        proxy_pass http://127.0.0.1:3002;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -310,19 +345,34 @@ curl -s -I http://127.0.0.1:8000/api/v1/ | head -n 3
 ```
 *Salida esperada:* Código HTTP `200 OK`, `401 Unauthorized` o `404 Not Found` generado por Django REST Framework
 
-### Test 4: Comprobar Nginx en Puerto 80
+### Test 4: Comprobar Nginx en Puerto 80 (Landing Page en Raíz)
 [SSH / SERVIDOR]
 ```bash
 curl -s -I http://localhost | head -n 3
 ```
-*Salida esperada:* Código HTTP `200 OK`
+*Salida esperada:* Código HTTP `200 OK` (sirviendo la Landing Page comercial desde el puerto 3002).
+
+### Test 4.1: Comprobar Contenedor de la Landing Page
+[SSH / SERVIDOR]
+```bash
+curl -s -I http://127.0.0.1:3002 | head -n 3
+```
+*Salida esperada:* Código HTTP `200 OK`.
 
 ### Test 5: Verificación Externa desde el Navegador Web de tu PC
 [PC LOCAL]
-1. Abre tu navegador web e ingresa a: `https://<TU_FQDN_AZURE>/` (o `http://<TU_IP_PUBLICA_AZURE>/`)
-   * **Resultado esperado:** Carga la página de bienvenida / login del Gestor de Notas con candado verde SSL.
-2. Ingresa a: `https://<TU_FQDN_AZURE>/admin`
+1. Abre tu navegador web e ingresa a: `http://20.51.189.52/` (o con tu FQDN de Azure)
+   * **Resultado esperado:** Carga la **Landing Page comercial** en la raíz directa, con diseño CafeBlend y el botón "Ingresar a la Plataforma".
+2. Pulsa en **"Ingresar a la Plataforma"** (o navega a `http://20.51.189.52/app/login` / `http://20.51.189.52:3000/login`):
+   * **Resultado esperado:** Carga la **Plataforma Académica Web Next.js** para iniciar sesión como Docente, Estudiante o Administrador.
+3. Ingresa a: `http://20.51.189.52/admin`
    * **Resultado esperado:** Carga el panel de administración de Django. Inicia sesión con el superusuario creado en el Paso 5.
+
+### Test 6: Verificación de Conexión de la App Móvil Flutter con el Servidor Cloud
+[PC LOCAL / EMULADOR / DISPOSITIVO FÍSICO]
+1. La aplicación móvil Flutter se conecta al servidor en la nube a través de su cliente HTTP (`mobile/lib/core/network/api_client.dart`):
+   * **URL Base de Producción:** `http://20.51.189.52/api/v1`
+2. **Arquitectura Segura de Inferencia:** La app móvil **NO** almacena ni requiere la clave de Google Gemini. La app envía las fotografías JPG al endpoint `/api/v1/evaluaciones/submit/`, y es el backend Django en Azure quien realiza de forma segura la llamada multimodal a Gemini, aplicando la cascada de modelos y retornando la calificación estructurada.
 
 ---
 
@@ -330,13 +380,14 @@ curl -s -I http://localhost | head -n 3
 
 ### Fallo 1: Error 502 Bad Gateway al acceder a la IP
 * **Síntoma:** Al abrir la URL el navegador devuelve error 502 Bad Gateway.
-* **Causa:** Nginx está corriendo pero no puede conectarse a los contenedores locales (puerto 3000 o 8000 caídos).
+* **Causa:** Nginx está corriendo pero no puede conectarse a los contenedores locales (puertos 3000, 3002 u 8000 caídos).
 * **Solución:**
   1. Revisa el estado de los contenedores: `docker compose -f docker-compose.prod.yml ps`.
   2. Si alguno muestra estado `Exit 1`, inspecciona sus logs:
      ```bash
      docker compose -f docker-compose.prod.yml logs --tail=50 backend
      docker compose -f docker-compose.prod.yml logs --tail=50 web
+     docker compose -f docker-compose.prod.yml logs --tail=50 landing
      ```
 
 ### Fallo 2: Error 413 Request Entity Too Large al subir fotos de exámenes
@@ -347,7 +398,7 @@ curl -s -I http://localhost | head -n 3
 ### Fallo 3: Error de CORS o DisallowedHost en llamadas API
 * **Síntoma:** La página web carga pero no puede listar materias o estudiantes (error 400 Bad Request en la consola del navegador).
 * **Causa:** La IP pública o FQDN de Azure no están agregados a `DJANGO_ALLOWED_HOSTS` o `CORS_ALLOWED_ORIGINS` en el `.env`.
-* **Solución:** Edita `.env`, añade tu IP pública y FQDN de Azure a ambas variables y reinicia el backend:
+* **Solución:** Edita `.env`, añade tu IP pública (`20.51.189.52`) y FQDN de Azure a ambas variables y reinicia el backend:
   ```bash
   docker compose -f docker-compose.prod.yml restart backend
   ```
@@ -357,22 +408,35 @@ curl -s -I http://localhost | head -n 3
 * **Causa:** El contenedor de PostgreSQL aún no ha completado su inicialización inicial o las contraseñas no coinciden.
 * **Solución:** Revisa los logs de postgres con `docker compose -f docker-compose.prod.yml logs postgres` y verifica que `POSTGRES_PASSWORD` en `.env` sea idéntico para el servicio `postgres` y `backend`.
 
-### Fallo 5: Error 429 Too Many Requests de Gemini API
-* **Síntoma:** La calificación con IA devuelve error de cuota o rate limit.
-* **Causa:** Se superaron las 15 peticiones por minuto del Free Tier de Google AI Studio.
-* **Solución:** El backend implementa un mecanismo de reintento exponencial (*Exponential Backoff*). Espera 60 segundos antes de enviar un nuevo lote de exámenes.
+### Fallo 5: Saturación de Cuota de Gemini API (HTTP 429) y Pausa en la App Móvil
+* **Síntoma:** El análisis devuelve HTTP 429 (Too Many Requests / Quota Exceeded) en la capa gratuita.
+* **Causa:** Se superó temporalmente el límite por minuto de la API gratuita de Gemini.
+* **Solución:**
+  1. En el backend, el pipeline de resiliencia degrada a `REVISION_DOCENTE` guardando el texto OCR en el borrador (`ESTUDIANTE_BORRADOR`).
+  2. En la app móvil, la interfaz muestra el banner interactivo: `"IA saturada, reintentando análisis... Intento #X"`.
+  3. El docente puede pulsar **"Pausar Análisis"** para detener los reintentos manteniendo las fotos capturadas intactas, y pulsar **"Reintentar Ahora"** cuando la cuota se haya restablecido sin repetir la sesión de escaneo.
+
+### Fallo 6: Error `COPY --from=builder /app/public ./public: not found` al construir Docker Web
+* **Síntoma:** Al ejecutar `docker compose build web`, el proceso se cancela con código de error en la instrucción COPY de la carpeta public.
+* **Causa:** La carpeta `frontend/public` estaba vacía y no fue incluida por Git en el clon del repositorio en el servidor.
+* **Solución:** Se incluyó el archivo `frontend/public/.gitkeep` en el repositorio y la instrucción `RUN mkdir -p /app/public` en el `Dockerfile.prod` de Next.js. Si persiste en el servidor, ejecuta:
+  ```bash
+  mkdir -p frontend/public
+  docker compose -f docker-compose.prod.yml build web
+  ```
 
 ---
 
 ## 5. Checklist de Cierre del Paso 04
 
 - [ ] Repositorio clonado en `~/proyecto-gestor-notas`.
-- [ ] Archivo `.env` configurado con IP pública y secretos de producción.
-- [ ] 3 contenedores (`gestornotas_backend`, `gestornotas_frontend`, `gestornotas_postgres`) en estado `Up`.
+- [ ] Archivo `.env` configurado con IP pública `20.51.189.52` y secretos de producción.
+- [ ] 4 contenedores (`gestornotas_backend`, `gestornotas_frontend`, `gestornotas_landing`, `gestornotas_postgres`) en estado `Up`.
 - [ ] Migraciones de Django aplicadas exitosamente en PostgreSQL.
+- [ ] Datos demo cargados con `seed_demo_data` (2 exámenes con rúbricas y componentes).
 - [ ] Superusuario administrador creado y probado.
-- [ ] Nginx configurado con límite de 50MB y recargado.
-- [ ] Batería de 5 pruebas físicas superada con código HTTP 200.
+- [ ] Nginx configurado: Landing Page en raíz `/`, Web en `/app/`, API en `/api/`, y límite de 50MB.
+- [ ] Batería de pruebas físicas superada con código HTTP 200.
 
 ---
 
