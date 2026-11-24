@@ -55,6 +55,11 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
                 </a>
               </li>
               <li>
+                <a href="#contacto" className="hover:text-[#D4A373] transition-colors">
+                  Contáctanos
+                </a>
+              </li>
+              <li>
                 <a href={appUrl} className="hover:text-[#D4A373] transition-colors flex items-center gap-1">
                   <span>Acceso a la Plataforma</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />

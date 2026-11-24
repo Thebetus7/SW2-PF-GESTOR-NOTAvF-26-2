@@ -120,7 +120,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 5rem; /* Altura de la barra sticky para evitar que oculte encabezados */
 }
 
 body {

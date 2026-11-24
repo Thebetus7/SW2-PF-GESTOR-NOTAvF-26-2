@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { ModulesSection } from '@/components/ModulesSection';
+import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ChatWidget } from '@/components/ChatWidget';
 
@@ -13,6 +14,7 @@ export default function LandingPage() {
       <Navbar appUrl={appUrl} />
       <HeroSection appUrl={appUrl} />
       <ModulesSection />
+      <ContactSection />
       <Footer appUrl={appUrl} />
       <ChatWidget />
     </main>

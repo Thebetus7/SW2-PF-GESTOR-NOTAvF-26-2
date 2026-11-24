@@ -11,6 +11,24 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const element = document.getElementById(targetId);
+    if (element) {
+      const navOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+      // Actualizar hash sin salto brusco
+      window.history.pushState(null, '', `#${targetId}`);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#FDFBF7]/90 border-b border-[#E8DCC8] transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -33,38 +51,31 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
         <nav className="hidden md:flex items-center gap-8">
           <a
             href="#hero"
+            onClick={(e) => handleSmoothScroll(e, 'hero')}
             className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors"
           >
             Inicio
           </a>
           <a
             href="#modulos"
+            onClick={(e) => handleSmoothScroll(e, 'modulos')}
             className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors"
           >
             Módulos
           </a>
           <a
             href="#diferenciadores"
+            onClick={(e) => handleSmoothScroll(e, 'diferenciadores')}
             className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors"
           >
             Innovación IA
           </a>
           <a
-            href="mailto:edybanera@gmail.com"
-            className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors flex items-center gap-1.5"
-            title="Escribir a oficina@edugrade.com"
+            href="#contacto"
+            onClick={(e) => handleSmoothScroll(e, 'contacto')}
+            className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors"
           >
-            <Mail className="w-3.5 h-3.5 text-[#9C8E85]" />
-            oficina@edugrade.com
-          </a>
-          <a
-            href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors flex items-center gap-1.5"
-          >
-            WhatsApp
-            <ExternalLink className="w-3.5 h-3.5 text-[#9C8E85]" />
+            Contáctanos
           </a>
         </nav>
 
@@ -97,39 +108,31 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
         <div className="md:hidden border-b border-[#E8DCC8] bg-[#FDFBF7] px-4 pt-2 pb-6 space-y-3">
           <a
             href="#hero"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => handleSmoothScroll(e, 'hero')}
             className="block px-3 py-2 rounded-lg text-base font-medium text-[#6B5B52] hover:bg-[#F0E6D6]"
           >
             Inicio
           </a>
           <a
             href="#modulos"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => handleSmoothScroll(e, 'modulos')}
             className="block px-3 py-2 rounded-lg text-base font-medium text-[#6B5B52] hover:bg-[#F0E6D6]"
           >
             Módulos
           </a>
           <a
             href="#diferenciadores"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => handleSmoothScroll(e, 'diferenciadores')}
             className="block px-3 py-2 rounded-lg text-base font-medium text-[#6B5B52] hover:bg-[#F0E6D6]"
           >
             Innovación IA
           </a>
           <a
-            href="mailto:edybanera@gmail.com"
-            className="block px-3 py-2 rounded-lg text-base font-medium text-[#8B5E3C] hover:bg-[#F0E6D6] flex items-center gap-2"
-          >
-            <Mail className="w-4 h-4 text-[#8B5E3C]" />
-            oficina@edugrade.com
-          </a>
-          <a
-            href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contacto"
+            onClick={(e) => handleSmoothScroll(e, 'contacto')}
             className="block px-3 py-2 rounded-lg text-base font-medium text-[#8B5E3C] hover:bg-[#F0E6D6]"
           >
-            WhatsApp (+591 77389330)
+            Contáctanos
           </a>
           <div className="pt-2">
             <a

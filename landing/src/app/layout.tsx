@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html lang="es" className="scroll-smooth">
       <body className="min-h-screen flex flex-col selection:bg-[#C4956A]/30 selection:text-[#3E2723]">
         {children}
       </body>
