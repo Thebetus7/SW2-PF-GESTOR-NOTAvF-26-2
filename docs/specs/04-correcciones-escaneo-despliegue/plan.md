@@ -1,7 +1,7 @@
 # Plan: 04-correcciones-escaneo-despliegue
 Status: APPROVED
-Version: 1
-Spec-SHA256: c09be26acd0fd8c31dc25e8d0f66279fb701bdbd23e72852fbddb24e18c8bdbf
+Version: 2
+Spec-SHA256: 3e758455e71f052adc6a11b9062419685166cd3e5ebca9a0095ac2d861967cdb
 Constitution-SHA256: a726869c15a091c769d54e19e825801d04ba2ae10cb890679dc43bc7a7e07212
 
 ## 1. Arquitectura y decisiones
@@ -104,3 +104,7 @@ Constitution-SHA256: a726869c15a091c769d54e19e825801d04ba2ae10cb890679dc43bc7a7e
 - `flutter test` en `mobile/` -> Todos los tests pasan.
 - Verificación física de los dos modos de escaneo en emulador.
 - Verificación de la configuración Nginx en `04_DESPLEGAR_Y_VERIFICAR.md`.
+
+## PLAN-49 — Flujo móvil por parcial
+
+Reutilizar las API de inscritos, evaluaciones, captura y publicación. Decodificar QR en las fotos con ZXing en Dart y contrastar su examen con el seleccionado. Mantener capturas en el controlador durante revisión y reintento. Verificar con Flutter y generar APK debug.

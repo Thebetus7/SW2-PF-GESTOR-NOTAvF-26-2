@@ -26,6 +26,25 @@ void main() {
       expect(controller.pages[1].imagePath, '/path/p3.jpg');
     });
 
+    test('moving and replacing pages keeps submission order', () {
+      final controller = SubmissionController();
+      addTearDown(controller.dispose);
+      controller.addPage(ScannedPage(pageNumber: 1, imagePath: '/first.jpg'));
+      controller.addPage(ScannedPage(pageNumber: 2, imagePath: '/second.jpg'));
+
+      controller.movePage(1, 0);
+      controller.replacePage(
+        1,
+        ScannedPage(pageNumber: 7, imagePath: '/retake.jpg'),
+      );
+
+      expect(controller.pages.map((page) => page.imagePath), [
+        '/second.jpg',
+        '/retake.jpg',
+      ]);
+      expect(controller.pages.map((page) => page.pageNumber), [1, 2]);
+    });
+
     test('submitExamSubmission fails when pages list is empty', () async {
       final controller = SubmissionController();
 
@@ -50,17 +69,22 @@ void main() {
       expect(controller.errorMessage, null);
     });
 
-    test('pauseAnalysis changes status to paused and preserves scanned pages', () {
-      final controller = SubmissionController();
-      controller.addPage(ScannedPage(pageNumber: 1, imagePath: '/path/p1.jpg'));
+    test(
+      'pauseAnalysis changes status to paused and preserves scanned pages',
+      () {
+        final controller = SubmissionController();
+        controller.addPage(
+          ScannedPage(pageNumber: 1, imagePath: '/path/p1.jpg'),
+        );
 
-      controller.pauseAnalysis();
+        controller.pauseAnalysis();
 
-      expect(controller.status, SubmissionStatus.paused);
-      expect(controller.isPaused, true);
-      expect(controller.pages.length, 1);
-      expect(controller.errorMessage, contains('Análisis pausado'));
-    });
+        expect(controller.status, SubmissionStatus.paused);
+        expect(controller.isPaused, true);
+        expect(controller.pages.length, 1);
+        expect(controller.errorMessage, contains('Análisis pausado'));
+      },
+    );
 
     test('retrySubmission increments retryAttempt counter', () async {
       final controller = SubmissionController();

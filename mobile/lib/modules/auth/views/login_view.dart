@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/network/api_client.dart';
 import '../../courses/views/course_selection_view.dart';
 
@@ -14,6 +16,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
   bool _isLoading = false;
+  bool _showPassword = false;
   String? _errorMessage;
   final ApiClient _apiClient = ApiClient();
 
@@ -68,7 +71,7 @@ class _LoginViewState extends State<LoginView> {
 
   Future<void> _handleCredentialsLogin() async {
     final email = _emailCtrl.text.trim();
-    final password = _passwordCtrl.text.trim();
+    final password = _passwordCtrl.text;
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
@@ -101,9 +104,18 @@ class _LoginViewState extends State<LoginView> {
           MaterialPageRoute(builder: (_) => const CourseSelectionView()),
         );
       }
-    } catch (e) {
+    } on DioException catch (error) {
+      if (!mounted) return;
+      final status = error.response?.statusCode;
       setState(() {
-        _errorMessage = 'Credenciales inválidas o error de conexión';
+        _errorMessage = switch (status) {
+          400 ||
+          401 ||
+          403 => 'El correo o la contraseña son incorrectos. Revisa los datos.',
+          null =>
+            'No se pudo conectar. Revisa tu conexión e inténtalo de nuevo.',
+          _ => 'El servicio no está disponible. Vuelve a intentarlo.',
+        };
       });
     } finally {
       if (mounted) {
@@ -151,10 +163,7 @@ class _LoginViewState extends State<LoginView> {
                 const Text(
                   'Digitalización Móvil & Calificación Asistida por IA',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF6B5B52),
-                  ),
+                  style: TextStyle(fontSize: 13, color: Color(0xFF6B5B52)),
                 ),
                 const SizedBox(height: 32),
 
@@ -169,12 +178,19 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.error_outline, color: Color(0xFFEF4444), size: 20),
+                        const Icon(
+                          Icons.error_outline,
+                          color: Color(0xFFEF4444),
+                          size: 20,
+                        ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             _errorMessage!,
-                            style: const TextStyle(color: Color(0xFFEF4444), fontSize: 13),
+                            style: const TextStyle(
+                              color: Color(0xFFEF4444),
+                              fontSize: 13,
+                            ),
                           ),
                         ),
                       ],
@@ -182,21 +198,51 @@ class _LoginViewState extends State<LoginView> {
                   ),
 
                 // Formulario
-                TextField(
-                  controller: _emailCtrl,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Correo Institucional',
-                    prefixIcon: Icon(Icons.email_outlined, color: Color(0xFF8B5E3C)),
-                  ),
-                ),
-                const SizedBox(height: 14),
-                TextField(
-                  controller: _passwordCtrl,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Contraseña',
-                    prefixIcon: Icon(Icons.lock_outline, color: Color(0xFF8B5E3C)),
+                AutofillGroup(
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _emailCtrl,
+                        autofillHints: const [AutofillHints.username],
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: 'Correo Institucional',
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                            color: Color(0xFF8B5E3C),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      TextField(
+                        controller: _passwordCtrl,
+                        obscureText: !_showPassword,
+                        autofillHints: const [AutofillHints.password],
+                        onSubmitted: (_) {
+                          if (!_isLoading) _handleCredentialsLogin();
+                        },
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            tooltip: _showPassword
+                                ? 'Ocultar contraseña'
+                                : 'Mostrar contraseña',
+                            onPressed: () =>
+                                setState(() => _showPassword = !_showPassword),
+                            icon: Icon(
+                              _showPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                          ),
+                          labelText: 'Contraseña',
+                          prefixIcon: Icon(
+                            Icons.lock_outline,
+                            color: Color(0xFF8B5E3C),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 22),
@@ -244,12 +290,20 @@ class _LoginViewState extends State<LoginView> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        icon: const Icon(Icons.school, color: Color(0xFF8B5E3C)),
+                        icon: const Icon(
+                          Icons.school,
+                          color: Color(0xFF8B5E3C),
+                        ),
                         label: const Text(
                           'Docente Demo',
-                          style: TextStyle(color: Color(0xFF8B5E3C), fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Color(0xFF8B5E3C),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        onPressed: _isLoading ? null : () => _handleDemoLogin('teacher'),
+                        onPressed: _isLoading
+                            ? null
+                            : () => _handleDemoLogin('teacher'),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -262,12 +316,20 @@ class _LoginViewState extends State<LoginView> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        icon: const Icon(Icons.admin_panel_settings, color: Color(0xFFC4956A)),
+                        icon: const Icon(
+                          Icons.admin_panel_settings,
+                          color: Color(0xFFC4956A),
+                        ),
                         label: const Text(
                           'Admin Demo',
-                          style: TextStyle(color: Color(0xFFC4956A), fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Color(0xFFC4956A),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        onPressed: _isLoading ? null : () => _handleDemoLogin('admin'),
+                        onPressed: _isLoading
+                            ? null
+                            : () => _handleDemoLogin('admin'),
                       ),
                     ),
                   ],

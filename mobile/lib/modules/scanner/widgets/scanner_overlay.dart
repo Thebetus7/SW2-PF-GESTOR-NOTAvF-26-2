@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 class ScannerOverlay extends StatelessWidget {
   final bool isQrDetected;
 
-  const ScannerOverlay({
-    Key? key,
-    required this.isQrDetected,
-  }) : super(key: key);
+  const ScannerOverlay({Key? key, required this.isQrDetected})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,9 @@ class ScannerOverlay extends StatelessWidget {
               height: frameHeight,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: isQrDetected ? const Color(0xFF059669) : Colors.white70,
+                  color: isQrDetected
+                      ? const Color(0xFF059669)
+                      : Colors.white70,
                   width: isQrDetected ? 3.0 : 1.5,
                 ),
                 borderRadius: BorderRadius.circular(16),
@@ -50,7 +50,10 @@ class ScannerOverlay extends StatelessWidget {
               top: (height - frameHeight) / 2 - 48,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: isQrDetected
                       ? const Color(0xFF059669).withOpacity(0.9)
@@ -68,13 +71,17 @@ class ScannerOverlay extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      isQrDetected ? Icons.check_circle_outline : Icons.crop_free,
+                      isQrDetected
+                          ? Icons.check_circle_outline
+                          : Icons.crop_free,
                       color: Colors.white,
                       size: 18,
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      isQrDetected ? '✓ Código QR Calibrado' : 'Alinee la hoja física',
+                      isQrDetected
+                          ? '✓ Código QR detectado'
+                          : 'Alinee la hoja física',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,

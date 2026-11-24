@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gestornotas_mobile/core/theme/cafeblend_theme.dart';
 import 'package:gestornotas_mobile/modules/scanner/models/scanned_page.dart';
 import 'package:gestornotas_mobile/modules/scanner/widgets/scanner_overlay.dart';
 import 'package:gestornotas_mobile/modules/scanner/views/camera_scanner_view.dart';
@@ -28,38 +27,38 @@ void main() {
       expect(reconstructed.qrData, 'EXAM_123_QR');
     });
 
-    testWidgets('ScannerOverlay renders QR calibrated text when isQrDetected is true',
-        (WidgetTester tester) async {
+    testWidgets(
+      'ScannerOverlay renders QR calibrated text when isQrDetected is true',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(body: ScannerOverlay(isQrDetected: true)),
+          ),
+        );
+
+        expect(find.text('✓ Código QR detectado'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'ScannerOverlay renders manual guide when isQrDetected is false',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(body: ScannerOverlay(isQrDetected: false)),
+          ),
+        );
+
+        expect(find.text('Alinee la hoja física'), findsOneWidget);
+      },
+    );
+
+    testWidgets('CameraScannerView renders title and switch mode', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ScannerOverlay(isQrDetected: true),
-          ),
-        ),
-      );
-
-      expect(find.text('✓ Código QR Calibrado'), findsOneWidget);
-    });
-
-    testWidgets('ScannerOverlay renders manual guide when isQrDetected is false',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ScannerOverlay(isQrDetected: false),
-          ),
-        ),
-      );
-
-      expect(find.text('Alinee la hoja física'), findsOneWidget);
-    });
-
-    testWidgets('CameraScannerView renders title and switch mode',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: CafeBlendTheme.lightTheme(),
-          home: const CameraScannerView(
+          home: CameraScannerView(
             examId: 'exam-uuid-123',
             parallelName: 'Cálculo I - Grupo A',
             examHasQr: true,
@@ -70,7 +69,7 @@ void main() {
       expect(find.text('Cálculo I - Grupo A'), findsOneWidget);
       expect(find.text('Auto QR'), findsOneWidget);
       expect(find.byType(Switch), findsOneWidget);
-      expect(find.text('Páginas del Alumno: 0'), findsOneWidget);
+      expect(find.text('0 hojas capturadas'), findsOneWidget);
 
       await tester.pump(const Duration(milliseconds: 1500));
     });

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+
 import '../../../core/network/api_client.dart';
 import '../models/scanned_page.dart';
 
@@ -18,7 +20,7 @@ class SubmissionController extends ChangeNotifier {
   final ApiClient _apiClient;
 
   SubmissionController({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   final List<ScannedPage> _pages = [];
   SubmissionStatus _status = SubmissionStatus.initial;
@@ -65,6 +67,20 @@ class SubmissionController extends ChangeNotifier {
     }
   }
 
+  void movePage(int from, int to) {
+    final page = _pages.removeAt(from);
+    _pages.insert(to, page);
+    for (var index = 0; index < _pages.length; index++) {
+      _pages[index] = _pages[index].copyWith(pageNumber: index + 1);
+    }
+    notifyListeners();
+  }
+
+  void replacePage(int index, ScannedPage page) {
+    _pages[index] = page.copyWith(pageNumber: index + 1);
+    notifyListeners();
+  }
+
   void clearPages() {
     _retryTimer?.cancel();
     _pages.clear();
@@ -82,7 +98,8 @@ class SubmissionController extends ChangeNotifier {
   void pauseAnalysis() {
     _retryTimer?.cancel();
     _status = SubmissionStatus.paused;
-    _errorMessage = 'Análisis pausado. Las fotografías se mantienen en memoria.';
+    _errorMessage =
+        'Análisis pausado. Las fotografías se mantienen en memoria.';
     notifyListeners();
   }
 
@@ -104,6 +121,7 @@ class SubmissionController extends ChangeNotifier {
     String? parallelId,
     String? studentIdentifier,
   }) async {
+    if (_status == SubmissionStatus.submitting) return false;
     if (_pages.isEmpty) {
       _errorMessage = 'No hay páginas escaneadas para enviar';
       _status = SubmissionStatus.initial;
@@ -136,21 +154,12 @@ class SubmissionController extends ChangeNotifier {
           formData.files.add(
             MapEntry(
               'pages',
-              await MultipartFile.fromFile(
-                page.imagePath,
-                filename: fileName,
-              ),
+              await MultipartFile.fromFile(page.imagePath, filename: fileName),
             ),
           );
         } else {
-          formData.files.add(
-            MapEntry(
-              'pages',
-              MultipartFile.fromBytes(
-                [0xFF, 0xD8, 0xFF, 0xE0], // Cabecera mágica JPG
-                filename: fileName,
-              ),
-            ),
+          throw StateError(
+            'Falta la imagen de la página ${page.pageNumber}. Vuelve a tomarla.',
           );
         }
       }
@@ -166,10 +175,11 @@ class SubmissionController extends ChangeNotifier {
         _retryAttempt = 0;
         notifyListeners();
         return true;
-      } else if (response.statusCode == 429 || response.data?['error'] == 'IA_SATURADA') {
+      } else if (response.statusCode == 429 ||
+          response.data?['error'] == 'IA_SATURADA') {
         _status = SubmissionStatus.rateLimited;
         _currentEvaluationId = response.data?['evaluation_id']?.toString();
-        _errorMessage = 'IA de Gemini saturada en capa gratuita. Reintentando análisis... (Intento #$_retryAttempt)';
+        _errorMessage = 'El análisis está ocupado. Puedes volver a intentarlo con las mismas fotos.';
         notifyListeners();
         return false;
       } else {
@@ -182,18 +192,22 @@ class SubmissionController extends ChangeNotifier {
       final statusCode = e.response?.statusCode;
       final responseData = e.response?.data;
 
-      if (statusCode == 429 || (responseData is Map && responseData['error'] == 'IA_SATURADA')) {
+      if (statusCode == 429 ||
+          (responseData is Map && responseData['error'] == 'IA_SATURADA')) {
         _status = SubmissionStatus.rateLimited;
         if (responseData is Map) {
           _currentEvaluationId = responseData['evaluation_id']?.toString();
         }
-        _errorMessage = 'IA de Gemini saturada en capa gratuita. Reintentando análisis... (Intento #$_retryAttempt)';
+        _errorMessage = 'El análisis está ocupado. Puedes volver a intentarlo con las mismas fotos.';
         notifyListeners();
         return false;
       }
 
       _status = SubmissionStatus.error;
-      _errorMessage = (responseData is Map ? (responseData['error'] ?? responseData['detail']) : null) ??
+      _errorMessage =
+          (responseData is Map
+              ? (responseData['error'] ?? responseData['detail'])
+              : null) ??
           e.message ??
           'Error al conectar con el servidor';
       notifyListeners();

@@ -1,6 +1,6 @@
 # Specification: 04-correcciones-escaneo-despliegue
 Status: APPROVED
-Version: 1
+Version: 2
 Risk: estándar
 Audit-Date: 2026-11-19
 Audit-Scope: Flujo docente, constructor de exámenes, digitalización móvil dual, resiliencia Gemini Free Tier, seeders y enrutamiento Nginx.
@@ -164,3 +164,9 @@ flowchart TD
 - **Implementador externo:** Todos los contratos de entrada/salida y comportamientos de UI y backend están especificados sin depender de supuestos implícitos.
 - **Trazabilidad:** Cada requerimiento (RF-01 a RF-05) tiene correspondencia unívoca con criterios de aceptación (SC-01 a SC-04).
 - **Estado:** `APPROVED` (Listo para fase de planificación técnica `/sdd-planning`).
+
+## Flujo móvil aprobado
+
+**RF-04.9:** Consultar inscritos y escaneos por parcial, buscar por nombre o matrícula y capturar en modo dirigido o por identificación automática. La cámara registra imágenes válidas e indica lectura real de QR. La revisión permite ampliar, reordenar y reemplazar hojas y cambiar explícitamente al estudiante. El reintento muestra el resultado exitoso. La publicación se confirma desde el parcial e indica alcance total. El acceso distingue credenciales y conectividad.
+
+**SC-04.9.1:** Verificar captura cancelada, QR válido, galería, edición de hojas, reintento, listado, acceso y publicación. Revisión funcional y aprobación registrada el 2026-11-24 a partir de la solicitud docente.

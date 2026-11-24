@@ -2,16 +2,16 @@
 <!-- sdd:progress:start -->
 ## Task Progress
 
-Status: COMPLETED
+Status: IN_PROGRESS
 
 | Métrica | Cantidad |
 | --- | ---: |
-| Total de tareas | 8 |
+| Total de tareas | 9 |
 | Tareas realizadas | 8 |
-| Tareas por realizar | 0 |
+| Tareas por realizar | 1 |
 | Tareas bloqueadas | 0 |
-| Tareas en progreso | 0 |
-| Progreso | 100.0% |
+| Tareas en progreso | 1 |
+| Progreso | 88.9% |
 
 ## Registro de tareas
 
@@ -25,6 +25,7 @@ Status: COMPLETED
 | T3.1 | COMPLETED | [IMPL] Armonización y Breadcrumbs en Constructor de Exámenes Web | Barra de migas de pan integrada (`Mis Materias > [Materia] > [Aula] > Constructor de Exámenes`); build exitoso de Next.js sin errores de tipado. |
 | T3.2 | COMPLETED | [IMPL] Configuración de Producción Nginx (Landing Page en Raíz `20.51.189.52` y Botón hacia App) | `HeroSection` y `Navbar` vinculan con `appUrl` ('http://20.51.189.52:3000/login' o `/app`); VirtualHost Nginx documentado en `04_DESPLEGAR_Y_VERIFICAR.md`; compilación exitosa de Next.js Landing. |
 | T4.1 | COMPLETED | [TEST] Verificación Integral de Suites de Pruebas y Flujo Completo | 29 pruebas backend aprobadas (29 passed), 9 pruebas Flutter mobile aprobadas (9 passed), frontend y landing build exitosos. |
+| T5.1 | TESTING | [IMPL] Mejorar el flujo móvil docente | El parser de Dart 3.14.0 procesó los ocho archivos Dart modificados. Verificación funcional y compilación Android en curso. |
 
 ## Checklist rápido
 
@@ -36,12 +37,13 @@ Status: COMPLETED
 - [x] T3.1 [IMPL] Armonización y Breadcrumbs en Constructor de Exámenes Web
 - [x] T3.2 [IMPL] Configuración de Producción Nginx (Landing Page en Raíz `20.51.189.52` y Botón hacia App)
 - [x] T4.1 [TEST] Verificación Integral de Suites de Pruebas y Flujo Completo
+- [?] T5.1 [IMPL] Mejorar el flujo móvil docente
 
 <!-- sdd:progress:end -->
 
-Version: 1
-Spec-SHA256: c09be26acd0fd8c31dc25e8d0f66279fb701bdbd23e72852fbddb24e18c8bdbf
-Plan-SHA256: 9f9e491c5ac2b74af614b75281f290607d0131862e297a8eca362c9fc951e9d3
+Version: 2
+Spec-SHA256: 3e758455e71f052adc6a11b9062419685166cd3e5ebca9a0095ac2d861967cdb
+Plan-SHA256: cbaab3028fcc45f12591749a6d2708882a4134ccfe005a5566268d1c6ec27865
 
 ## 1. Trazabilidad y estrategia
 
@@ -168,3 +170,19 @@ Plan-SHA256: 9f9e491c5ac2b74af614b75281f290607d0131862e297a8eca362c9fc951e9d3
 - **2026-11-19:** Rediseñado el diálogo de resultados con desglose de transcripción de preguntas y UI CafeBlend.
 - **2026-11-19:** Armonizados breadcrumbs en Constructor de Exámenes Web y documentada configuración de Landing Page en raíz Nginx.
 - **2026-11-19:** Ejecutadas suites de pruebas completas con 100% de éxito.
+
+## Mejoras del flujo móvil
+
+### T5.1 [IMPL] Mejorar el flujo móvil docente
+
+**Status:** TESTING
+**Depends on:** —
+**Traceability:** RF-04.9, SC-04.9.1, PLAN-49
+**Files:** `mobile/`
+**Objective:** Completar el flujo móvil aprobado.
+**Work:** Implementar y verificar el recorrido y compilar APK debug.
+**Done when:** Pruebas del flujo y APK debug verificadas.
+**Verification:** NOT_RUN
+**Command:** `dart format --output=none`; `flutter test --no-pub`; `flutter build apk --debug --no-pub`
+**Exit code:** —
+**Evidence:** El parser de Dart 3.14.0 procesó los ocho archivos Dart modificados. Verificación funcional y compilación Android en curso.
