@@ -41,6 +41,42 @@ mobile/build/app/outputs/flutter-apk/app-debug.apk
 
 ---
 
+## 🚀 Generación del APK de Pruebas (`app-release.apk`)
+
+APK optimizado para probar el comportamiento real (sin el overlay de debug de Flutter y con las optimizaciones de release activas). Es el archivo recomendado para compartir con usuarios de prueba.
+
+### 1. Comandos de Compilación
+
+Desde la carpeta `mobile/`:
+
+```bash
+# Resolver dependencias (necesario si cambió pubspec.yaml)
+flutter pub get
+
+# Compilar en modo release
+flutter build apk --release
+```
+
+### 2. Ubicación del Archivo Generado
+
+```text
+mobile/build/app/outputs/flutter-apk/app-release.apk
+```
+
+### 3. Instalación
+
+```bash
+adb install -r build/app/outputs/flutter-apk/app-release.apk
+```
+
+### 4. Consideraciones
+
+* **Firma**: el `buildType release` en `android/app/build.gradle.kts` usa la **keystore de debug**. Por eso este APK sirve únicamente para pruebas internas; para publicar en Play Store se debe configurar una keystore de producción.
+* **Verificación mínima**: tras instalar, comprobar el arranque en frío (app cerrada por completo), el login y el reinicio con sesión guardada. Si la app se queda en la pantalla inicial, revisar el override de `shared_preferences_android` en `pubspec.yaml` (la rama 2.5.x usa Pigeon JNI y bloquea el arranque en algunos dispositivos).
+* **Tiempo de build**: la primera compilación release puede tardar varios minutos porque Gradle aplica R8 y tree-shaking de iconos.
+
+---
+
 ## 📲 Instalación y Ejecución
 
 ### Opción A: Instalar directamente mediante ADB (Emulador o Teléfono Físico)
