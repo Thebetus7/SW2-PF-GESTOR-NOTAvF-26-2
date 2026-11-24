@@ -1,303 +1,313 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { StudentEvaluation } from '@/types';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import type { StudentEvaluation } from '@/types';
 import { Navbar } from '@/components/ui/Navbar';
 import { EvaluationDetailModal } from '@/components/evaluations/EvaluationDetailModal';
-import { API_BASE_URL } from '@/lib/api';
+import { apiClient } from '@/lib/api';
+
+interface Exam {
+  title: string;
+  parallel: string;
+}
+
+interface EnrolledStudent {
+  id: string;
+  full_name: string;
+  student_id_code: string;
+}
+
+interface ExamRoster {
+  exam: Exam;
+  students: EnrolledStudent[];
+  evaluations: StudentEvaluation[];
+}
+
+const detailClass = 'btn-secondary text-xs';
 
 export default function TeacherExamEvaluationsPage() {
-  const params = useParams();
-  const router = useRouter();
-  const examId = params.id as string;
+  const { id } = useParams<{ id: string }>();
+  return <ExamRosterPage key={id} examId={id} />;
+}
 
-  const [evaluations, setEvaluations] = useState<StudentEvaluation[]>([]);
+function ExamRosterPage({ examId }: { examId: string }) {
+  const [roster, setRoster] = useState<ExamRoster | null>(null);
   const [selectedEvaluation, setSelectedEvaluation] = useState<StudentEvaluation | null>(null);
-  const [filterStatus, setFilterStatus] = useState<string>('ALL');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isPublishing, setIsPublishing] = useState<boolean>(false);
-  const [publishFeedback, setPublishFeedback] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [selectedStudent, setSelectedStudent] = useState<EnrolledStudent | null>(null);
+  const [loadingDetailId, setLoadingDetailId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const unscannedDialog = useRef<HTMLDialogElement>(null);
 
-  useEffect(() => {
-    fetchEvaluations();
+  const loadRoster = useCallback(async (signal?: AbortSignal) => {
+    setIsLoading(true);
+    setLoadError(null);
+    try {
+      const token = localStorage.getItem('access_token') || '';
+      const options = { token, signal };
+      const exam = await apiClient<Exam>(`/exams/exams/${examId}/`, options);
+      const [students, evaluationData] = await Promise.all([
+        apiClient<EnrolledStudent[]>(`/academics/parallels/${exam.parallel}/students/`, options),
+        apiClient<StudentEvaluation[] | { results: StudentEvaluation[] }>(
+          `/evaluations/?exam_id=${examId}`, options
+        ),
+      ]);
+      if (signal?.aborted) return;
+
+      setRoster({
+        exam,
+        students: [...students].sort((a, b) => a.full_name.localeCompare(b.full_name, 'es')),
+        evaluations: Array.isArray(evaluationData) ? evaluationData : evaluationData.results,
+      });
+    } catch (error) {
+      if (!signal?.aborted) {
+        setLoadError(error instanceof Error ? error.message : 'No se pudo cargar el listado.');
+      }
+    } finally {
+      if (!signal?.aborted) setIsLoading(false);
+    }
   }, [examId]);
 
-  const fetchEvaluations = async () => {
-    setIsLoading(true);
-    setErrorMessage(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    void loadRoster(controller.signal);
+    return () => controller.abort();
+  }, [loadRoster]);
+
+  useEffect(() => {
+    if (selectedStudent) unscannedDialog.current?.showModal();
+  }, [selectedStudent]);
+
+  const handleOpenDetail = async (evaluation: StudentEvaluation) => {
+    setActionError(null);
+    setLoadingDetailId(evaluation.id);
     try {
-      const token = localStorage.getItem('access_token');
-      const res = await fetch(`${API_BASE_URL}/evaluations/?exam_id=${examId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error('No se pudieron obtener las evaluaciones del examen');
-      }
-
-      const data = await res.json();
-      setEvaluations(data.results || data);
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Error al conectar con el servidor');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleOpenDetail = async (evalItem: StudentEvaluation) => {
-    try {
-      const token = localStorage.getItem('access_token');
-      const res = await fetch(`${API_BASE_URL}/evaluations/${evalItem.id}/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.ok) {
-        const fullDetail = await res.json();
-        setSelectedEvaluation(fullDetail);
-      } else {
-        setSelectedEvaluation(evalItem);
-      }
+      const token = localStorage.getItem('access_token') || '';
+      const detail = await apiClient<StudentEvaluation>(`/evaluations/${evaluation.id}/`, { token });
+      setSelectedEvaluation(detail);
     } catch {
-      setSelectedEvaluation(evalItem);
+      setActionError('No se pudieron cargar los detalles de la entrega. Vuelve a intentarlo.');
+    } finally {
+      setLoadingDetailId(null);
     }
   };
 
   const handleGradeUpdated = (updated: StudentEvaluation) => {
     setSelectedEvaluation(updated);
-    setEvaluations((prev) =>
-      prev.map((item) => (item.id === updated.id ? { ...item, ...updated } : item))
-    );
+    setRoster((current) => current && ({
+      ...current,
+      evaluations: current.evaluations.map((evaluation) =>
+        evaluation.id === updated.id ? { ...evaluation, ...updated } : evaluation
+      ),
+    }));
   };
 
   const handlePublishAll = async () => {
-    if (!confirm('¿Confirma que desea publicar todas las calificaciones? Quedarán inmediatamente visibles para los alumnos.')) {
+    if (!confirm('¿Deseas publicar las calificaciones? Quedarán visibles para los estudiantes.')) {
       return;
     }
 
     setIsPublishing(true);
-    setPublishFeedback(null);
+    setFeedback(null);
+    setActionError(null);
     try {
-      const token = localStorage.getItem('access_token');
-      const res = await fetch(`${API_BASE_URL}/evaluations/exams/${examId}/publish/`, {
+      const token = localStorage.getItem('access_token') || '';
+      const data = await apiClient<{ message?: string }>(`/evaluations/exams/${examId}/publish/`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        token,
       });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Error al publicar calificaciones');
-      }
-
-      const data = await res.json();
-      setPublishFeedback(data.message || 'Calificaciones publicadas con éxito.');
-      fetchEvaluations();
-    } catch (err: any) {
-      alert(`Error: ${err.message}`);
+      setFeedback(data.message || 'Calificaciones publicadas.');
+      await loadRoster();
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : 'No se pudieron publicar las calificaciones.');
     } finally {
       setIsPublishing(false);
     }
   };
 
-  // Métricas
-  const totalCount = evaluations.length;
-  const publishedCount = evaluations.filter((e) => e.is_published).length;
-  const reviewNeededCount = evaluations.filter((e) => e.status === 'REVISION_DOCENTE').length;
-  const averageScore = totalCount > 0
-    ? (evaluations.reduce((acc, curr) => acc + Number(curr.final_score || 0), 0) / totalCount).toFixed(1)
-    : '0.0';
+  const evaluationsByStudent = new Map<string, StudentEvaluation[]>(
+    roster?.students.map((student) => [student.id, []])
+  );
+  const otherEvaluations: StudentEvaluation[] = [];
+  for (const evaluation of roster?.evaluations ?? []) {
+    const entries = evaluationsByStudent.get(evaluation.student ?? '');
+    if (entries) entries.push(evaluation);
+    else otherEvaluations.push(evaluation);
+  }
 
-  const filteredEvaluations = evaluations.filter((item) => {
-    if (filterStatus === 'ALL') return true;
-    if (filterStatus === 'PUBLISHED') return item.is_published;
-    if (filterStatus === 'REVISION_DOCENTE') return item.status === 'REVISION_DOCENTE';
-    if (filterStatus === 'EN_REVISION') return item.status === 'EN_REVISION';
-    return true;
+  const students = (roster?.students ?? []).map((student) => {
+    const entries = evaluationsByStudent.get(student.id) ?? [];
+    return {
+      ...student,
+      entries,
+      scanned: entries.some((evaluation) => (evaluation.pages_count ?? 0) > 0),
+    };
   });
+  const scannedCount = students.filter((student) => student.scanned).length;
+
+  const evaluationButton = (evaluation: StudentEvaluation, label = 'Detalles') => (
+    <button
+      key={evaluation.id}
+      type="button"
+      className={detailClass}
+      disabled={loadingDetailId !== null}
+      onClick={() => void handleOpenDetail(evaluation)}
+    >
+      {loadingDetailId === evaluation.id ? 'Cargando…' : label}
+    </button>
+  );
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Navbar userRole="TEACHER" userName="Profesor Evaluador" />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
-        
-        {/* Cabecera y Botón de Publicación */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+      <main className="mx-auto w-full max-w-6xl px-4 py-8">
+        <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <button
-              onClick={() => router.back()}
-              className="text-xs text-[var(--primary)] font-semibold hover:underline mb-2 inline-flex items-center gap-1"
-            >
-              ← Volver al Listado de Exámenes
-            </button>
-            <h1 className="text-3xl font-bold font-serif text-[var(--primary)]">
-              Auditoría y Post-Detalle de Examen
-            </h1>
-            <p className="text-sm text-[var(--foreground)]/70 mt-1">
-              Revise las respuestas digitalizadas, ajuste calificaciones puntuales y publique los resultados oficiales.
-            </p>
-          </div>
-
-          <button
-            onClick={handlePublishAll}
-            disabled={isPublishing || totalCount === 0}
-            className="px-5 py-3 rounded-xl font-bold text-white bg-[var(--primary)] hover:opacity-90 transition-all shadow-lg hover:shadow-xl flex items-center gap-2 disabled:opacity-50"
-          >
-            {isPublishing ? (
-              <span>Publicando...</span>
-            ) : (
-              <>
-                <span>📢 Publicar Calificaciones del Aula</span>
-              </>
+            {roster && (
+              <Link
+                href={`/teacher/parallels/${roster.exam.parallel}/exams`}
+                className="mb-2 inline-block text-sm font-semibold text-[var(--primary)] hover:underline"
+              >
+                ← Volver a los parciales
+              </Link>
             )}
+            <h1 className="font-serif text-3xl font-bold text-[var(--primary)]">
+              {roster?.exam.title ?? 'Estudiantes del parcial'}
+            </h1>
+          </div>
+          <button
+            type="button"
+            className="btn-primary disabled:opacity-50"
+            disabled={isLoading || isPublishing || !roster?.evaluations.length}
+            onClick={() => void handlePublishAll()}
+          >
+            {isPublishing ? 'Publicando…' : 'Publicar calificaciones'}
           </button>
-        </div>
+        </header>
 
-        {publishFeedback && (
-          <div className="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 dark:bg-green-950/40 dark:border-green-800 dark:text-green-300 rounded-xl text-sm font-semibold flex items-center justify-between">
-            <span>✓ {publishFeedback}</span>
-            <button onClick={() => setPublishFeedback(null)} className="text-xs underline ml-4">
-              Cerrar
+        {feedback && <p role="status" className="mb-4 text-sm">{feedback}</p>}
+        {actionError && (
+          <p role="alert" className="mb-4 text-sm text-[var(--color-error)]">{actionError}</p>
+        )}
+        {loadError && (
+          <div className="mb-4 flex flex-wrap items-center gap-3">
+            <p role="alert" className="text-sm text-[var(--color-error)]">
+              No se pudo actualizar el listado. {loadError}
+            </p>
+            <button type="button" className="btn-secondary" onClick={() => void loadRoster()}>
+              Reintentar
             </button>
           </div>
         )}
 
-        {errorMessage && (
-          <div className="mb-6 p-4 bg-red-100 border border-red-300 text-red-800 dark:bg-red-950/40 dark:border-red-800 dark:text-red-300 rounded-xl text-sm">
-            {errorMessage}
-          </div>
-        )}
+        {isLoading && <p role="status" className="mb-4 text-sm">Cargando estudiantes y escaneos…</p>}
+        {roster && (
+          <>
+            <section aria-labelledby="roster-heading" className="card overflow-hidden !p-0">
+              <div className="flex flex-wrap items-baseline justify-between gap-2 px-4 py-4">
+                <h2 id="roster-heading" className="font-serif text-xl font-bold">Estudiantes inscritos</h2>
+                <p className="text-sm text-[var(--color-text-secondary)]">
+                  {scannedCount} de {students.length} con escaneo
+                </p>
+              </div>
+              {students.length === 0 ? (
+                <p className="px-4 pb-5 text-sm">Este paralelo todavía no tiene estudiantes inscritos.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead className="border-y border-[var(--color-border)] bg-[var(--color-surface-inset)]">
+                      <tr>
+                        <th scope="col" className="px-4 py-3">Estudiante</th>
+                        <th scope="col" className="px-4 py-3">Matrícula</th>
+                        <th scope="col" className="px-4 py-3">Escaneo</th>
+                        <th scope="col" className="px-4 py-3">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[var(--color-border)]">
+                      {students.map((student) => (
+                        <tr key={student.id}>
+                          <th scope="row" className="px-4 py-3 font-semibold">{student.full_name}</th>
+                          <td className="px-4 py-3 font-mono text-xs">{student.student_id_code}</td>
+                          <td className="px-4 py-3">
+                            <span className={`inline-block whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold ${
+                              student.scanned
+                                ? 'bg-[var(--color-success-bg)] text-[var(--color-success)]'
+                                : 'bg-[var(--color-surface-inset)] text-[var(--color-text-secondary)]'
+                            }`}>
+                              {student.scanned ? 'Escaneado' : 'Sin escaneo'}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <div className="flex flex-wrap gap-2">
+                              {student.entries.length ? student.entries.map((evaluation, index) =>
+                                evaluationButton(evaluation, student.entries.length > 1 ? `Detalles ${index + 1}` : 'Detalles')
+                              ) : (
+                                <button
+                                  type="button"
+                                  className={detailClass}
+                                  disabled={loadingDetailId !== null}
+                                  onClick={() => setSelectedStudent(student)}
+                                >
+                                  Detalles
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
 
-        {/* Tarjetas de Métricas Rápidas */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--primary)]/15 shadow-sm">
-            <span className="text-xs font-semibold text-[var(--foreground)]/60 uppercase">Total Entregas</span>
-            <p className="text-2xl font-bold font-serif text-[var(--primary)] mt-1">{totalCount}</p>
-          </div>
-          <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--primary)]/15 shadow-sm">
-            <span className="text-xs font-semibold text-[var(--foreground)]/60 uppercase">Publicados</span>
-            <p className="text-2xl font-bold font-serif text-emerald-600 dark:text-emerald-400 mt-1">{publishedCount}</p>
-          </div>
-          <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--primary)]/15 shadow-sm">
-            <span className="text-xs font-semibold text-[var(--foreground)]/60 uppercase">Requieren Revisión</span>
-            <p className="text-2xl font-bold font-serif text-amber-600 dark:text-amber-400 mt-1">{reviewNeededCount}</p>
-          </div>
-          <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--primary)]/15 shadow-sm">
-            <span className="text-xs font-semibold text-[var(--foreground)]/60 uppercase">Promedio General</span>
-            <p className="text-2xl font-bold font-serif text-[var(--primary)] mt-1">{averageScore} pts</p>
-          </div>
-        </div>
-
-        {/* Barra de Filtros */}
-        <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2">
-          <span className="text-xs font-semibold text-[var(--foreground)]/60 mr-2">Filtrar por:</span>
-          {['ALL', 'EN_REVISION', 'REVISION_DOCENTE', 'PUBLISHED'].map((st) => (
-            <button
-              key={st}
-              onClick={() => setFilterStatus(st)}
-              className={`px-3 py-1.5 text-xs rounded-lg font-semibold transition-all ${
-                filterStatus === st
-                  ? 'bg-[var(--primary)] text-white shadow'
-                  : 'bg-[var(--surface)] text-[var(--foreground)]/70 hover:bg-[var(--primary)]/10 border border-[var(--primary)]/15'
-              }`}
-            >
-              {st === 'ALL' && 'Todos los Alumnos'}
-              {st === 'EN_REVISION' && 'En Revisión (IA Exitosa)'}
-              {st === 'REVISION_DOCENTE' && 'Requiere Revisión Manual'}
-              {st === 'PUBLISHED' && 'Publicados'}
-            </button>
-          ))}
-        </div>
-
-        {/* Tabla de Evaluaciones */}
-        <div className="bg-[var(--surface)] rounded-2xl border border-[var(--primary)]/15 shadow-sm overflow-hidden">
-          {isLoading ? (
-            <div className="p-12 text-center text-sm text-[var(--foreground)]/60">
-              Cargando evaluaciones del examen...
-            </div>
-          ) : filteredEvaluations.length === 0 ? (
-            <div className="p-12 text-center text-sm text-[var(--foreground)]/60">
-              No hay evaluaciones registradas con el filtro seleccionado.
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm border-collapse">
-                <thead>
-                  <tr className="border-b border-[var(--primary)]/15 bg-[var(--surface-inset)]/60 text-xs uppercase font-bold text-[var(--foreground)]/70">
-                    <th className="py-3 px-4">Estudiante</th>
-                    <th className="py-3 px-4">Matrícula</th>
-                    <th className="py-3 px-4 text-center">Hojas JPG</th>
-                    <th className="py-3 px-4 text-right">Nota IA</th>
-                    <th className="py-3 px-4 text-right">Nota Final</th>
-                    <th className="py-3 px-4 text-center">Estado</th>
-                    <th className="py-3 px-4 text-center">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--primary)]/10">
-                  {filteredEvaluations.map((item) => (
-                    <tr key={item.id} className="hover:bg-[var(--primary)]/5 transition-colors">
-                      <td className="py-3 px-4 font-semibold text-[var(--foreground)]">
-                        {item.student_name}
-                      </td>
-                      <td className="py-3 px-4 font-mono text-xs text-[var(--foreground)]/80">
-                        {item.student_identifier}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <span className="px-2 py-0.5 rounded-full text-xs bg-[var(--primary)]/10 font-semibold text-[var(--primary)]">
-                          {item.pages_count ?? 1} pág.
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-right text-[var(--foreground)]/70">
-                        {item.ai_total_score} pts
-                      </td>
-                      <td className="py-3 px-4 text-right font-bold text-[var(--primary)]">
-                        {item.final_score} pts
-                        {item.is_score_overridden && (
-                          <span className="block text-[10px] text-amber-600 dark:text-amber-400 font-normal">
-                            (Ajustada)
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <span className={`text-xs px-2.5 py-1 rounded-full font-bold ${
-                          item.status === 'PUBLICADO'
-                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
-                            : item.status === 'REVISION_DOCENTE'
-                            ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
-                            : 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300'
-                        }`}>
-                          {item.status}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <button
-                          onClick={() => handleOpenDetail(item)}
-                          className="px-3 py-1.5 text-xs font-bold rounded-lg bg-[var(--primary)]/10 text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white transition-all shadow-sm"
-                        >
-                          Auditar / Ajustar
-                        </button>
-                      </td>
-                    </tr>
+            {otherEvaluations.length > 0 && (
+              <section aria-labelledby="other-evaluations-heading" className="card mt-6">
+                <h2 id="other-evaluations-heading" className="mb-2 font-serif text-xl font-bold">
+                  Entregas sin vínculo con la lista del paralelo
+                </h2>
+                <ul className="divide-y divide-[var(--color-border)]">
+                  {otherEvaluations.map((evaluation) => (
+                    <li key={evaluation.id} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm">
+                      <span>{evaluation.student_name} · {evaluation.student_identifier}</span>
+                      {evaluationButton(evaluation)}
+                    </li>
                   ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-
+                </ul>
+              </section>
+            )}
+          </>
+        )}
       </main>
 
-      {/* Modal de Detalle con Visor Dividido */}
+      <dialog
+        ref={unscannedDialog}
+        aria-labelledby="student-detail-heading"
+        onClose={() => setSelectedStudent(null)}
+        className="card m-auto w-[calc(100%-2rem)] max-w-md text-[var(--color-text)] backdrop:bg-black/60"
+      >
+        {selectedStudent && (
+          <>
+            <h2 id="student-detail-heading" className="font-serif text-xl font-bold">{selectedStudent.full_name}</h2>
+            <p className="mt-1 text-sm">Matrícula {selectedStudent.student_id_code}</p>
+            <p className="my-4 text-sm">Este estudiante todavía no tiene un escaneo registrado para este parcial.</p>
+            <form method="dialog">
+              <button className="btn-secondary">Cerrar</button>
+            </form>
+          </>
+        )}
+      </dialog>
+
       {selectedEvaluation && (
         <EvaluationDetailModal
           evaluation={selectedEvaluation}
-          isOpen={!!selectedEvaluation}
+          isOpen
           onClose={() => setSelectedEvaluation(null)}
           onGradeUpdated={handleGradeUpdated}
         />

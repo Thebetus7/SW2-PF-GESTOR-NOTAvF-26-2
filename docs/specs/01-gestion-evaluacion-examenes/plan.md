@@ -1,4 +1,9 @@
 # Plan Técnico: Sistema de Gestión y Evaluación de Exámenes con IA
+Constitution-SHA256: a726869c15a091c769d54e19e825801d04ba2ae10cb890679dc43bc7a7e07212
+Spec-SHA256: be4ef266fef6682784ac059e730dbae7031cdde782bba788b0f4672b816aaecd
+
+Status: APPROVED
+Version: 2
 
 > Módulo: `docs/specs/01-gestion-evaluacion-examenes/` | Especificación Base: `spec.md` | Constitución: `docs/constitution.md` | Estado: Diseñado | Metodología: SDD-Planning
 
@@ -479,3 +484,9 @@ Para dar cumplimiento estricto al requerimiento del usuario, la gestión de secr
 * **Tests de Caja Blanca (Unitarios):**
   1. `test_cascade_fallback_gemini`: Simula un HTTP 429 en `gemini-2.5-flash` y valida que el cliente rote automáticamente a `gemini-2.5-pro` sin lanzar excepción al usuario.
   2. `test_excel_format_sanitization`: Prueba la extracción de columnas de número y nombre con filas vacías o espacios en blanco.
+
+## PLAN-56 — Listado de estudiantes del parcial
+
+Para RF-05.6, obtener el título y el paralelo del examen autorizado desde `GET /exams/exams/{id}/`. Consultar en paralelo `GET /academics/parallels/{id}/students/` y `GET /evaluations/?exam_id={id}`. Combinar por UUID del estudiante. Una matrícula puede tener varias entregas y se conservan los accesos a todas. El indicador de escaneo exige al menos una página en una entrega vinculada. Las entregas sin matrícula del paralelo se muestran aparte. El detalle sin entrega es local y el visor existente atiende las entregas registradas. No se requieren migraciones ni cambios de contrato.
+
+Verificar SC-06.3.1 y SC-06.3.2, acceso a Detalles y el retorno al listado en escritorio y viewport estrecho. El cambio se revierte en el cliente web.

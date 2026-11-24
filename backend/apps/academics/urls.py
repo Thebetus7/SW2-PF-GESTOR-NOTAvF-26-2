@@ -4,6 +4,7 @@ from .views import (
     TeacherManagementViewSet,
     SubjectViewSet,
     ClassroomParallelViewSet,
+    StudentManagementViewSet,
     StudentDetailView,
 )
 
@@ -13,6 +14,7 @@ router = DefaultRouter()
 router.register(r'teachers', TeacherManagementViewSet, basename='teachers')
 router.register(r'subjects', SubjectViewSet, basename='subjects')
 router.register(r'parallels', ClassroomParallelViewSet, basename='parallels')
+router.register(r'students', StudentManagementViewSet, basename='students')
 
 urlpatterns = [
     path('', include(router.urls)),

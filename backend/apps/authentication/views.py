@@ -27,6 +27,9 @@ class StudentIdLoginView(APIView):
         code = serializer.validated_data['student_id_code']
 
         user = User.objects.filter(student_id_code__iexact=code, role=UserRole.STUDENT).first()
+        if not user and '@' in code:
+            user = User.objects.filter(email__iexact=code, role=UserRole.STUDENT).first()
+
         if not user:
             return Response(
                 {'error': f'No se encontró ningún estudiante registrado con el ID "{code}".'},

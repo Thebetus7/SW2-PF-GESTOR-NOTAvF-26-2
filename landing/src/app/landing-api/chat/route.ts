@@ -21,6 +21,7 @@ TUS CAPACIDADES Y CONOCIMIENTOS CLAVE:
    - Motor IA Multimodal: Calificación objetiva comparando respuestas manuscritas físicas contra rúbricas docentes, ahorrando >85% del tiempo de corrección.
 
 2. CANALES OFICIALES:
+   - Correo Institucional: oficina@edugrade.com (contacto directo: edybanera@gmail.com)
    - WhatsApp Oficial: +591 77389330 (https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA)
    - Repositorio GitHub: https://github.com/Thebetus7/SW2-PF-GESTOR-NOTAvF-26-2
    - Acceso al Software: /app/login

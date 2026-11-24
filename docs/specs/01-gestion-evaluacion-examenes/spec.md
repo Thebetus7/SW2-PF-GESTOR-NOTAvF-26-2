@@ -1,6 +1,7 @@
 # Specification: Sistema de Gestión y Evaluación de Exámenes con IA
 
 Status: APPROVED
+Version: 2
 
 ## 1. Context
 
@@ -215,6 +216,7 @@ para **probar y demostrar fluidamente todas las capacidades del sistema sin ingr
 
 ### Panel Post-Detalle, Auditoría y Portal Estudiantil por ID
 * **RF-05.1:** El sistema deberá presentar al docente una tabla post-detalle con la lista de notas de los estudiantes, estado de revisión y visor comparativo (foto JPG original vs corrección IA).
+* **RF-05.6:** Al abrir un parcial, el docente ve a todos los estudiantes inscritos en su paralelo, incluso si todavía no se ha escaneado ninguna entrega. Cada fila indica si el estudiante tiene hojas escaneadas vinculadas a ese parcial y ofrece **Detalles**. Para una entrega existente se conserva el visor y la auditoría. Si no hay entrega, se muestra la matrícula y el estado sin escaneo. Las entregas sin vínculo con un inscrito siguen accesibles para auditoría.
 * **RF-05.2:** El sistema deberá permitir al docente modificar el puntaje de cualquier pregunta registrando un motivo u observación que será visible para el estudiante.
 * **RF-05.3:** El sistema deberá proveer el botón de acción "Publicar Calificaciones del Paralelo", que cambia el estado a `PUBLICADO` y habilita la consulta a los estudiantes del curso.
 * **RF-05.4:** El portal web del estudiante deberá permitir el login mediante su **ID de estudiante** (matrícula) y desplegar sus atributos personales, aula, notas finales publicadas, desglose por pregunta con retroalimentación u observaciones del docente, y fotos JPG de su examen.
@@ -458,3 +460,9 @@ Feature: Gestión, Escaneo y Evaluación Automatizada de Exámenes con IA
   - Timeout preventivo estricto de 10-15s y degradación elegante a revisión docente (`REVISION_DOCENTE`) ante contingencias.
 * **PLAN-03:** Configuración del generador de PDF (como `WeasyPrint` o `ReportLab`) con renderizado de QR y maquetación de exámenes impresos de 1 a N páginas.
 * **PLAN-04:** Manejo de almacenamiento de archivos estáticos y volúmenes Docker para las imágenes JPG multipágina.
+
+## Revisión del listado por parcial
+
+- **SC-06.3.1:** Al abrir un parcial con alumnos inscritos y sin entregas, aparecen todos como «Sin escaneo» y Detalles muestra el estado individual.
+- **SC-06.3.2:** Con entregas parciales, solo los inscritos con hojas vinculadas en ese examen aparecen como «Escaneado». Los escaneos de otros parciales no influyen. Las entregas sin vínculo con un inscrito siguen accesibles.
+- **Revisión funcional (2026-11-24):** RF-05.6 recoge la solicitud docente. Los permisos y las operaciones de ajuste y publicación existentes se conservan. La consulta fallida tiene un estado de error con reintento y una matrícula vacía se indica explícitamente.

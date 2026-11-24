@@ -121,3 +121,53 @@ class TestAcademics:
         assert len(data) == 1
         assert data[0]['student_id_code'] == 'EST-102'
         assert data[0]['full_name'] == 'Lucía Ramos'
+
+    def test_admin_create_student_and_login_flexible(self):
+        """Admin puede crear estudiante manualmente y el estudiante puede autenticarse con email o matrícula."""
+        self.client.force_authenticate(user=self.admin_user)
+        subject = Subject.objects.create(name='Física I', code='FIS101', teacher=self.teacher_user)
+        parallel = ClassroomParallel.objects.create(subject=subject, group_code='A', period='1-2026')
+
+        payload = {
+            'full_name': 'Mario Hugo Morales',
+            'email': 'mario.morales@estudiante.edu.bo',
+            'student_id_code': 'EST-2026-999',
+            'password': 'password123',
+            'parallel_id': str(parallel.id),
+        }
+
+        url = '/api/v1/academics/students/'
+        response = self.client.post(url, payload, format='json')
+        assert response.status_code == status.HTTP_201_CREATED
+        created_data = response.json()
+        assert created_data['full_name'] == 'Mario Hugo Morales'
+        assert created_data['student_id_code'] == 'EST-2026-999'
+        assert created_data['email'] == 'mario.morales@estudiante.edu.bo'
+        assert 'Física I' in created_data['parallel_name']
+
+        # Desautenticar cliente para probar logins
+        self.client.force_authenticate(user=None)
+
+        # 1. Login con email y password
+        login_res_email = self.client.post('/api/v1/auth/login/', {
+            'email': 'mario.morales@estudiante.edu.bo',
+            'password': 'password123',
+        }, format='json')
+        assert login_res_email.status_code == status.HTTP_200_OK
+        assert 'access' in login_res_email.json()
+        assert login_res_email.json()['user']['role'] == 'STUDENT'
+
+        # 2. Login con student_id_code en campo de credenciales
+        login_res_code = self.client.post('/api/v1/auth/login/', {
+            'email': 'EST-2026-999',
+            'password': 'password123',
+        }, format='json')
+        assert login_res_code.status_code == status.HTTP_200_OK
+        assert 'access' in login_res_code.json()
+
+        # 3. Login rápido por student_id_code
+        login_res_fast = self.client.post('/api/v1/auth/login/student-id/', {
+            'student_id_code': 'EST-2026-999',
+        }, format='json')
+        assert login_res_fast.status_code == status.HTTP_200_OK
+        assert login_res_fast.json()['user']['studentIdCode'] == 'EST-2026-999'

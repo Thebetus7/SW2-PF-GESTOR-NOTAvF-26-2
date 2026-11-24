@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, MessageSquare, Github, ArrowUpRight, Heart, Shield } from 'lucide-react';
+import { Sparkles, MessageSquare, Github, ArrowUpRight, Heart, Shield, Mail } from 'lucide-react';
 
 interface FooterProps {
   appUrl?: string;
@@ -67,6 +67,25 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
           <div className="md:col-span-4 space-y-4">
             <h4 className="font-headline text-lg font-bold text-[#FDF6EC]">Contacto y Código</h4>
             <div className="space-y-2.5">
+              {/* Email Button */}
+              <a
+                href="mailto:edybanera@gmail.com"
+                className="flex items-center justify-between p-3 rounded-xl bg-[#261A13] hover:bg-[#32231A] border border-[#38281E] text-sm text-[#FDF6EC] hover:border-[#D4A373] transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#8B5E3C]/20 text-[#D4A373] flex items-center justify-center">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="font-medium block text-xs text-[#D5C9B8]">Correo Electrónico</span>
+                    <span className="font-bold text-sm text-[#FDF6EC] group-hover:text-[#D4A373]">
+                      oficina@edugrade.com
+                    </span>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-[#A89886] group-hover:text-[#D4A373]" />
+              </a>
+
               {/* WhatsApp Button */}
               <a
                 href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"

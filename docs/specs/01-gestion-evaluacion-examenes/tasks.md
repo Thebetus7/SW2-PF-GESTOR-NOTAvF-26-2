@@ -1,19 +1,38 @@
 # Tasks: Sistema de Gestión y Evaluación de Exámenes con IA
 
+<!-- sdd:progress:start -->
 ## Task Progress
 
-| Métrica             | Cantidad |
-| ------------------- | -------: |
-| Total de tareas     |       21 |
-| Tareas realizadas   |       21 |
-| Tareas por realizar |        0 |
-| Tareas bloqueadas   |        0 |
-| Tareas en progreso  |        0 |
-| Progreso            |     100% |
+Status: IN_PROGRESS
 
-**Estado:** COMPLETED
+| Métrica | Cantidad |
+| --- | ---: |
+| Total de tareas | 1 |
+| Tareas realizadas | 0 |
+| Tareas por realizar | 1 |
+| Tareas bloqueadas | 0 |
+| Tareas en progreso | 1 |
+| Progreso | 0.0% |
 
----
+## Registro de tareas
+
+| ID | Estado | Tarea | Evidencia actual |
+| --- | --- | --- | --- |
+| T5.3 | TESTING | [IMPL] Mostrar inscritos y estado de escaneo del parcial | 2026-11-24, cambios locales sobre 6fdb085. TypeScript de ambas rutas sin diagnósticos. Parcial local con 4 inscritos, 1 con páginas escaneadas y 3 sin escaneo. Respuestas HTTP 200 para examen, inscritos, evaluaciones, detalle de entrega y ruta web. La comprobación global de tipos detectó un error preexistente en admin/students. Revisión visual y clics NOT_RUN porque el host del navegador no estaba disponible. |
+
+## Checklist rápido
+
+- [?] T5.3 [IMPL] Mostrar inscritos y estado de escaneo del parcial
+
+<!-- sdd:progress:end -->
+
+Plan-SHA256: fb0ab0d7f5eb1909f60aed1b4217b1200a3ed5950dcdb4c35787a8e3a5f9376f
+
+Spec-SHA256: be4ef266fef6682784ac059e730dbae7031cdde782bba788b0f4672b816aaecd
+
+Version: 2
+
+## Historial de implementaci?n inicial
 
 ## 1. Mapa de Dependencias y Vertical Slices
 
@@ -456,3 +475,20 @@ flowchart TD
   - **Mobile Flutter:** `flutter analyze` finalizó con **"No issues found!"** y `flutter test` ejecutó exitosamente **7/7 tests PASSED** cubriendo modelos de páginas JPG, encuadre asistido con overlay y controlador de transmisión multipart.
   - **Orquestación Docker:** `docker compose config` validó exitosamente la composición de servicios `backend`, `postgres` y `web`.
 - **Estado:** `COMPLETED`
+
+
+## Listado por parcial
+
+### T5.3 [IMPL] Mostrar inscritos y estado de escaneo del parcial
+
+**Status:** TESTING
+**Depends on:** —
+**Traceability:** RF-05.6, SC-06.3.1, SC-06.3.2, PLAN-56
+**Files:** `frontend/src/app/teacher/exams/[id]/evaluations/page.tsx`, `frontend/src/app/teacher/parallels/[id]/exams/page.tsx`
+**Objective:** Consultar todos los inscritos y sus entregas en el parcial seleccionado.
+**Work:** Integrar los endpoints existentes, mostrar el estado visual y abrir el detalle individual.
+**Done when:** Se verifican lista completa, estados de escaneo y acceso a Detalles.
+**Verification:** NOT_RUN
+**Command:** `bun run -` (TypeScript API, dos rutas); `manage.py shell -c` (DRF APIClient autenticado y GET de Next.js); `git diff --check`
+**Exit code:** 0 en controles parciales
+**Evidence:** 2026-11-24, cambios locales sobre 6fdb085. TypeScript de ambas rutas sin diagnósticos. Parcial local con 4 inscritos, 1 con páginas escaneadas y 3 sin escaneo. Respuestas HTTP 200 para examen, inscritos, evaluaciones, detalle de entrega y ruta web. La comprobación global de tipos detectó un error preexistente en admin/students. Revisión visual y clics NOT_RUN porque el host del navegador no estaba disponible.

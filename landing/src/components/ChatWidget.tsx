@@ -14,6 +14,7 @@ import {
   Github,
   ArrowRight,
   ShieldCheck,
+  Mail,
 } from 'lucide-react';
 
 interface Message {
@@ -39,6 +40,7 @@ const SUGGESTIONS = [
   '¿Cómo funciona el escaneo QR?',
   'Módulo para docentes y rúbricas',
   '¿Cómo califica la IA los exámenes?',
+  '📧 Correo: oficina@edugrade.com',
   '📱 Contactar por WhatsApp (+591 77389330)',
   '🐙 Ver código en GitHub',
 ];
@@ -377,7 +379,15 @@ export const ChatWidget: React.FC = () => {
           </div>
 
           {/* Quick Action Buttons */}
-          <div className="px-3 py-1.5 bg-[#FDFBF7] dark:bg-[#1A1412] border-t border-[#E8DDD0] dark:border-[#38281E] flex items-center justify-between text-[11px]">
+          <div className="px-3 py-1.5 bg-[#FDFBF7] dark:bg-[#1A1412] border-t border-[#E8DDD0] dark:border-[#38281E] flex items-center justify-between text-[11px] gap-2">
+            <a
+              href="mailto:edybanera@gmail.com"
+              className="text-[#8B5E3C] dark:text-[#D4A373] hover:underline flex items-center gap-1 font-semibold"
+              title="Escribir a oficina@edugrade.com"
+            >
+              <Mail className="w-3 h-3" />
+              <span>oficina@edugrade.com</span>
+            </a>
             <a
               href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
               target="_blank"
@@ -385,7 +395,7 @@ export const ChatWidget: React.FC = () => {
               className="text-[#059669] hover:underline flex items-center gap-1 font-semibold"
             >
               <MessageSquare className="w-3 h-3" />
-              <span>WhatsApp +591 77389330</span>
+              <span>WhatsApp</span>
             </a>
             <a
               href="https://github.com/edberto/gestor-notas-ia"

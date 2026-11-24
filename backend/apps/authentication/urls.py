@@ -12,6 +12,7 @@ app_name = 'authentication'
 urlpatterns = [
     path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('login/student-id/', StudentIdLoginView.as_view(), name='student_id_login'),
+    path('student-id-login/', StudentIdLoginView.as_view(), name='student_id_login_alt'),
     path('demo-login/', DemoLoginView.as_view(), name='demo_login'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('me/', UserProfileView.as_view(), name='user_profile'),

@@ -96,8 +96,11 @@ export function Navbar({ userRole: propRole, userName: propName, userEmail: prop
                 <Link href="/admin/teachers" style={getLinkStyle('/admin/teachers')}>
                   Profesores
                 </Link>
+                <Link href="/admin/students" style={getLinkStyle('/admin/students')}>
+                  Estudiantes
+                </Link>
                 <Link href="/admin/students/import" style={getLinkStyle('/admin/students/import')}>
-                  Importar Estudiantes (Excel)
+                  Importar (Excel)
                 </Link>
               </>
             )}
@@ -157,6 +160,17 @@ export function Navbar({ userRole: propRole, userName: propName, userEmail: prop
               >
                 <Users size={18} />
                 <span>Gestión de Profesores</span>
+              </Link>
+              <Link
+                href="/admin/students"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  isLinkActive('/admin/students')
+                    ? 'bg-[var(--color-surface-inset)] text-[var(--color-primary)] font-bold'
+                    : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-inset)]'
+                }`}
+              >
+                <GraduationCap size={18} />
+                <span>Gestión de Estudiantes</span>
               </Link>
               <Link
                 href="/admin/students/import"

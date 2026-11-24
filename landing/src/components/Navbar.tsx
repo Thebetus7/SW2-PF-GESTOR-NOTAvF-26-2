@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, Menu, X, ArrowRight, ExternalLink } from 'lucide-react';
+import { Sparkles, Menu, X, ArrowRight, ExternalLink, Mail } from 'lucide-react';
 
 interface NavbarProps {
   appUrl?: string;
@@ -48,6 +48,14 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
             className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors"
           >
             Innovación IA
+          </a>
+          <a
+            href="mailto:edybanera@gmail.com"
+            className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C] transition-colors flex items-center gap-1.5"
+            title="Escribir a oficina@edugrade.com"
+          >
+            <Mail className="w-3.5 h-3.5 text-[#9C8E85]" />
+            oficina@edugrade.com
           </a>
           <a
             href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
@@ -107,6 +115,13 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
             className="block px-3 py-2 rounded-lg text-base font-medium text-[#6B5B52] hover:bg-[#F0E6D6]"
           >
             Innovación IA
+          </a>
+          <a
+            href="mailto:edybanera@gmail.com"
+            className="block px-3 py-2 rounded-lg text-base font-medium text-[#8B5E3C] hover:bg-[#F0E6D6] flex items-center gap-2"
+          >
+            <Mail className="w-4 h-4 text-[#8B5E3C]" />
+            oficina@edugrade.com
           </a>
           <a
             href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"

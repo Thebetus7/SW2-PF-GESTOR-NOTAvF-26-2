@@ -2,6 +2,7 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db import models
 from apps.authentication.models import User, UserRole
 from .models import Subject, ClassroomParallel, Student, StudentEnrollment
 from .serializers import (
@@ -9,6 +10,7 @@ from .serializers import (
     ClassroomParallelSerializer,
     StudentSerializer,
     TeacherAdminSerializer,
+    StudentAdminSerializer,
 )
 from .services.excel_importer import ExcelStudentImporter
 
@@ -37,6 +39,31 @@ class TeacherManagementViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return User.objects.filter(role=UserRole.TEACHER).order_by('-date_joined')
+
+class StudentManagementViewSet(viewsets.ModelViewSet):
+    """
+    CRUD para que el Administrador registre y gestione estudiantes individuales de forma ágil.
+    """
+    serializer_class = StudentAdminSerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [IsTeacherOrAdminRole()]
+        return [IsAdminUserRole()]
+
+    def get_queryset(self):
+        qs = Student.objects.all().prefetch_related('enrollments__parallel__subject').order_by('-created_at')
+        parallel_id = self.request.query_params.get('parallel_id')
+        if parallel_id:
+            qs = qs.filter(enrollments__parallel_id=parallel_id)
+        search = self.request.query_params.get('search')
+        if search:
+            qs = qs.filter(
+                models.Q(full_name__icontains=search) |
+                models.Q(student_id_code__icontains=search) |
+                models.Q(email__icontains=search)
+            )
+        return qs
 
 class SubjectViewSet(viewsets.ModelViewSet):
     """

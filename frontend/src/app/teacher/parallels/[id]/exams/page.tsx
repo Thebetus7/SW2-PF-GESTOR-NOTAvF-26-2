@@ -393,7 +393,7 @@ export default function ParallelExamsPage() {
                     className="btn-primary"
                     style={{ fontSize: '0.85rem', padding: '0.5rem 1rem', textDecoration: 'none' }}
                   >
-                    <span>Revisar Evaluaciones</span>
+                    <span>Ver estudiantes</span>
                     <ChevronRight size={16} />
                   </Link>
                 </div>

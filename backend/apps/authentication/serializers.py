@@ -32,6 +32,12 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
     def validate(self, attrs):
+        login_input = attrs.get(self.username_field, '').strip()
+        if login_input and '@' not in login_input:
+            user_found = User.objects.filter(student_id_code__iexact=login_input).first()
+            if user_found:
+                attrs[self.username_field] = user_found.email
+
         data = super().validate(attrs)
         data['user'] = {
             'id': str(self.user.id),
