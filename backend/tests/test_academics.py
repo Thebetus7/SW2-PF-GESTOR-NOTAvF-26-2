@@ -24,6 +24,16 @@ class TestAcademics:
             last_name='Docente'
         )
 
+    def test_admin_lists_parallels_from_all_teachers(self):
+        other_teacher = User.objects.create_user(email='other@test.com', password='Password123!', role=UserRole.TEACHER)
+        first = Subject.objects.create(code='SUB1', name='Primera', teacher=self.teacher_user)
+        second = Subject.objects.create(code='SUB2', name='Segunda', teacher=other_teacher)
+        parallels = [ClassroomParallel.objects.create(subject=subject, group_code='A', period='2026') for subject in (first, second)]
+        self.client.force_authenticate(user=self.admin_user)
+        response = self.client.get(reverse('academics:parallels-list'))
+        assert response.status_code == status.HTTP_200_OK
+        assert {item['id'] for item in response.json()} >= {str(parallel.id) for parallel in parallels}
+
     def test_admin_can_create_teacher(self):
         self.client.force_authenticate(user=self.admin_user)
         url = reverse('academics:teachers-list')

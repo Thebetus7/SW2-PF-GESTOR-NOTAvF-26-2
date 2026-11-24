@@ -69,8 +69,8 @@ export default function AdminStudentsPage() {
     try {
       const token = localStorage.getItem('access_token') || '';
       const [parallelsData, studentsData] = await Promise.all([
-        apiClient<ParallelItem[]>('/academics/parallels/', { token }).catch(() => []),
-        apiClient<StudentItem[]>('/academics/students/', { token }).catch(() => []),
+        apiClient<ParallelItem[]>('/academics/parallels/', { token }),
+        apiClient<StudentItem[]>('/academics/students/', { token }),
       ]);
 
       setParallels(parallelsData);
