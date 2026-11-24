@@ -167,6 +167,6 @@ flowchart TD
 
 ## Flujo móvil aprobado
 
-**RF-04.9:** Consultar inscritos y escaneos por parcial, buscar por nombre o matrícula y capturar en modo dirigido o por identificación automática. La cámara registra imágenes válidas e indica lectura real de QR. La revisión permite ampliar, reordenar y reemplazar hojas y cambiar explícitamente al estudiante. El reintento muestra el resultado exitoso. La publicación se confirma desde el parcial e indica alcance total. El acceso distingue credenciales y conectividad.
+**RF-04.9:** Este flujo sustituye el acceso directo a publicación desde el diálogo de resultados y el anuncio de reintento automático. Consultar inscritos y escaneos por parcial, buscar por nombre o matrícula y capturar en modo dirigido o por identificación automática. La cámara registra imágenes válidas e indica lectura real de QR. La revisión permite ampliar, reordenar y reemplazar hojas y cambiar explícitamente al estudiante. El reintento muestra el resultado exitoso. La publicación se confirma desde el parcial e indica alcance total. El acceso distingue credenciales y conectividad.
 
 **SC-04.9.1:** Verificar captura cancelada, QR válido, galería, edición de hojas, reintento, listado, acceso y publicación. Revisión funcional y aprobación registrada el 2026-11-24 a partir de la solicitud docente.

@@ -25,7 +25,7 @@ Status: IN_PROGRESS
 | T3.1 | COMPLETED | [IMPL] Armonización y Breadcrumbs en Constructor de Exámenes Web | Barra de migas de pan integrada (`Mis Materias > [Materia] > [Aula] > Constructor de Exámenes`); build exitoso de Next.js sin errores de tipado. |
 | T3.2 | COMPLETED | [IMPL] Configuración de Producción Nginx (Landing Page en Raíz `20.51.189.52` y Botón hacia App) | `HeroSection` y `Navbar` vinculan con `appUrl` ('http://20.51.189.52:3000/login' o `/app`); VirtualHost Nginx documentado en `04_DESPLEGAR_Y_VERIFICAR.md`; compilación exitosa de Next.js Landing. |
 | T4.1 | COMPLETED | [TEST] Verificación Integral de Suites de Pruebas y Flujo Completo | 29 pruebas backend aprobadas (29 passed), 9 pruebas Flutter mobile aprobadas (9 passed), frontend y landing build exitosos. |
-| T5.1 | TESTING | [IMPL] Mejorar el flujo móvil docente | El parser de Dart 3.14.0 procesó los ocho archivos Dart modificados. Verificación funcional y compilación Android en curso. |
+| T5.1 | TESTING | [IMPL] Mejorar el flujo móvil docente | 2026-11-24. Flutter 3.50.1 y Dart 3.14.0. Diez pruebas Flutter aprobadas y análisis Dart sin errores. APK debug generado con assembleDebug, 175 796 565 bytes. Manifiesto y firma Android Debug verificados con aapt y apksigner. SHA-256 88DD2AD9CCDC8DC332E11AD855FF9B3AAD68D6AC90DBDD6EF619AB5D61F27921. Captura con cámara física y revisión visual en dispositivo NOT_RUN. |
 
 ## Checklist rápido
 
@@ -42,8 +42,8 @@ Status: IN_PROGRESS
 <!-- sdd:progress:end -->
 
 Version: 2
-Spec-SHA256: 3e758455e71f052adc6a11b9062419685166cd3e5ebca9a0095ac2d861967cdb
-Plan-SHA256: cbaab3028fcc45f12591749a6d2708882a4134ccfe005a5566268d1c6ec27865
+Spec-SHA256: 709d8d8c1b55159e2744c5b027cbf1d2651d4d9f7d204aef4c8861789b9b00bf
+Plan-SHA256: 939399e1ed8f15ab2ab0f14a7f146fe911806f2e49b44f78df0edd5058dfc568
 
 ## 1. Trazabilidad y estrategia
 
@@ -184,5 +184,5 @@ Plan-SHA256: cbaab3028fcc45f12591749a6d2708882a4134ccfe005a5566268d1c6ec27865
 **Done when:** Pruebas del flujo y APK debug verificadas.
 **Verification:** NOT_RUN
 **Command:** `dart format --output=none`; `flutter test --no-pub`; `flutter build apk --debug --no-pub`
-**Exit code:** —
-**Evidence:** El parser de Dart 3.14.0 procesó los ocho archivos Dart modificados. Verificación funcional y compilación Android en curso.
+**Exit code:** 0 para análisis, pruebas, compilación y verificación del APK
+**Evidence:** 2026-11-24. Flutter 3.50.1 y Dart 3.14.0. Diez pruebas Flutter aprobadas y análisis Dart sin errores. APK debug generado con assembleDebug, 175 796 565 bytes. Manifiesto y firma Android Debug verificados con aapt y apksigner. SHA-256 88DD2AD9CCDC8DC332E11AD855FF9B3AAD68D6AC90DBDD6EF619AB5D61F27921. Captura con cámara física y revisión visual en dispositivo NOT_RUN.

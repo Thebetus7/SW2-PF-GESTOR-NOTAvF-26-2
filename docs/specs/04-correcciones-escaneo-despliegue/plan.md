@@ -1,7 +1,7 @@
 # Plan: 04-correcciones-escaneo-despliegue
 Status: APPROVED
 Version: 2
-Spec-SHA256: 3e758455e71f052adc6a11b9062419685166cd3e5ebca9a0095ac2d861967cdb
+Spec-SHA256: 709d8d8c1b55159e2744c5b027cbf1d2651d4d9f7d204aef4c8861789b9b00bf
 Constitution-SHA256: a726869c15a091c769d54e19e825801d04ba2ae10cb890679dc43bc7a7e07212
 
 ## 1. Arquitectura y decisiones
