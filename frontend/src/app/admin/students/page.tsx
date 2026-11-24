@@ -534,7 +534,7 @@ export default function AdminStudentsPage() {
                           color: 'var(--color-primary)',
                           fontWeight: 700,
                           fontSize: '0.9rem',
-                          shrink: 0,
+                          flexShrink: 0,
                         }}
                       >
                         {st.full_name.charAt(0).toUpperCase()}

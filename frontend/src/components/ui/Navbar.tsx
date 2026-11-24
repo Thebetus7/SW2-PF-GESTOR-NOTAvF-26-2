@@ -17,8 +17,7 @@ export function Navbar({ userRole: propRole, userName: propName, userEmail: prop
   const pathname = usePathname();
   const [currentRole, setCurrentRole] = useState<UserRole>(propRole || 'TEACHER');
   const [currentName, setCurrentName] = useState<string>(propName || 'Usuario');
-  const [currentEmail, setCurrentEmail] = useState<string>(propEmail || '/
-    ');
+  const [currentEmail, setCurrentEmail] = useState<string>(propEmail || '');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {

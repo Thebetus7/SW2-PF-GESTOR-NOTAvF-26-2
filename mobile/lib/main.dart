@@ -21,9 +21,16 @@ Future<void> main() async {
     }
   }
 
-  // Comprobar si existe sesión activa previa
-  final prefs = await SharedPreferences.getInstance();
-  final hasSession = prefs.getString('access_token') != null;
+  // Comprobar si existe sesión activa previa.
+  // Si el almacenamiento falla, se continúa en la pantalla de login en lugar
+  // de bloquear el arranque de la aplicación.
+  bool hasSession = false;
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    hasSession = prefs.getString('access_token') != null;
+  } catch (e) {
+    debugPrint('Aviso: no se pudo leer la sesión guardada ($e). Se mostrará el login.');
+  }
 
   runApp(GestorNotasMobileApp(initialHasSession: hasSession));
 }

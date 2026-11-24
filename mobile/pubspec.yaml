@@ -45,6 +45,10 @@ dependencies:
   zxing2: ^0.2.4
   camera: ^0.12.2
 
+dependency_overrides:
+  # 2.5.x falla al inicializar JNI en Android al recuperar la sesión.
+  shared_preferences_android: 2.4.28
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -101,3 +105,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
