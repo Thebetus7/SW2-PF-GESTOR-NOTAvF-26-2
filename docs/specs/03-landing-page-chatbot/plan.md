@@ -1,8 +1,8 @@
 # Plan: Landing Page Corporativa con Chatbot IA GroqCloud
 
 Status: APPROVED
-Version: 1
-Spec-SHA256: 7692cc5cab51653699c40db8f03b939bb1a13a9f21231d4ce454f6df674c9219
+Version: 2
+Spec-SHA256: a27fcb58595b118f0823fd75d8be256a74212471d2f733fca1be8c624dcf2a4e
 Constitution-SHA256: a726869c15a091c769d54e19e825801d04ba2ae10cb890679dc43bc7a7e07212
 
 ## 1. Arquitectura y decisiones
@@ -116,3 +116,8 @@ sequenceDiagram
   - RF-02.4, SC-02.3.1 $\longrightarrow$ PLAN-03
   - Despliegue $\longrightarrow$ PLAN-04
 - **Riesgos y Mitigación:** Inyección de prompt mitigada mediante delimitadores de contexto estrictos en el System Prompt y validación de longitud de entrada.
+
+
+## Evolución institucional — versión 2
+
+RF-03.1–RF-03.5: componentes de contenido y precios en la landing, rutas Next.js /terminos y /privacidad, enlaces accesibles desde pie y formulario, y mailto al correo publicado. La información comercial es demostrativa; no se añaden cobros, persistencia ni migraciones. Actualizar la información contextual del chatbot de la landing. Verificar build, rutas y navegación en escritorio y móvil. El despliegue solo requiere reconstruir el servicio landing.

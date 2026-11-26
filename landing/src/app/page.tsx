@@ -5,6 +5,7 @@ import { ModulesSection } from '@/components/ModulesSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ChatWidget } from '@/components/ChatWidget';
+import { InstitutionalSections, PricingSection } from '@/components/InstitutionalSections';
 
 export default function LandingPage() {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || '/app/login';
@@ -13,7 +14,9 @@ export default function LandingPage() {
     <main className="min-h-screen bg-[#FDFBF7] text-[#2C1810] flex flex-col justify-between selection:bg-[#C4956A]/20">
       <Navbar appUrl={appUrl} />
       <HeroSection appUrl={appUrl} />
+      <InstitutionalSections />
       <ModulesSection />
+      <PricingSection />
       <ContactSection />
       <Footer appUrl={appUrl} />
       <ChatWidget />

@@ -46,10 +46,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ appUrl = '/app/login' 
 
           {/* Subtitle */}
           <p className="font-body text-lg sm:text-xl text-[#6B5B52] max-w-3xl mx-auto leading-relaxed">
-            Ahorra más del <strong className="text-[#2C1810] font-semibold">85% del tiempo docente</strong>.
-            Captura exámenes manuscritos desde la app móvil Flutter, identifica al estudiante mediante{' '}
-            <strong className="text-[#2C1810] font-semibold">código QR</strong> y evalúa respuestas con{' '}
-            visión artificial y rúbricas pedagógicas exactas.
+            Organiza cursos y exámenes, digitaliza pruebas escritas y apoya su revisión con inteligencia artificial, manteniendo la supervisión docente.
           </p>
 
           {/* Action Buttons */}
@@ -71,26 +68,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ appUrl = '/app/login' 
               <MessageSquare className="w-5 h-5 text-[#8B5E3C]" />
               <span>Contactar por WhatsApp</span>
             </a>
-          </div>
-
-          {/* Quick Stats Pill */}
-          <div className="pt-6 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto text-left">
-            <div className="bg-white/80 backdrop-blur border border-[#E8DCC8] p-3.5 rounded-xl">
-              <div className="text-2xl font-bold text-[#8B5E3C] font-headline">85%</div>
-              <div className="text-xs text-[#6B5B52]">Ahorro en tiempo docente</div>
-            </div>
-            <div className="bg-white/80 backdrop-blur border border-[#E8DCC8] p-3.5 rounded-xl">
-              <div className="text-2xl font-bold text-[#8B5E3C] font-headline">&lt; 3 seg</div>
-              <div className="text-xs text-[#6B5B52]">Por examen calificado</div>
-            </div>
-            <div className="bg-white/80 backdrop-blur border border-[#E8DCC8] p-3.5 rounded-xl">
-              <div className="text-2xl font-bold text-[#8B5E3C] font-headline">100%</div>
-              <div className="text-xs text-[#6B5B52]">Trazabilidad QR criptográfica</div>
-            </div>
-            <div className="bg-white/80 backdrop-blur border border-[#E8DCC8] p-3.5 rounded-xl">
-              <div className="text-2xl font-bold text-[#8B5E3C] font-headline">0%</div>
-              <div className="text-xs text-[#6B5B52]">Sesgo subjetivo en rúbricas</div>
-            </div>
           </div>
         </div>
 

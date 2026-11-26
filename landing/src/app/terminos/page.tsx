@@ -1,0 +1,15 @@
+import { LegalPage } from '@/components/LegalPage';
+
+export default function TerminosPage() {
+  return <LegalPage title="Términos y condiciones de uso" intro="Bienvenido a EduGradeIA. Al acceder y utilizar este prototipo, aceptas las condiciones descritas a continuación." sections={[
+    { title: '1. Naturaleza del proyecto', body: 'EduGradeIA es un prototipo desarrollado con fines académicos y demostrativos. Su propósito es mostrar herramientas de gestión de cursos, exámenes y resultados, así como funcionalidades de apoyo mediante inteligencia artificial. Las características del sistema pueden cambiar durante el desarrollo y algunas funciones podrían no estar disponibles en todo momento.' },
+    { title: '2. Uso permitido', body: 'La plataforma debe utilizarse de forma responsable y únicamente para actividades relacionadas con su evaluación, demostración o uso académico autorizado. El usuario se compromete a no acceder a información ajena, alterar datos sin autorización o interferir con su funcionamiento.' },
+    { title: '3. Cuentas e información', body: 'Los usuarios deben utilizar únicamente las cuentas o accesos que se les hayan asignado para las pruebas. Cada usuario es responsable de las acciones realizadas mediante su acceso y de informar cualquier uso indebido al equipo del proyecto. Para las demostraciones se recomienda utilizar datos ficticios o información cuya utilización haya sido autorizada.' },
+    { title: '4. Funciones con inteligencia artificial', body: 'EduGradeIA puede utilizar inteligencia artificial para apoyar la lectura y revisión de exámenes. Las respuestas generadas pueden contener errores o interpretaciones incompletas. El docente debe revisar los resultados y conserva la responsabilidad de las decisiones de evaluación y de la publicación de calificaciones.' },
+    { title: '5. Disponibilidad del prototipo', body: 'Al tratarse de un proyecto en desarrollo, el acceso podría interrumpirse por mantenimiento, pruebas, fallos técnicos o cambios en sus componentes. El prototipo no debe considerarse el único medio para conservar información académica importante.' },
+    { title: '6. Planes y precios', body: 'Los planes, precios y condiciones comerciales mostrados en la landing son ejemplos visuales para la demostración del proyecto. No constituyen una oferta de venta y no se realizarán cobros a través de la página.' },
+    { title: '7. Contenido y propiedad intelectual', body: 'Los textos, diseños, materiales y componentes incorporados al proyecto se utilizan para su desarrollo y presentación académica. Los recursos de terceros conservan la titularidad y condiciones de uso que les correspondan.' },
+    { title: '8. Cambios en estas condiciones', body: 'El equipo del proyecto podrá actualizar estos términos cuando se modifique el prototipo o su forma de uso. La versión vigente estará disponible en esta página.' },
+    { title: '9. Contacto', body: 'Para consultas sobre estos términos o sobre el prototipo, puedes escribir a oficina@edugrade.com.' },
+  ]} />;
+}

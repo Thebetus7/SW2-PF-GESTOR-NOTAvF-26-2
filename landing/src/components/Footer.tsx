@@ -20,7 +20,7 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
                 <Sparkles className="w-5 h-5 text-[#FDF6EC]" />
               </div>
               <span className="font-headline text-2xl font-bold tracking-tight text-[#FDF6EC]">
-                GestorNotas <span className="text-[#D4A373]">IA</span>
+                EduGrade<span className="text-[#D4A373]">IA</span>
               </span>
             </div>
             <p className="text-[#D5C9B8] text-sm max-w-sm leading-relaxed">
@@ -39,6 +39,10 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
           <div className="md:col-span-3 space-y-3">
             <h4 className="font-headline text-lg font-bold text-[#FDF6EC]">Navegación</h4>
             <ul className="space-y-2 text-sm text-[#D5C9B8]">
+              <li><a href="/#quienes-somos" className="hover:text-[#D4A373]">Quiénes somos</a></li>
+              <li><a href="/#planes" className="hover:text-[#D4A373]">Planes</a></li>
+              <li><Link href="/terminos" className="hover:text-[#D4A373]">Términos y condiciones</Link></li>
+              <li><Link href="/privacidad" className="hover:text-[#D4A373]">Política de privacidad</Link></li>
               <li>
                 <a href="#hero" className="hover:text-[#D4A373] transition-colors">
                   Inicio
@@ -74,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
             <div className="space-y-2.5">
               {/* Email Button */}
               <a
-                href="mailto:edybanera@gmail.com"
+                href="mailto:oficina@edugrade.com"
                 className="flex items-center justify-between p-3 rounded-xl bg-[#261A13] hover:bg-[#32231A] border border-[#38281E] text-sm text-[#FDF6EC] hover:border-[#D4A373] transition-all group"
               >
                 <div className="flex items-center gap-3">
@@ -138,7 +142,7 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#A89886] gap-4">
-          <p>&copy; {new Date().getFullYear()} GestorNotas IA. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} EduGradeIA. Proyecto académico.</p>
           <p className="flex items-center gap-1.5">
             Desarrollado con arquitectura <span className="text-[#D4A373] font-mono">SDD</span> y{' '}
             <Heart className="w-3.5 h-3.5 text-[#F87171] inline" /> para docentes innovadores.

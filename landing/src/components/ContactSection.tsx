@@ -14,13 +14,13 @@ export const ContactSection: React.FC = () => {
     e.preventDefault();
     if (!name || !senderEmail || !message) return;
 
-    // Crear enlace mailto estructurado con destino a edybanera@gmail.com
+    // Crear enlace mailto estructurado con destino a oficina@edugrade.com
     const emailSubject = encodeURIComponent(subject ? `[GestorNotas IA] ${subject}` : `[GestorNotas IA] Consulta de ${name}`);
     const emailBody = encodeURIComponent(
       `Nombre: ${name}\nCorreo de contacto: ${senderEmail}\n\nMensaje:\n${message}\n\n---\nEnviado desde el formulario de contacto institucional (oficina@edugrade.com)`
     );
 
-    const mailtoUrl = `mailto:edybanera@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+    const mailtoUrl = `mailto:oficina@edugrade.com?subject=${emailSubject}&body=${emailBody}`;
     
     // Intentar abrir cliente de correo
     window.location.href = mailtoUrl;
@@ -68,13 +68,13 @@ export const ContactSection: React.FC = () => {
                     Correo Institucional
                   </span>
                   <a
-                    href="mailto:edybanera@gmail.com"
+                    href="mailto:oficina@edugrade.com"
                     className="font-bold text-base text-[#2C1810] hover:text-[#8B5E3C] transition-colors break-all"
                   >
                     oficina@edugrade.com
                   </a>
                   <span className="block text-xs text-[#6B5B52] mt-0.5">
-                    Respuesta en menos de 24 horas hábiles
+                    Canal de contacto del proyecto
                   </span>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export const ContactSection: React.FC = () => {
                     <ArrowUpRight className="w-4 h-4 text-[#059669]" />
                   </a>
                   <span className="block text-xs text-[#6B5B52] mt-0.5">
-                    Coordinación de demos y asistencia inmediata
+                    Consultas sobre el prototipo
                   </span>
                 </div>
               </div>
@@ -137,7 +137,7 @@ export const ContactSection: React.FC = () => {
                     ¡Mensaje preparado para envío!
                   </h4>
                   <p className="text-sm text-[#6B5B52] max-w-md mx-auto">
-                    Se ha abierto tu cliente de correo para despachar el mensaje a <strong>oficina@edugrade.com</strong> (edybanera@gmail.com). Si no se abrió automáticamente, puedes hacer clic abajo.
+                    Si tu aplicación de correo está disponible, podrás revisar y enviar el mensaje a <strong>oficina@edugrade.com</strong>. Si no se abrió automáticamente, puedes hacer clic abajo.
                   </p>
                   <div className="pt-2 flex flex-wrap justify-center gap-3">
                     <button
@@ -148,7 +148,7 @@ export const ContactSection: React.FC = () => {
                       Escribir otro mensaje
                     </button>
                     <a
-                      href={`mailto:edybanera@gmail.com?subject=${encodeURIComponent(subject ? `[GestorNotas IA] ${subject}` : `[GestorNotas IA] Consulta de ${name}`)}&body=${encodeURIComponent(`Nombre: ${name}\nCorreo: ${senderEmail}\n\n${message}`)}`}
+                      href={`mailto:oficina@edugrade.com?subject=${encodeURIComponent(subject ? `[GestorNotas IA] ${subject}` : `[GestorNotas IA] Consulta de ${name}`)}&body=${encodeURIComponent(`Nombre: ${name}\nCorreo: ${senderEmail}\n\n${message}`)}`}
                       className="px-4 py-2 rounded-xl bg-[#8B5E3C] text-xs font-semibold text-white hover:bg-[#724A2D] transition-colors"
                     >
                       Abrir correo nuevamente
@@ -221,14 +221,14 @@ export const ContactSection: React.FC = () => {
                   {/* Botón de Enviar */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <span className="text-xs text-[#6B5B52]">
-                      Destino: <strong className="text-[#8B5E3C]">oficina@edugrade.com</strong>
+                      Destino: <strong className="text-[#8B5E3C]">oficina@edugrade.com</strong> · <a href="/privacidad" className="underline">Política de privacidad</a>
                     </span>
                     <button
                       type="submit"
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#8B5E3C] hover:bg-[#724A2D] text-white text-sm font-semibold shadow-md hover:shadow-lg transition-all"
                     >
                       <Send className="w-4 h-4" />
-                      <span>Enviar Correo</span>
+                      <span>Abrir aplicación de correo</span>
                     </button>
                   </div>
                 </form>

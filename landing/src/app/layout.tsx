@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'GestorNotas IA — Digitalización, Escaneo QR y Calificación Multimodal',
+  title: 'EduGradeIA — Evaluación académica',
   description:
     'Plataforma integral de gestión académica con evaluación automatizada de exámenes manuscritos mediante Visión Artificial IA, códigos QR y rúbricas pedagógicas precisas.',
   keywords: [
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     'Docentes',
     'Universidad',
   ],
-  authors: [{ name: 'GestorNotas IA Team' }],
+  authors: [{ name: 'Equipo EduGradeIA' }],
 };
 
 export const viewport: Viewport = {

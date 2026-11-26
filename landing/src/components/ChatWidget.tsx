@@ -381,7 +381,7 @@ export const ChatWidget: React.FC = () => {
           {/* Quick Action Buttons */}
           <div className="px-3 py-1.5 bg-[#FDFBF7] dark:bg-[#1A1412] border-t border-[#E8DDD0] dark:border-[#38281E] flex items-center justify-between text-[11px] gap-2">
             <a
-              href="mailto:edybanera@gmail.com"
+              href="mailto:oficina@edugrade.com"
               className="text-[#8B5E3C] dark:text-[#D4A373] hover:underline flex items-center gap-1 font-semibold"
               title="Escribir a oficina@edugrade.com"
             >
@@ -409,6 +409,7 @@ export const ChatWidget: React.FC = () => {
           </div>
 
           {/* Input Box */}
+          <p className="bg-white px-3 pt-2 text-[11px] text-[#6B5B52] dark:bg-[#261A13] dark:text-[#D5C9B8]">Evita compartir datos sensibles. <a href="/privacidad" className="underline">Política de privacidad</a></p>
           <form
             onSubmit={(e) => {
               e.preventDefault();

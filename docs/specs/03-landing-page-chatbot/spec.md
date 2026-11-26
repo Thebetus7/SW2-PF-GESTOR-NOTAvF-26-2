@@ -1,7 +1,7 @@
 # Specification: Landing Page Corporativa con Chatbot IA GroqCloud
 
 Status: APPROVED
-Version: 1
+Version: 2
 Risk: estándar
 
 ---
@@ -18,7 +18,7 @@ Desarrollar una aplicación web corporativa (**Landing Page**) ubicada en la ra�
     - **Header & Navbar:** Isotipo corporativo, enlaces de navegación y botón CTA *"Ingresar a la Plataforma"*.
     - **Hero Section:** Titular de alto impacto (*"Digitalización, Escaneo QR y Calificación de Exámenes con IA Multimodal"*), subtítulo, botones de acción y mockup/preview visual.
     - **Módulos del Sistema:** Tarjetas interactivas de Docentes (Mis Materias -> Aulas -> Exámenes), Estudiantes (Portal de Consulta y Desglose) y App Móvil Flutter (Escaneo QR y fotos JPG).
-    - **Diferenciadores Técnicos:** Procesamiento multimodal, ahorro del 85% de tiempo de corrección, rúbricas pedagógicas y trazabilidad de notas.
+    - **Diferenciadores Técnicos:** Procesamiento multimodal, apoyo al trabajo de corrección, rúbricas pedagógicas y trazabilidad de notas.
     - **Footer Corporativo:** Enlace a WhatsApp directo (+591 77389330), enlace al repositorio de GitHub y acceso al software.
   - **Widget de Chatbot Flotante (Burbuja inferior derecha):**
     - Botón flotante animado para abrir/cerrar.
@@ -169,3 +169,16 @@ Entonces se abre una nueva pestaña en "https://wa.me/59177389330?text=..." con 
 
 - **Pendientes:** Inyección de `GROQ_API_KEY` por parte del usuario tras la implementación.
 - **Trazabilidad:** RF-01.1, RF-01.2, RF-02.1, RF-02.2, RF-02.3, RF-02.4 $\longleftrightarrow$ SC-01.1.1 a SC-02.3.1.
+
+
+## 10. Evolución institucional del prototipo (2026-11-26)
+
+- RF-03.1: Mostrar quiénes somos y la misión y visión facilitadas por el usuario.
+- RF-03.2: Mostrar planes demostrativos Básico de $3 USD/mes e Institucional de $5 USD/mes con límites ficticios y aviso explícito de ausencia de cobros. La selección dirige a contacto; no hay suscripción ni pasarela de pago.
+- RF-03.3: Publicar páginas de términos y privacidad para el prototipo y enlazarlas desde el pie, con enlace de privacidad en el formulario.
+- RF-03.4: El formulario prepara un correo dirigido a oficina@edugrade.com y explica que debe enviarse desde el cliente del usuario.
+- RF-03.5: Mantener la revisión docente sobre los resultados de IA y comunicar los proveedores que pueden intervenir.
+- SC-03.1: El visitante accede a las secciones institucionales y planes mediante la navegación y llega a contacto desde los planes.
+- SC-03.2: Los enlaces legales abren páginas independientes y permiten volver a la landing.
+- SC-03.3: El formulario prepara un mailto al correo mostrado, sin afirmar que se ha enviado.
+- Cambio autorizado por el usuario: contenido académico de ejemplo, sin cambios de datos, permisos, migraciones ni cobros. La cifra de ahorro carece de evidencia y deja de ser requisito. Los textos legales describen el prototipo y requieren revisión antes de uso con datos reales.

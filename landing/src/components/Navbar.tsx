@@ -39,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
           </div>
           <div>
             <span className="font-headline text-2xl font-bold tracking-tight text-[#2C1810] block leading-none">
-              GestorNotas <span className="text-[#8B5E3C]">IA</span>
+              EduGrade<span className="text-[#8B5E3C]">IA</span>
             </span>
             <span className="font-mono text-[10px] text-[#9C8E85] uppercase tracking-wider">
               Plataforma Evaluativa
@@ -56,6 +56,12 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
           >
             Inicio
           </a>
+          <a
+            href="#quienes-somos"
+            onClick={(e) => handleSmoothScroll(e, 'quienes-somos')}
+            className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C]"
+          >Quiénes somos</a>
+          <a href="#planes" onClick={(e) => handleSmoothScroll(e, 'planes')} className="text-sm font-medium text-[#6B5B52] hover:text-[#8B5E3C]">Planes</a>
           <a
             href="#modulos"
             onClick={(e) => handleSmoothScroll(e, 'modulos')}
@@ -113,6 +119,12 @@ export const Navbar: React.FC<NavbarProps> = ({ appUrl = '/app/login' }) => {
           >
             Inicio
           </a>
+          <a
+            href="#quienes-somos"
+            onClick={(e) => handleSmoothScroll(e, 'quienes-somos')}
+            className="block px-3 py-2 rounded-lg text-base font-medium text-[#6B5B52] hover:bg-[#F0E6D6]"
+          >Quiénes somos</a>
+          <a href="#planes" onClick={(e) => handleSmoothScroll(e, 'planes')} className="block px-3 py-2 rounded-lg text-base font-medium text-[#6B5B52] hover:bg-[#F0E6D6]">Planes</a>
           <a
             href="#modulos"
             onClick={(e) => handleSmoothScroll(e, 'modulos')}

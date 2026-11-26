@@ -402,11 +402,10 @@ export const ModulesSection: React.FC = () => {
                 <TrendingUp className="w-6 h-6" />
               </div>
               <h4 className="font-headline text-xl font-bold text-[#2C1810]">
-                85% de Tiempo Recuperado
+                Apoyo al trabajo docente
               </h4>
               <p className="text-xs sm:text-sm text-[#6B5B52] leading-relaxed">
-                Los docentes liberan hasta 14 horas semanales de corrección manual repetitiva para
-                dedicarlas a investigación, tutorías personalizadas y preparación de cátedra.
+                La revisión asistida ayuda a organizar el trabajo de corrección y acompañamiento del aprendizaje.
               </p>
             </div>
           </div>

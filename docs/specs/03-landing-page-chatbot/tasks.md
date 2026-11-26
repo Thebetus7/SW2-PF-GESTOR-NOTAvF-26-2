@@ -2,16 +2,16 @@
 <!-- sdd:progress:start -->
 ## Task Progress
 
-Status: COMPLETED
+Status: IN_PROGRESS
 
 | Métrica | Cantidad |
 | --- | ---: |
-| Total de tareas | 6 |
+| Total de tareas | 7 |
 | Tareas realizadas | 6 |
-| Tareas por realizar | 0 |
+| Tareas por realizar | 1 |
 | Tareas bloqueadas | 0 |
-| Tareas en progreso | 0 |
-| Progreso | 100.0% |
+| Tareas en progreso | 1 |
+| Progreso | 85.7% |
 
 ## Registro de tareas
 
@@ -23,6 +23,7 @@ Status: COMPLETED
 | T1.4 | COMPLETED | [IMPL] Desarrollar Widget de Chatbot Flotante (Burbuja Inferior Derecha) | ChatWidget.tsx implementado como burbuja flotante fija (bottom-6 right-6), modal animado CafeBlend, historial en sessionStorage, selector de preguntas frecuentes y enlaces de conversión a WhatsApp y GitHub. Compilación exitosa. |
 | T1.5 | COMPLETED | [SETUP] Configurar Dockerfile.prod y Servicio Docker para Azure | Dockerfile.prod multicapa creado con usuario no-root nextjs. Servicio gestornotas_landing registrado en docker-compose.prod.yml con mapeo de puerto 3002:3000 y red gestornotas_network validado por Docker Compose. |
 | T1.6 | COMPLETED | [VERIFY] Compilación Global y Verificación de Flujos | Build global de producción Next.js 14 ejecutado con código 0. 5 páginas estáticas y dinámicas compiladas sin advertencias. Listo para despliegue productivo. |
+| T2.1 | IN_PROGRESS | [IMPL] Contenido institucional y legal del prototipo | npm --prefix landing run build: código 0, rutas /, /terminos y /privacidad generadas. Navegador: planes en escritorio y móvil, página de privacidad y enlace mailto observados. Pendiente: verificar envío desde un cliente de correo real y navegación final tras los últimos ajustes. |
 
 ## Checklist rápido
 
@@ -32,12 +33,13 @@ Status: COMPLETED
 - [x] T1.4 [IMPL] Desarrollar Widget de Chatbot Flotante (Burbuja Inferior Derecha)
 - [x] T1.5 [SETUP] Configurar Dockerfile.prod y Servicio Docker para Azure
 - [x] T1.6 [VERIFY] Compilación Global y Verificación de Flujos
+- [/] T2.1 [IMPL] Contenido institucional y legal del prototipo
 
 <!-- sdd:progress:end -->
 
-Version: 1
-Spec-SHA256: 7692cc5cab51653699c40db8f03b939bb1a13a9f21231d4ce454f6df674c9219
-Plan-SHA256: 4487ce6792e5cf7e2e2c2c3e80f73b1510a6380b6ae11299c89734d67c66f0f8
+Version: 2
+Spec-SHA256: a27fcb58595b118f0823fd75d8be256a74212471d2f733fca1be8c624dcf2a4e
+Plan-SHA256: 1016d36b6d7c8d17eef935a1257d54986ddffa42f251264cb55a58d7971f9451
 
 ## 1. Trazabilidad y estrategia
 
@@ -130,3 +132,18 @@ Este backlog organiza la implementación en 4 vertical slices:
 ## 3. Bitácora
 
 - 2026-11-19: Plan de tareas inicializado para Landing Page corporativa con Chatbot GroqCloud.
+
+
+### T2.1 [IMPL] Contenido institucional y legal del prototipo
+
+**Status:** IN_PROGRESS
+**Files:** landing/src/app, landing/src/components
+**Depends on:** T1.6
+**Traceability:** RF-03.1, RF-03.2, RF-03.3, RF-03.4, RF-03.5, SC-03.1, SC-03.2, SC-03.3
+**Objective:** Implementar RF-03.1–RF-03.5 y escenarios SC-03.1–SC-03.3.
+**Work:** Incorporar misión, visión, planes ficticios, páginas legales, navegación y contacto coherente; actualizar contexto del chatbot.
+**Done when:** Compilación y flujos relevantes verificados, incluyendo revisión visual en escritorio y móvil.
+**Command:** npm --prefix landing run build
+**Verification:** NOT_RUN
+**Exit code:** —
+**Evidence:** npm --prefix landing run build: código 0, rutas /, /terminos y /privacidad generadas. Navegador: planes en escritorio y móvil, página de privacidad y enlace mailto observados. Pendiente: verificar envío desde un cliente de correo real y navegación final tras los últimos ajustes.
