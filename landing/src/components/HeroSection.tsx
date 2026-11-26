@@ -60,7 +60,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ appUrl = '/app/login' 
             </a>
 
             <a
-              href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
+              href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FFFFFF] hover:bg-[#FAF0E1] text-[#3E2723] border border-[#E8DDD0] text-base font-medium px-6 py-3.5 rounded-xl shadow-sm hover:border-[#8B5E3C] transition-all"

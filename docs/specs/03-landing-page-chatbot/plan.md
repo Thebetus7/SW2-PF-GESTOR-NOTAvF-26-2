@@ -1,8 +1,8 @@
 # Plan: Landing Page Corporativa con Chatbot IA GroqCloud
 
 Status: APPROVED
-Version: 2
-Spec-SHA256: a27fcb58595b118f0823fd75d8be256a74212471d2f733fca1be8c624dcf2a4e
+Version: 3
+Spec-SHA256: 049b544b2a9e04d83921e859651e5fa7715f115d85690d41066ea9b6abf1357c
 Constitution-SHA256: a726869c15a091c769d54e19e825801d04ba2ae10cb890679dc43bc7a7e07212
 
 ## 1. Arquitectura y decisiones
@@ -16,7 +16,7 @@ Constitution-SHA256: a726869c15a091c769d54e19e825801d04ba2ae10cb890679dc43bc7a7e
   - Endpoint de servidor seguro `landing/src/app/api/chat/route.ts` que consume el SDK oficial `@groq/groq-sdk` con el modelo `llama-3.3-70b-versatile`.
   - **Modo Dual:** Si la variable `GROQ_API_KEY` en `landing/.env` está ausente o vacía, el route handler opera mediante un motor de conocimiento semántico predefinido que responde con la información verídica del software, módulos y accesos directos; al definirse la clave, activa la inferencia de GroqCloud automáticamente sin alterar código.
 - **PLAN-03 (Canales de Conversión y Enlaces Directos):**
-  - WhatsApp oficial: `https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA`.
+  - WhatsApp oficial: `https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA`.
   - Enlace al repositorio GitHub y enlace al software en producción.
 - **PLAN-04 (Despliegue Integrado en Microsoft Azure):**
   - Creación de `landing/Dockerfile.prod` optimizado multicapa (`node:20-alpine`).
@@ -121,3 +121,8 @@ sequenceDiagram
 ## Evolución institucional — versión 2
 
 RF-03.1–RF-03.5: componentes de contenido y precios en la landing, rutas Next.js /terminos y /privacidad, enlaces accesibles desde pie y formulario, y mailto al correo publicado. La información comercial es demostrativa; no se añaden cobros, persistencia ni migraciones. Actualizar la información contextual del chatbot de la landing. Verificar build, rutas y navegación en escritorio y móvil. El despliegue solo requiere reconstruir el servicio landing.
+
+
+## Identidad pública — versión 3
+
+RF-04.1, SC-04.1, SC-04.2: actualizar contenido y metadatos de landing y web, contexto y respuestas del servidor de chat de Next.js, textos y etiquetas visibles de Flutter y sus plataformas. Mantener identificadores técnicos y contratos para preservar compatibilidad; sin migración de datos. Verificar builds web, búsquedas del nombre visible y herramientas Flutter si están disponibles.

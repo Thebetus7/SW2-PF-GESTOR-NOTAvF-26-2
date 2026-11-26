@@ -11,7 +11,7 @@ interface ChatRequestBody {
 }
 
 const BASE_SYSTEM_PROMPT = `
-Eres el Asistente Virtual Inteligente de "GestorNotas IA", la plataforma universitaria integral para evaluación, escaneo QR y corrección asistida con Inteligencia Artificial Multimodal.
+Eres el Asistente Virtual Inteligente de "EduGradeIA", la plataforma universitaria integral para evaluación, escaneo QR y corrección asistida con Inteligencia Artificial Multimodal.
 
 TUS CAPACIDADES Y CONOCIMIENTOS CLAVE:
 1. ARQUITECTURA Y MÓDULOS:
@@ -23,7 +23,7 @@ TUS CAPACIDADES Y CONOCIMIENTOS CLAVE:
 2. CANALES OFICIALES:
    - Planes de demostración: Básico $3 USD/mes (1 docente, 50 estudiantes, 3 materias, 50 evaluaciones con IA al mes) e Institucional $5 USD/mes (5 docentes, 200 estudiantes, 10 materias, 200 evaluaciones con IA al mes). Son ejemplos ficticios; no se realizan cobros.
    - Correo Institucional: oficina@edugrade.com
-   - WhatsApp Oficial: +591 77389330 (https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA)
+   - WhatsApp Oficial: +591 77389330 (https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA)
    - Repositorio GitHub: https://github.com/Thebetus7/SW2-PF-GESTOR-NOTAvF-26-2
    - Acceso al Software: /app/login
 
@@ -144,14 +144,14 @@ function getFallbackResponse(query: string, knowledge: string): string {
     q.includes('saludos') ||
     q.includes('inicio')
   ) {
-    return `¡Hola! 👋 Bienvenido al asistente inteligente de **GestorNotas IA**.
+    return `¡Hola! 👋 Bienvenido al asistente inteligente de **EduGradeIA**.
 
 Puedo ayudarte a resolver cualquier consulta sobre la plataforma:
 - 📚 **Materias y Aulas:** Cómo se organizan y qué asignaturas están registradas.
 - 📝 **Constructor de Exámenes:** Diseño de preguntas con rúbricas y tolerancias pedagógicas.
 - 📱 **App Móvil Flutter:** Escaneo ultrarrápido con códigos QR criptográficos.
 - 🤖 **Calificación con IA:** Corrección automática de respuestas manuscritas con Google Gemini.
-- 💬 **WhatsApp Oficial:** [+591 77389330](https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA)
+- 💬 **WhatsApp Oficial:** [+591 77389330](https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA)
 
 ¿Sobre qué módulo o tema te gustaría conocer más detalles?`;
   }
@@ -181,12 +181,12 @@ Los docentes pueden crear nuevas materias y generar los exámenes en PDF con có
   ) {
     return `¡Con gusto te orientamos! Puedes comunicarte directamente con nuestro equipo técnico y comercial:
 
-📱 **WhatsApp:** [+591 77389330](https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA)
+📱 **WhatsApp:** [+591 77389330](https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA)
 
 Ofrecemos asesoría para la integración del software en facultades universitarias y colegios.`;
   }
 
-  return `**GestorNotas IA — Información del Sistema:**
+  return `**EduGradeIA — Información del Sistema:**
 
 - 🎯 **Propósito:** Digitalización y calificación con IA de exámenes físicos manuscritos.
 - 🚀 **Acceso al Software:** Puedes ingresar directamente en [/app/login](/app/login) para probar con el profesor demo.

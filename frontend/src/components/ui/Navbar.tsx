@@ -86,7 +86,7 @@ export function Navbar({ userRole: propRole, userName: propName, userEmail: prop
             className="flex items-center gap-2 text-[var(--color-primary)] font-bold text-lg sm:text-xl no-underline"
           >
             <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-[var(--color-primary)] shrink-0" />
-            <span className="font-headline tracking-tight">GestorNotas <span className="text-[var(--color-secondary)]">IA</span></span>
+            <span className="font-headline tracking-tight">EduGrade<span className="text-[var(--color-secondary)]">IA</span></span>
           </Link>
 
           {/* Enlaces de Escritorio (ocultos en móvil) */}

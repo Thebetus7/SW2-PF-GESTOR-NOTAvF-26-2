@@ -1,7 +1,7 @@
 # Specification: Landing Page Corporativa con Chatbot IA GroqCloud
 
 Status: APPROVED
-Version: 2
+Version: 3
 Risk: estándar
 
 ---
@@ -9,7 +9,7 @@ Risk: estándar
 ## 1. Objetivo, contexto y alcance
 
 ### 1.1 Objetivo
-Desarrollar una aplicación web corporativa (**Landing Page**) ubicada en la raíz del repositorio (`landing/`), orientada a la difusión, presentación institucional y captación de usuarios para la plataforma **GestorNotas IA**. La web se servirá en la raíz `/` con un botón de llamada a la acción primario hacia el software principal (en `/app`) y un **asistente virtual conversacional interactivo (Chatbot flotante)** en la esquina inferior derecha alimentado por **GroqCloud**, capaz de responder con ultra baja latencia sobre los módulos, características pedagógicas, enlaces a WhatsApp (+591 77389330) y repositorio de GitHub.
+Desarrollar una aplicación web corporativa (**Landing Page**) ubicada en la raíz del repositorio (`landing/`), orientada a la difusión, presentación institucional y captación de usuarios para la plataforma **EduGradeIA**. La web se servirá en la raíz `/` con un botón de llamada a la acción primario hacia el software principal (en `/app`) y un **asistente virtual conversacional interactivo (Chatbot flotante)** en la esquina inferior derecha alimentado por **GroqCloud**, capaz de responder con ultra baja latencia sobre los módulos, características pedagógicas, enlaces a WhatsApp (+591 77389330) y repositorio de GitHub.
 
 ### 1.2 Alcance
 - **In Scope:**
@@ -46,7 +46,7 @@ Desarrollar una aplicación web corporativa (**Landing Page**) ubicada en la ra�
 ## 3. Datos funcionales e invariantes
 
 ### 3.1 Invariantes y Reglas de Negocio (RB)
-- **RB-01 (Contacto Oficial de WhatsApp):** El botón de WhatsApp debe redirigir a `https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA`.
+- **RB-01 (Contacto Oficial de WhatsApp):** El botón de WhatsApp debe redirigir a `https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA`.
 - **RB-02 (Seguridad de API Key):** `GROQ_API_KEY` nunca debe exponerse en el código del navegador cliente. Todas las llamadas hacia Groq pasan por el endpoint del servidor `/api/chat`.
 - **RB-03 (Tolerancia a Modo Dual):** Si no hay `GROQ_API_KEY`, el chat responderá en modo local/fallback sin errores en consola ni interrupción del servicio.
 - **RB-04 (Identidad Visual CafeBlend):** El proyecto implementará la paleta de colores oficial: Warm Cream (`#FDFBF7`) en modo claro y Dark Espresso (`#1A1412`) en modo oscuro, con tipografías y bordes redondeados consistentes.
@@ -64,7 +64,7 @@ Desarrollar una aplicación web corporativa (**Landing Page**) ubicada en la ra�
 - **Respuesta Exitosa (200 OK):**
   ```json
   {
-    "response": "GestorNotas IA utiliza modelos de visión multimodal para transcribir la caligrafía manuscrita y compararla contra la rúbrica definida por el docente..."
+    "response": "EduGradeIA utiliza modelos de visión multimodal para transcribir la caligrafía manuscrita y compararla contra la rúbrica definida por el docente..."
   }
   ```
 
@@ -79,7 +79,7 @@ Desarrollar una aplicación web corporativa (**Landing Page**) ubicada en la ra�
 
 ### 4.2 Flujo del Chatbot Interactivo
 1. El usuario visualiza la burbuja flotante en la esquina inferior derecha (`bottom: 1.5rem; right: 1.5rem`).
-2. Al pulsarla, se despliega la ventana con cabecera: *"Asistente Virtual GestorNotas IA (Groq Powered)"*.
+2. Al pulsarla, se despliega la ventana con cabecera: *"Asistente Virtual EduGradeIA (Groq Powered)"*.
 3. El asistente saluda cordialmente e incluye accesos rápidos:
    - 📱 WhatsApp (+591 77389330)
    - 🐙 Repositorio GitHub
@@ -102,7 +102,7 @@ Desarrollar una aplicación web corporativa (**Landing Page**) ubicada en la ra�
 - **RF-02.3 (Fallback de Base de Conocimiento):** Cuando `GROQ_API_KEY` esté ausente, el sistema debe responder automáticamente utilizando la base de conocimiento local estructurada.
 - **RF-02.4 (Enlaces de Conversión):** El sistema debe proveer enlaces funcionales a:
   - Repositorio GitHub.
-  - Enlace a la Plataforma GestorNotas.
+  - Enlace a la Plataforma EduGradeIA.
   - WhatsApp oficial (`+591 77389330`).
 
 ---
@@ -182,3 +182,11 @@ Entonces se abre una nueva pestaña en "https://wa.me/59177389330?text=..." con 
 - SC-03.2: Los enlaces legales abren páginas independientes y permiten volver a la landing.
 - SC-03.3: El formulario prepara un mailto al correo mostrado, sin afirmar que se ha enviado.
 - Cambio autorizado por el usuario: contenido académico de ejemplo, sin cambios de datos, permisos, migraciones ni cobros. La cifra de ahorro carece de evidencia y deja de ser requisito. Los textos legales describen el prototipo y requieren revisión antes de uso con datos reales.
+
+
+## 11. Identidad del prototipo (2026-11-26)
+
+- RF-04.1: El nombre visible del proyecto es EduGradeIA en la landing, plataforma web y aplicaciones móviles, incluidos títulos, etiquetas del sistema, mensajes de contacto y asistente.
+- SC-04.1: Al navegar en la web y abrir el asistente, su nombre y los mensajes de contacto usan EduGradeIA.
+- SC-04.2: La pantalla de acceso y el nombre visible de la aplicación móvil muestran EduGradeIA.
+- Compatibilidad: conservar los identificadores técnicos existentes de paquetes, bases de datos, contenedores, almacenamiento, rutas de repositorio y API; no requiere migraciones ni cambios de lógica del backend Django. Las conversaciones históricas de usuarios se conservan; se normaliza el nombre de marca en mensajes históricos del asistente al mostrarlos.

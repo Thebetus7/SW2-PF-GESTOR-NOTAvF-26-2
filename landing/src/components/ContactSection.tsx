@@ -15,7 +15,7 @@ export const ContactSection: React.FC = () => {
     if (!name || !senderEmail || !message) return;
 
     // Crear enlace mailto estructurado con destino a oficina@edugrade.com
-    const emailSubject = encodeURIComponent(subject ? `[GestorNotas IA] ${subject}` : `[GestorNotas IA] Consulta de ${name}`);
+    const emailSubject = encodeURIComponent(subject ? `[EduGradeIA] ${subject}` : `[EduGradeIA] Consulta de ${name}`);
     const emailBody = encodeURIComponent(
       `Nombre: ${name}\nCorreo de contacto: ${senderEmail}\n\nMensaje:\n${message}\n\n---\nEnviado desde el formulario de contacto institucional (oficina@edugrade.com)`
     );
@@ -41,7 +41,7 @@ export const ContactSection: React.FC = () => {
             Contáctanos
           </h2>
           <p className="text-[#6B5B52] text-base sm:text-lg leading-relaxed">
-            ¿Deseas implementar GestorNotas IA en tu facultad, agendar una demostración en vivo o realizar una consulta académica? Escríbenos directamente por correo institucional o WhatsApp.
+            ¿Deseas implementar EduGradeIA en tu facultad, agendar una demostración en vivo o realizar una consulta académica? Escríbenos directamente por correo institucional o WhatsApp.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export const ContactSection: React.FC = () => {
                     WhatsApp Oficial
                   </span>
                   <a
-                    href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
+                    href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-bold text-base text-[#2C1810] hover:text-[#059669] transition-colors flex items-center gap-1.5"
@@ -105,7 +105,7 @@ export const ContactSection: React.FC = () => {
 
               {/* Botón Acción Rápida WhatsApp */}
               <a
-                href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
+                href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold shadow-md transition-all group"
@@ -148,7 +148,7 @@ export const ContactSection: React.FC = () => {
                       Escribir otro mensaje
                     </button>
                     <a
-                      href={`mailto:oficina@edugrade.com?subject=${encodeURIComponent(subject ? `[GestorNotas IA] ${subject}` : `[GestorNotas IA] Consulta de ${name}`)}&body=${encodeURIComponent(`Nombre: ${name}\nCorreo: ${senderEmail}\n\n${message}`)}`}
+                      href={`mailto:oficina@edugrade.com?subject=${encodeURIComponent(subject ? `[EduGradeIA] ${subject}` : `[EduGradeIA] Consulta de ${name}`)}&body=${encodeURIComponent(`Nombre: ${name}\nCorreo: ${senderEmail}\n\n${message}`)}`}
                       className="px-4 py-2 rounded-xl bg-[#8B5E3C] text-xs font-semibold text-white hover:bg-[#724A2D] transition-colors"
                     >
                       Abrir correo nuevamente

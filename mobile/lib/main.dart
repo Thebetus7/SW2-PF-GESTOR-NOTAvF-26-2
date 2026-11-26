@@ -43,7 +43,7 @@ class GestorNotasMobileApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Gestor de Notas & Evaluaciones',
+      title: 'EduGradeIA',
       debugShowCheckedModeBanner: false,
       theme: CafeBlendTheme.lightTheme(),
       darkTheme: CafeBlendTheme.darkTheme(),

@@ -97,7 +97,7 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
 
               {/* WhatsApp Button */}
               <a
-                href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
+                href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-3 rounded-xl bg-[#261A13] hover:bg-[#32231A] border border-[#38281E] text-sm text-[#FDF6EC] hover:border-[#D4A373] transition-all group"
@@ -130,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({ appUrl = '/app' }) => {
                   <div>
                     <span className="font-medium block text-xs text-[#D5C9B8]">Repositorio</span>
                     <span className="font-bold text-sm text-[#FDF6EC] group-hover:text-[#D4A373]">
-                      GitHub / gestor-notas-ia
+                      Código en GitHub
                     </span>
                   </div>
                 </div>

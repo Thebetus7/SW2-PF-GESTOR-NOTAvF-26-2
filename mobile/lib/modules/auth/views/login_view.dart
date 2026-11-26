@@ -151,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Gestor de Notas & Evaluaciones',
+                  'EduGradeIA',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 22,

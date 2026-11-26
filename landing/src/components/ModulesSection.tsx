@@ -365,7 +365,7 @@ export const ModulesSection: React.FC = () => {
               Diferenciadores Clave de Nuestra Tecnología
             </h3>
             <p className="text-[#6B5B52] text-sm sm:text-base">
-              ¿Por qué GestorNotas IA transforma la evaluación presencial tradicional?
+              ¿Por qué EduGradeIA transforma la evaluación presencial tradicional?
             </p>
           </div>
 

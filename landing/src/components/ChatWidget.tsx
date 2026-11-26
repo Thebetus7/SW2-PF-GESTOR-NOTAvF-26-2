@@ -31,7 +31,7 @@ const INITIAL_MESSAGE: Message = {
   id: 'init-msg',
   role: 'assistant',
   content:
-    '¡Hola! 👋 Soy el asistente virtual de **GestorNotas IA**.\n\n¿En qué puedo orientarte hoy? Puedes preguntarme cómo funciona el escaneo QR, la calificación con IA multimodal, los módulos para docentes y estudiantes o solicitar una demostración por WhatsApp.',
+    '¡Hola! 👋 Soy el asistente virtual de **EduGradeIA**.\n\n¿En qué puedo orientarte hoy? Puedes preguntarme cómo funciona el escaneo QR, la calificación con IA multimodal, los módulos para docentes y estudiantes o solicitar una demostración por WhatsApp.',
   source: 'fallback',
   timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
 };
@@ -61,7 +61,11 @@ export const ChatWidget: React.FC = () => {
         if (saved) {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            setMessages(parsed);
+            setMessages(parsed.map((message: Message) =>
+              message.role === 'assistant' && typeof message.content === 'string'
+                ? { ...message, content: message.content.replace(/GestorNotas IA/g, 'EduGradeIA').replace(/GestorNotas%20IA/g, 'EduGradeIA') }
+                : message,
+            ));
           }
         }
       } catch (e) {
@@ -163,7 +167,7 @@ export const ChatWidget: React.FC = () => {
         id: 'msg-' + (Date.now() + 1),
         role: 'assistant',
         content:
-          'Lo sentimos, hubo una pequeña dificultad de conexión. Puedes escribirnos directamente a nuestro **[WhatsApp Oficial (+591 77389330)](https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA)**.',
+          'Lo sentimos, hubo una pequeña dificultad de conexión. Puedes escribirnos directamente a nuestro **[WhatsApp Oficial (+591 77389330)](https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA)**.',
         source: 'fallback',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
@@ -227,7 +231,7 @@ export const ChatWidget: React.FC = () => {
   };
 
   return (
-    <aside aria-label="Asistente Virtual GestorNotas IA" className="fixed bottom-6 right-6 z-50">
+    <aside aria-label="Asistente Virtual EduGradeIA" className="fixed bottom-6 right-6 z-50">
       {/* Floating Action Bubble */}
       <button
         type="button"
@@ -269,7 +273,7 @@ export const ChatWidget: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-headline font-bold text-base text-[#FDF6EC] leading-tight">
-                  Asistente GestorNotas IA
+                  Asistente EduGradeIA
                 </h3>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse"></span>
@@ -389,7 +393,7 @@ export const ChatWidget: React.FC = () => {
               <span>oficina@edugrade.com</span>
             </a>
             <a
-              href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20GestorNotas%20IA"
+              href="https://wa.me/59177389330?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20EduGradeIA"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#059669] hover:underline flex items-center gap-1 font-semibold"

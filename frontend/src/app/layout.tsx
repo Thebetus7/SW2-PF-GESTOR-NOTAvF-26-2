@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Gestor de Exámenes y Notas IA',
+  title: 'EduGradeIA — Evaluación académica',
   description: 'Sistema integral de evaluación física manuscrita asistida con IA Multimodal',
 };
 

@@ -1,6 +1,6 @@
 {
-    "name": "gestornotas_mobile",
-    "short_name": "gestornotas_mobile",
+    "name": "EduGradeIA",
+    "short_name": "EduGradeIA",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

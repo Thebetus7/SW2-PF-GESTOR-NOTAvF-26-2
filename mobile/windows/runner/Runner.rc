@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.evaluacion" "\0"
-            VALUE "FileDescription", "gestornotas_mobile" "\0"
+            VALUE "FileDescription", "EduGradeIA" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "gestornotas_mobile" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.evaluacion. All rights reserved." "\0"
             VALUE "OriginalFilename", "gestornotas_mobile.exe" "\0"
-            VALUE "ProductName", "gestornotas_mobile" "\0"
+            VALUE "ProductName", "EduGradeIA" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
