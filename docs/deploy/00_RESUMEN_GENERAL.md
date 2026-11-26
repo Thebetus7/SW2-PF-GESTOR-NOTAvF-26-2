@@ -11,6 +11,7 @@
 | **Proyecto** | Gestor de Notas & Evaluaciones con IA Multimodal | Plataforma de digitalización de exámenes físicos, escaneo QR y calificación automatizada con IA |
 | **Repositorio** | `SW2-PF-GESTOR-NOTAvF-26-2` | Monorepo con backend Django 5, frontend Next.js 14 y app móvil Flutter |
 | **Proveedor Cloud** | Microsoft Azure | Plataforma de nube empresarial con alta disponibilidad y presencia regional en América Latina |
+| **Azure Portal (Login)** | [https://portal.azure.com](https://portal.azure.com) | Consola web oficial para iniciar sesión y administrar la máquina virtual, redes y recursos |
 | **Servicio de Cómputo** | Azure Virtual Machine (IaaS) | Control operativo absoluto sobre kernel Linux, Docker Compose, almacenamiento y demonios de sistema |
 | **Tamaño de Instancia** | `Standard_B2s` (2 vCPU, 4.0 GiB RAM) | Capacidad equilibrada de la serie B (burstable) para ejecutar simultáneamente Django, Next.js y PostgreSQL sin Out-Of-Memory (OOM) |
 | **Almacenamiento** | 30 GB Standard SSD (`StandardSSD_LRS`) | Rendimiento sólido para capas Docker, base de datos relacional y almacenamiento de fotos JPG de exámenes |
